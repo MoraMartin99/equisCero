@@ -80,6 +80,22 @@ const game = (() => {
         })(_players);
     };
 
+    const _setRounds = () => {
+        _rounds = ((totalRounds) => {
+            let _currentRound = 1;
+            const getCurrentRound = () => {
+                return _currentRound;
+            };
+            const next = () => {
+                if (_currentRound < totalRounds) {
+                    _currentRound++;
+                }
+            };
+
+            return { getCurrentRound, next };
+        })(_gameType.totalRounds);
+    };
+
     return {
         setPlayer,
         start,
