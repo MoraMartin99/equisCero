@@ -174,6 +174,13 @@ const game = (() => {
         })();
     };
 
+    const _setNewGame = (initialConditions) => {
+        _setTurns();
+        _setRounds();
+        _setResults();
+        _setBoard();
+    };
+
     return {
         setPlayer,
         start,
