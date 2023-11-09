@@ -136,6 +136,44 @@ const game = (() => {
         })(_gameType.totalRounds);
     };
 
+    const _setBoard = () => {
+        _board = (() => {
+            const _cells = {};
+
+            const reset = () => {
+                const rowsIdArr = [1, 2, 3];
+                const columnsIdArr = ["a", "b", "c"];
+
+                columnsIdArr.forEach((columnId) => {
+                    rowsIdArr.forEach((rowId) => {
+                        _cells[`${columnId}${rowId}`] = { value: null, columnId, rowId };
+                    });
+                });
+            };
+
+            const _isEmpty = (cellId) => {
+                return Object.is(getCell(cellId).value, null);
+            };
+
+            const getCell = (cellId) => {
+                return { ..._cells[cellId] };
+            };
+
+            const setCell = (cellId, token) => {
+                const cell = _cells[cellId];
+                if (_isEmpty(cellId)) {
+                    cell.value = token;
+                } else {
+                    //throw error o algo asi, llamar al modulo encargado de la animación
+                }
+            };
+
+            reset();
+
+            return { getCell, setCell, reset };
+        })();
+    };
+
     return {
         setPlayer,
         start,
