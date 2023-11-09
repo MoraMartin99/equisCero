@@ -56,6 +56,11 @@ const game = (() => {
     const setGameType = (type = null, totalRounds = null) => {
         _gameType = { type, totalRounds };
     };
+
+    const setDifficultyLevel = (level = null) => {
+        _difficultyLevel = level;
+    };
+
     return {
         setPlayer,
         start,
