@@ -61,6 +61,25 @@ const game = (() => {
         _difficultyLevel = level;
     };
 
+    const _setTurns = () => {
+        _turns = ((playerArr) => {
+            let _queue = [playerArr[0]];
+            const getCurrentPlayer = () => {
+                return _queue[_queue.length - 1];
+            };
+            const next = () => {
+                const currentPlayerIndex = playerArr.findIndex((player) => {
+                    return player.getId() == getCurrentPlayer().getId();
+                });
+                const nextPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
+
+                _queue.push(playerArr[nextPlayerIndex]);
+            };
+
+            return { getCurrentPlayer, next };
+        })(_players);
+    };
+
     return {
         setPlayer,
         start,
