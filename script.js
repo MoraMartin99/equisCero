@@ -190,3 +190,6 @@ const game = (() => {
         setDifficultyLevel,
     };
 })();
+
+// este modulo sera el encargado de traer datos externos como las src de las imágenes de los avatares
+const externalResource = (() => {})();
