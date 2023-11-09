@@ -53,6 +53,9 @@ const game = (() => {
         }
     };
 
+    const setGameType = (type = null, totalRounds = null) => {
+        _gameType = { type, totalRounds };
+    };
     return {
         setPlayer,
         start,
