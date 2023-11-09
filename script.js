@@ -181,6 +181,8 @@ const game = (() => {
         _setBoard();
     };
 
+    const start = () => {};
+
     return {
         setPlayer,
         start,
