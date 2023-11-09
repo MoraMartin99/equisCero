@@ -96,6 +96,46 @@ const game = (() => {
         })(_gameType.totalRounds);
     };
 
+    const _setResults = () => {
+        _results = ((totalRounds) => {
+            const _records = {};
+            const setRecord = (recordId, type = null, winnerId = null) => {
+                _records[recordId] = { type, winnerId };
+            };
+            const _setTotalRecord = ({
+                type = null,
+                winnerId = null,
+                player1TotalWins = null,
+                player2TotalWins = null,
+                totalDraws = null,
+            } = {}) => {
+                const recordId = "total";
+
+                _records[recordId] = { type, winnerId, player1TotalWins, player2TotalWins, totalDraws };
+            };
+            const getRecord = (recordId) => {
+                return { ..._records[recordId] };
+            };
+            const getTotal = () => {
+                const recordId = "total";
+
+                return getRecord(recordId);
+            };
+            let _recordId;
+
+            for (let currentRound = 1; currentRound <= totalRounds; currentRound++) {
+                _recordId = `round${currentRound}`;
+                setRecord(_recordId);
+
+                if (currentRound == totalRounds) {
+                    _setTotalRecord();
+                }
+            }
+
+            return { setRecord, getRecord, getTotal };
+        })(_gameType.totalRounds);
+    };
+
     return {
         setPlayer,
         start,
