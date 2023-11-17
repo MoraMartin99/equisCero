@@ -1,7 +1,29 @@
 const game = (() => {
+    const _type = (() => {
+        let _gameType;
+        const _validTypeList = ["PVSP", "PVSCPU"];
+
+        const reset = () => {
+            _gameType = null;
+        };
+
+        const isValidType = (type) => {
+            return _validTypeList.includes(type);
+        };
+
+        const setType = (type) => {
+            if (!isValidType(type)) return;
+            _gameType = type;
+        };
+
+        const getType = () => {
+            return _gameType;
+        };
+
+        return { reset, isValidType, setType, getType };
+    })();
     let _players = [];
     let _turns;
-    let _gameType; //type, totalRounds
     let _rounds;
     let _results;
     let _initialConditions;
@@ -53,10 +75,6 @@ const game = (() => {
         }
     };
 
-    const setGameType = (type = null, totalRounds = null) => {
-        _gameType = { type, totalRounds };
-    };
-
     const setDifficultyLevel = (level = null) => {
         _difficultyLevel = level;
     };
@@ -93,7 +111,7 @@ const game = (() => {
             };
 
             return { getCurrentRound, next };
-        })(_gameType.totalRounds);
+        })();
     };
 
     const _setResults = () => {
@@ -133,7 +151,7 @@ const game = (() => {
             }
 
             return { setRecord, getRecord, getTotal };
-        })(_gameType.totalRounds);
+        })();
     };
 
     const _setBoard = () => {
