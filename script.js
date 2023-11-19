@@ -22,9 +22,37 @@ const game = (() => {
 
         return { reset, isValidType, setType, getType };
     })();
+    const _rounds = (() => {
+        let _totalRounds;
+        let _currentRound;
+
+        const getCurrentRound = () => {
+            return _currentRound;
+        };
+
+        const getTotalRounds = () => {
+            return _totalRounds;
+        };
+
+        const setTotalRounds = (totalRounds) => {
+            _totalRounds = totalRounds;
+        };
+
+        const next = () => {
+            if (_currentRound < _totalRounds) {
+                _currentRound++;
+            }
+        };
+
+        const reset = () => {
+            setTotalRounds(null);
+            _currentRound = 1;
+        };
+
+        return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next };
+    })();
     let _players = [];
     let _turns;
-    let _rounds;
     let _results;
     let _initialConditions;
     let _board;
@@ -96,22 +124,6 @@ const game = (() => {
 
             return { getCurrentPlayer, next };
         })(_players);
-    };
-
-    const _setRounds = () => {
-        _rounds = ((totalRounds) => {
-            let _currentRound = 1;
-            const getCurrentRound = () => {
-                return _currentRound;
-            };
-            const next = () => {
-                if (_currentRound < totalRounds) {
-                    _currentRound++;
-                }
-            };
-
-            return { getCurrentRound, next };
-        })();
     };
 
     const _setResults = () => {
@@ -194,7 +206,6 @@ const game = (() => {
 
     const _setNewGame = (initialConditions) => {
         _setTurns();
-        _setRounds();
         _setResults();
         _setBoard();
     };
