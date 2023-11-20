@@ -51,7 +51,6 @@ const game = (() => {
 
         return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next };
     })();
-    let _players = [];
     let _turns;
     let _results;
     let _initialConditions;
@@ -59,19 +58,51 @@ const game = (() => {
     let _control;
     let _canvas;
     let _difficultyLevel;
-    const _tokens = (() => {
-        const _token = { token1: "x", token2: "0" };
-        const getToken = (tokenId) => {
-            return _token[tokenId];
-        };
-        return { getToken };
-    })();
+    const _players = (() => {
+        const _playerArr = [];
+        const basePlayers = (() => {
+            const _base = { player1: { id: "player1", token: "x" }, player2: { id: "player2", token: "0" } };
+            const getPlayer = (id) => {
+                return { ..._base[id] };
+            };
+            const getAllPlayersId = () => {
+                return Object.values(_base).map(({ id }) => {
+                    return id;
+                });
+            };
+            return { getPlayer, getAllPlayersId };
+        })();
 
-    const setPlayer = (name) => {
-        const playerArr = _players;
-        const createPlayer = (name) => {
-            let _id, _token, _avatarImageURL;
+        const reset = () => {
+            _playerArr.splice(0);
+        };
+
+        const getAllPlayers = () => {
+            return _playerArr.map((player) => {
+                return { ...player };
+            });
+        };
+
+        const _getPlayerByProperty = (propertyGetterName, value) => {
+            return getAllPlayers().find((player) => {
+                return player[propertyGetterName]() == value;
+            });
+        };
+
+        const getPlayerById = (id) => {
+            return _getPlayerByProperty("getId", id);
+        };
+
+        const getPlayerByToken = (token) => {
+            return _getPlayerByProperty("getToken", token);
+        };
+
+        const _createPlayer = (playerId, name) => {
+            const _id = playerId;
             const _name = name;
+            const _token = basePlayers.getPlayer(_id).token;
+            const _avatarImageURL = undefined; //aqui se debe pedir el recurso a externalResources
+
             const getName = () => {
                 return _name;
             };
@@ -85,23 +116,22 @@ const game = (() => {
                 return _avatarImageURL;
             };
 
-            if (!playerArr.length) {
-                _id = "player1";
-                _token = _tokens.getToken("token1");
-                _avatarImageURL; //aquí debe ocurrir alguna lógica que obtenga el recurso de externalResource
-            } else {
-                _id = "player2";
-                _token = _tokens.getToken("token2");
-                _avatarImageURL; //aquí debe ocurrir alguna lógica que obtenga el recurso de externalResource
-            }
+            const dropToken = () => {}; //conectar con _board.setCell
 
-            return { getName, getId, getToken, getAvatarImageURL };
+            return { getName, getId, getToken, getAvatarImageURL, dropToken };
         };
 
-        if (playerArr.length < 2) {
-            playerArr.push(createPlayer(name));
-        }
-    };
+        const setPlayer = (playerId, name) => {
+            const player = _createPlayer(playerId, name);
+            const idList = getAllPlayers().map((item) => {
+                return item.getId();
+            });
+            if (idList.includes(player.getId()) || idList.length > 1) return;
+            _playerArr.push(player);
+        };
+
+        return { basePlayers, reset, getAllPlayers, getPlayerById, getPlayerByToken, setPlayer };
+    })();
 
     const setDifficultyLevel = (level = null) => {
         _difficultyLevel = level;
@@ -213,7 +243,6 @@ const game = (() => {
     const start = () => {};
 
     return {
-        setPlayer,
         start,
         setGameType,
         setDifficultyLevel,
