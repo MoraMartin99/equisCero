@@ -57,7 +57,7 @@ const game = (() => {
     let _board;
     let _control;
     let _canvas;
-    let _difficultyLevel;
+
     const _players = (() => {
         const _playerArr = [];
         const basePlayers = (() => {
@@ -133,9 +133,31 @@ const game = (() => {
         return { basePlayers, reset, getAllPlayers, getPlayerById, getPlayerByToken, setPlayer };
     })();
 
-    const setDifficultyLevel = (level = null) => {
-        _difficultyLevel = level;
-    };
+    const _difficultyLevel = (() => {
+        let _level;
+
+        const validLevel = (() => {
+            const _list = ["normal", "hard"];
+            const getList = () => {
+                return [..._list];
+            };
+            return { getList };
+        })();
+
+        const reset = () => {
+            setLevel(null);
+        };
+
+        const setLevel = (level) => {
+            _level = level;
+        };
+
+        const getLevel = () => {
+            return _level;
+        };
+
+        return { validLevel, reset, setLevel, getLevel };
+    })();
 
     const _setTurns = () => {
         _turns = ((playerArr) => {
