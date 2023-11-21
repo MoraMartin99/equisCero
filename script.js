@@ -29,6 +29,14 @@ const game = (() => {
         let _totalRounds;
         let _currentRound;
 
+        const validTotalRounds = (() => {
+            const _roundlist = [1, 3, 5];
+            const getList = () => {
+                return [..._roundlist];
+            };
+            return { getList };
+        })();
+
         const getCurrentRound = () => {
             return _currentRound;
         };
@@ -52,7 +60,7 @@ const game = (() => {
             _currentRound = 1;
         };
 
-        return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next };
+        return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validTotalRounds };
     })();
     let _turns;
     let _results;
