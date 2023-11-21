@@ -1,18 +1,20 @@
 const game = (() => {
     const _type = (() => {
         let _gameType;
-        const _validTypeList = ["PVSP", "PVSCPU"];
+
+        const validTypes = (() => {
+            const _typeList = ["PVSP", "PVSCPU"];
+            const getList = () => {
+                return [..._typeList];
+            };
+            return { getList };
+        })();
 
         const reset = () => {
-            _gameType = null;
-        };
-
-        const isValidType = (type) => {
-            return _validTypeList.includes(type);
+            setType(null);
         };
 
         const setType = (type) => {
-            if (!isValidType(type)) return;
             _gameType = type;
         };
 
@@ -20,8 +22,9 @@ const game = (() => {
             return _gameType;
         };
 
-        return { reset, isValidType, setType, getType };
+        return { reset, setType, getType, validTypes };
     })();
+
     const _rounds = (() => {
         let _totalRounds;
         let _currentRound;
