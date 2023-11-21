@@ -170,6 +170,37 @@ const game = (() => {
         return { validLevel, reset, setLevel, getLevel };
     })();
 
+    const _state = (() => {
+        let _currentState;
+
+        const validState = (() => {
+            const _stateList = ["setting", "playing", "pause", "waiting"];
+            const getList = () => {
+                return [..._stateList];
+            };
+            return { getList };
+        })();
+
+        const _isValidState = (state) => {
+            return validState.getList().includes(state);
+        };
+
+        const setState = (state) => {
+            if (!_isValidState(state)) return;
+            _currentState = state;
+        };
+
+        const reset = () => {
+            _currentState = null;
+        };
+
+        const getState = () => {
+            return _currentState;
+        };
+
+        return { validState, setState, reset, getState };
+    })();
+
     const _setTurns = () => {
         _turns = ((playerArr) => {
             let _queue = [playerArr[0]];
