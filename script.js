@@ -153,7 +153,7 @@ const game = (() => {
         let _level;
 
         const validLevel = (() => {
-            const _list = ["normal", "hard"];
+            const _list = ["noLevel", "normal", "hard"];
             const getList = () => {
                 return [..._list];
             };
