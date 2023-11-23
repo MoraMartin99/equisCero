@@ -141,7 +141,12 @@ const game = (() => {
             _playerArr.push(player);
         };
 
-        return { basePlayers, reset, getAllPlayers, getPlayerById, getPlayerByToken, setPlayer };
+        const isValidName = (name) => {
+            const regex = /^\S{1,10}$/;
+            return regex.test(name);
+        };
+
+        return { basePlayers, reset, getAllPlayers, getPlayerById, getPlayerByToken, setPlayer, isValidName };
     })();
 
     const _difficultyLevel = (() => {
