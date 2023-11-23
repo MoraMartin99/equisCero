@@ -206,6 +206,126 @@ const game = (() => {
         return { validState, setState, reset, getState };
     })();
 
+    const _session = (() => {
+        const _settings = {};
+        const _preferredState = "setting";
+
+        const _isPreferredStateActive = () => {
+            return _state.getState() == _preferredState;
+        };
+
+        const _setSettingRecord = (settingId, values, handler) => {
+            if (_settings[settingId]) return;
+            _settings[settingId] = { values, handler };
+        };
+
+        const deleteSettingRecord = (settingId) => {
+            if (!_settings[settingId]) return;
+            delete _settings[settingId];
+        };
+
+        const reset = () => {
+            const keys = Object.keys(_settings);
+            keys.forEach((key) => {
+                deleteSettingRecord(key);
+            });
+        };
+
+        const setType = (type) => {
+            const settingId = "type";
+            const values = [{ type }];
+            const handler = _type.setType;
+            const isValid = (value) => {
+                return _type.validTypes.getList().includes(value);
+            };
+            if (!_isPreferredStateActive() || !isValid(type)) return;
+            _setSettingRecord(settingId, values, handler);
+        };
+
+        const setTotalRounds = (totalRounds) => {
+            const settingId = "totalRounds";
+            const values = [{ totalRounds }];
+            const handler = _rounds.setTotalRounds;
+            const isValid = (value) => {
+                return _rounds.validTotalRounds.getList().includes(value);
+            };
+            if (!_isPreferredStateActive() || !isValid(totalRounds)) return;
+            _setSettingRecord(settingId, values, handler);
+        };
+
+        const setDifficultyLevel = (level) => {
+            const settingId = "difficultyLevel";
+            const values = [{ level }];
+            const handler = _difficultyLevel.setLevel;
+            const isValid = (value) => {
+                return _difficultyLevel.validLevel.getList().includes(value);
+            };
+            if (!_isPreferredStateActive() || !isValid(level)) return;
+            _setSettingRecord(settingId, values, handler);
+        };
+
+        const setPlayerName = (playerId, name) => {
+            const settingId = playerId;
+            const values = [{ id: playerId }, { name }];
+            const handler = _players.setPlayer;
+            const isValid = (playerId, name) => {
+                const isValidId = (id) => {
+                    return _players.basePlayers.getAllPlayersId().includes(id);
+                };
+                const isValidName = (name) => {
+                    return _players.isValidName(name);
+                };
+                return isValidId(playerId) && isValidName(name);
+            };
+            if (!_isPreferredStateActive() || !isValid(playerId, name)) return;
+            _setSettingRecord(settingId, values, handler);
+        };
+
+        const getProperty = (settingId, property) => {
+            let value;
+            if (_settings[settingId]) {
+                const targetElement = _settings[settingId].values.find((element) => {
+                    return Object.hasOwn(element, property);
+                });
+                if (targetElement) {
+                    value = targetElement[property];
+                }
+            }
+            return value;
+        };
+
+        const isSet = () => {
+            const requiredSettingIdList = ["type", "totalRounds", "difficultyLevel", "player1", "player2"];
+            return requiredSettingIdList.every((settingId) => {
+                return Object.hasOwn(_settings, settingId);
+            });
+        };
+
+        const loadSession = () => {
+            if (!isSet()) return;
+            const settingsValueList = Object.values(_settings);
+            for (const { values, handler } of settingsValueList) {
+                const argumentList = values.map((value) => {
+                    const key = Object.keys(value)[0];
+                    return value[key];
+                });
+                handler(...argumentList);
+            }
+        };
+
+        return {
+            deleteSettingRecord,
+            reset,
+            setType,
+            setTotalRounds,
+            setDifficultyLevel,
+            setPlayerName,
+            getProperty,
+            isSet,
+            loadSession,
+        };
+    })();
+
     const _setTurns = () => {
         _turns = ((playerArr) => {
             let _queue = [playerArr[0]];
