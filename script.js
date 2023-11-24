@@ -62,7 +62,6 @@ const game = (() => {
 
         return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validTotalRounds };
     })();
-    let _turns;
     let _results;
     let _initialConditions;
     let _board;
@@ -326,24 +325,36 @@ const game = (() => {
         };
     })();
 
-    const _setTurns = () => {
-        _turns = ((playerArr) => {
-            let _queue = [playerArr[0]];
-            const getCurrentPlayer = () => {
-                return _queue[_queue.length - 1];
-            };
-            const next = () => {
-                const currentPlayerIndex = playerArr.findIndex((player) => {
-                    return player.getId() == getCurrentPlayer().getId();
-                });
-                const nextPlayerIndex = currentPlayerIndex == 0 ? 1 : 0;
+    const _turns = (() => {
+        const _queue = [];
 
-                _queue.push(playerArr[nextPlayerIndex]);
-            };
+        const _getPlayerById = (id) => {
+            return _players.getPlayerById(id);
+        };
 
-            return { getCurrentPlayer, next };
-        })(_players);
-    };
+        const reset = () => {
+            _queue.splice(0);
+            _queue.push(_getPlayerById("player1"));
+        };
+
+        const getCurrentTurn = () => {
+            return _queue.length;
+        };
+
+        const getCurrentPlayer = () => {
+            return _queue[_queue.length - 1];
+        };
+
+        const next = () => {
+            if (_queue.length) {
+                const nextPlayer =
+                    getCurrentPlayer().getId() == "player1" ? _getPlayerById("player2") : _getPlayerById("player1");
+                _queue.push(nextPlayer);
+            }
+        };
+
+        return { reset, getCurrentTurn, getCurrentPlayer, next };
+    })();
 
     const _setResults = () => {
         _results = ((totalRounds) => {
