@@ -29,12 +29,25 @@ const game = (() => {
         let _totalRounds;
         let _currentRound;
 
-        const validTotalRounds = (() => {
-            const _roundlist = [1, 3, 5];
-            const getList = () => {
-                return [..._roundlist];
+        const validRounds = (() => {
+            const _totalRoundlist = [1, 3, 5];
+
+            const getTotalRoundlist = () => {
+                return [..._totalRoundlist];
             };
-            return { getList };
+
+            const getRoundList = () => {
+                const list = [];
+                const _totalRounds = getTotalRounds();
+                if (_totalRounds) {
+                    for (let round = 1; round <= _totalRounds; round++) {
+                        list.push(round);
+                    }
+                }
+                return list;
+            };
+
+            return { getTotalRoundlist, getRoundList };
         })();
 
         const getCurrentRound = () => {
@@ -60,7 +73,7 @@ const game = (() => {
             _currentRound = 1;
         };
 
-        return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validTotalRounds };
+        return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validRounds };
     })();
     let _initialConditions;
     let _board;
@@ -245,7 +258,7 @@ const game = (() => {
             const values = [{ totalRounds }];
             const handler = _rounds.setTotalRounds;
             const isValid = (value) => {
-                return _rounds.validTotalRounds.getList().includes(value);
+                return _rounds.validRounds.getTotalRoundlist().includes(value);
             };
             if (!_isPreferredStateActive() || !isValid(totalRounds)) return;
             _setSettingRecord(settingId, values, handler);
