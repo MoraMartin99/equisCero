@@ -62,7 +62,6 @@ const game = (() => {
 
         return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validTotalRounds };
     })();
-    let _results;
     let _initialConditions;
     let _board;
     let _control;
@@ -356,45 +355,120 @@ const game = (() => {
         return { reset, getCurrentTurn, getCurrentPlayer, next };
     })();
 
-    const _setResults = () => {
-        _results = ((totalRounds) => {
-            const _records = {};
-            const setRecord = (recordId, type = null, winnerId = null) => {
-                _records[recordId] = { type, winnerId };
-            };
-            const _setTotalRecord = ({
-                type = null,
-                winnerId = null,
-                player1TotalWins = null,
-                player2TotalWins = null,
-                totalDraws = null,
-            } = {}) => {
-                const recordId = "total";
+    const _results = (() => {
+        const _records = {};
 
-                _records[recordId] = { type, winnerId, player1TotalWins, player2TotalWins, totalDraws };
+        const validResultType = (() => {
+            const resultList = ["win", "draw"];
+            const getList = () => {
+                return [...resultList];
             };
-            const getRecord = (recordId) => {
-                return { ..._records[recordId] };
+            return { getList };
+        })();
+
+        const _isValid = (validList, value) => {
+            return validList.includes(value);
+        };
+
+        const _isValidRound = (round) => {
+            const validList = _rounds.validRounds.getRoundList();
+            return _isValid(validList, round);
+        };
+
+        const _isValidResultType = (resultType) => {
+            const validList = validResultType.getList();
+            return _isValid(validList, resultType);
+        };
+
+        const _isValidWinnerId = (winnerId) => {
+            const validList = [..._players.basePlayers.getAllPlayersId(), null];
+            return _isValid(validList, winnerId);
+        };
+
+        const setRecord = (round, resultType, winnerId) => {
+            const recordId = `round${round}`;
+            const areValid = (round, resultType, winnerId) => {
+                return _isValidRound(round) && _isValidResultType(resultType) && _isValidWinnerId(winnerId);
             };
-            const getTotal = () => {
-                const recordId = "total";
+            winnerId = resultType === "draw" ? null : winnerId;
+            if (_records[recordId] || !areValid(round, resultType, winnerId)) return;
+            _records[recordId] = { round, resultType, winnerId };
+        };
+        const reset = () => {
+            const keys = Object.keys(_records);
+            keys.forEach((key) => {
+                delete _records[key];
+            });
+        };
 
-                return getRecord(recordId);
+        const getRecord = (round) => {
+            return { ..._records[`round${round}`] };
+        };
+
+        const getAllRecords = () => {
+            const result = {};
+            const _recordEntries = Object.entries(_records);
+            _recordEntries.forEach(([key, value]) => {
+                result[key] = { ...value };
+            });
+            return result;
+        };
+
+        const _hasAllRecords = () => {
+            const keys = Object.keys(_records);
+            const requiredRecordList = _rounds.validRounds.getRoundList().map((round) => {
+                return `round${round}`;
+            });
+            const hasRequiredLength =
+                keys.length === requiredRecordList.length && keys.length === _rounds.getTotalRounds();
+            const containsAllItems = keys.every((key) => {
+                return requiredRecordList.includes(key);
+            });
+            return hasRequiredLength && containsAllItems;
+        };
+
+        const _countPropertyValue = (filterObj = {}) => {
+            const recordsValuesList = Object.values(_records);
+            const hasMatchedAllFilters = (obj) => {
+                const filterList = Object.entries(filterObj).map(([key, value]) => {
+                    if (value !== undefined) {
+                        return [key, value];
+                    }
+                });
+                return filterList.every(([filterKey, filterValue]) => {
+                    return obj[filterKey] === filterValue;
+                });
             };
-            let _recordId;
+            const count = recordsValuesList.reduce((accumulator, currentRecord) => {
+                if (hasMatchedAllFilters(currentRecord)) {
+                    accumulator++;
+                }
+                return accumulator;
+            }, 0);
+            return count;
+        };
 
-            for (let currentRound = 1; currentRound <= totalRounds; currentRound++) {
-                _recordId = `round${currentRound}`;
-                setRecord(_recordId);
-
-                if (currentRound == totalRounds) {
-                    _setTotalRecord();
+        const getTotal = () => {
+            const result = {};
+            if (_hasAllRecords()) {
+                result["player1TotalWins"] = _countPropertyValue({ winnerId: "player1" });
+                result["player2TotalWins"] = _countPropertyValue({ winnerId: "player2" });
+                result["totalDraws"] = _countPropertyValue({ resultType: "draw" });
+                result["resultType"] = "win";
+                if (result["player1TotalWins"] > result["player2TotalWins"]) {
+                    result["winnerId"] = "player1";
+                } else if (result["player1TotalWins"] < result["player2TotalWins"]) {
+                    result["winnerId"] = "player2";
+                } else {
+                    result["resultType"] = "draw";
+                    result["winnerId"] = null;
                 }
             }
+            return result;
+        };
 
-            return { setRecord, getRecord, getTotal };
-        })();
-    };
+        return { setRecord, reset, getRecord, getTotal, validResultType, getAllRecords };
+    })();
 
     const _setBoard = () => {
         _board = (() => {
