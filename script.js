@@ -76,7 +76,6 @@ const game = (() => {
         return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validRounds };
     })();
     let _initialConditions;
-    let _board;
     let _control;
     let _canvas;
 
@@ -483,57 +482,193 @@ const game = (() => {
         return { setRecord, reset, getRecord, getTotal, validResultType, getAllRecords };
     })();
 
-    const _setBoard = () => {
-        _board = (() => {
-            const _cells = {};
+    const _board = (() => {
+        const _cells = {};
 
-            const reset = () => {
-                const rowsIdArr = [1, 2, 3];
-                const columnsIdArr = ["a", "b", "c"];
-
-                columnsIdArr.forEach((columnId) => {
-                    rowsIdArr.forEach((rowId) => {
-                        _cells[`${columnId}${rowId}`] = { value: null, columnId, rowId };
-                    });
-                });
+        const validCells = (() => {
+            const _rowList = [1, 2, 3];
+            const _columnList = ["a", "b", "c"];
+            const getRowList = () => {
+                return [..._rowList];
             };
-
-            const _isEmpty = (cellId) => {
-                return Object.is(getCell(cellId).value, null);
+            const getColumnList = () => {
+                return [..._columnList];
             };
-
-            const getCell = (cellId) => {
-                return { ..._cells[cellId] };
-            };
-
-            const setCell = (cellId, token) => {
-                const cell = _cells[cellId];
-                if (_isEmpty(cellId)) {
-                    cell.value = token;
-                } else {
-                    //throw error o algo asi, llamar al modulo encargado de la animación
-                }
-            };
-
-            reset();
-
-            return { getCell, setCell, reset };
+            return { getRowList, getColumnList };
         })();
-    };
+
+        const getCell = (cellId) => {
+            if (!_cells[cellId]) return {};
+            return { ..._cells[cellId] };
+        };
+
+        const _isEmpty = (cellId) => {
+            return Object.is(getCell(cellId).value, null);
+        };
+
+        const _isValidToken = (token) => {
+            return _players.basePlayers.getAllPlayersToken().includes(token);
+        };
+
+        const setCell = (cellId, token) => {
+            const cell = _cells[cellId];
+            if (!cell || !_isValidToken(token)) return;
+            if (_isEmpty(cellId)) {
+                cell.value = token;
+            }
+        };
+
+        const reset = () => {
+            const columnList = validCells.getColumnList();
+            const rowList = validCells.getRowList();
+            columnList.forEach((columnId) => {
+                rowList.forEach((rowId) => {
+                    const key = `${columnId}${rowId}`;
+                    const value = { value: null, column: columnId, row: rowId };
+                    _cells[key] = value;
+                });
+            });
+        };
+
+        const _getGroupByProperty = (property) => {
+            const group = {};
+            const _cellsEntries = Object.entries(_cells);
+
+            for (const [key, value] of _cellsEntries) {
+                if (Object.hasOwn(value, property)) {
+                    const recordId = `${property}${value[property]}`;
+                    const recordValue = { [key]: { ...value } };
+
+                    if (!group[recordId]) {
+                        group[recordId] = { ...recordValue };
+                    } else {
+                        group[recordId] = { ...group[recordId], ...recordValue };
+                    }
+                }
+            }
+
+            return group;
+        };
+
+        const getAllRows = () => {
+            return _getGroupByProperty("row");
+        };
 
     const _setNewGame = (initialConditions) => {
         _setTurns();
         _setResults();
         _setBoard();
     };
+        const getAllColumns = () => {
+            return _getGroupByProperty("column");
+        };
+
+        const _getGroupByCellIds = (cellIdList = []) => {
+            const group = {};
+            if (utilities.isIterable(cellIdList)) {
+                for (const cellId of cellIdList) {
+                    const value = getCell(cellId);
+                    if (Object.keys(value).length) {
+                        group[cellId] = { ...value };
+                    }
+                }
+            }
+            return group;
+        };
+
+        const getAllDiagonals = () => {
+            const group = {};
+            group["diagonal1"] = _getGroupByCellIds(["a1", "b2", "c3"]);
+            group["diagonal2"] = _getGroupByCellIds(["a3", "b2", "c1"]);
+            return { ...group };
+        };
+
+        const getScore = () => {
+            const _currentTurn = _turns.getCurrentTurn();
+            const _currentRound = _rounds.getCurrentRound();
+            const score = {
+                done: false,
+                turn: _currentTurn,
+                round: _currentRound,
+                resultType: null,
+                winnerId: null,
+                move: {},
+            };
+            const _isEachCellFilled = Object.keys(_cells).every((key) => {
+                return !_isEmpty(key);
+            });
+            const _groupGettersList = [getAllRows, getAllColumns, getAllDiagonals];
+            const _getWinner = (cellGroup = {}) => {
+                const winner = {};
+                const _moveList = Object.values(cellGroup);
+                const _isWinnerMove = (move) => {
+                    const cellList = Object.values(move);
+                    return cellList.every((cell, index) => {
+                        const referenceToken = index === 0 ? cellList[index + 1].value : cellList[index - 1].value;
+                        const currentToken = cell.value;
+                        return referenceToken === currentToken && currentToken != null;
+                    });
+                };
+                const _getWinnerId = (move) => {
+                    const _token = Object.values(move)[0].value;
+                    return _players.getPlayerByToken(_token).getId();
+                };
+                for (const currentMove of _moveList) {
+                    if (_isWinnerMove(currentMove)) {
+                        winner["move"] = { ...currentMove };
+                        winner["winnerId"] = _getWinnerId(winner["move"]);
+                        break;
+                    }
+                }
+                return winner;
+            };
 
     const start = () => {};
+            if (_currentTurn > 4) {
+                if (_isEachCellFilled) {
+                    score.done = true;
+                    score.resultType = "draw";
+                }
+                for (const groupGetter of _groupGettersList) {
+                    const winner = _getWinner(groupGetter());
+                    if (Object.keys(winner).length) {
+                        score.done = true;
+                        score.resultType = "win";
+                        score.winnerId = winner.winnerId;
+                        score.move = { ...winner.move };
+                        break;
+                    }
+                }
+            }
 
     return {
         start,
         setGameType,
         setDifficultyLevel,
     };
+            return { ...score };
+        };
+
+        const print = () => {
+            const getCellASCIIValue = (cellId) => {
+                const value = getCell(cellId).value;
+                return value != null ? value : " ";
+            };
+            const asciiBoard = `   a     b     c
+      |     |     
+1  ${getCellASCIIValue("a1")}  |  ${getCellASCIIValue("b1")}  |  ${getCellASCIIValue("c1")}  
+ _____|_____|_____
+      |     |     
+2  ${getCellASCIIValue("a2")}  |  ${getCellASCIIValue("b2")}  |  ${getCellASCIIValue("c2")}  
+ _____|_____|_____
+      |     |     
+3  ${getCellASCIIValue("a3")}  |  ${getCellASCIIValue("b3")}  |  ${getCellASCIIValue("c3")}  
+      |     |  `;
+            console.log(asciiBoard);
+        };
+
+        return { validCells, getCell, setCell, reset, getAllRows, getAllColumns, getAllDiagonals, getScore, print };
+    })();
 })();
 
 // este modulo sera el encargado de traer datos externos como las src de las imágenes de los avatares
