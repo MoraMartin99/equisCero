@@ -75,9 +75,6 @@ const game = (() => {
 
         return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validRounds };
     })();
-    let _initialConditions;
-    let _control;
-    let _canvas;
 
     const _players = (() => {
         const _playerArr = [];
@@ -559,11 +556,6 @@ const game = (() => {
             return _getGroupByProperty("row");
         };
 
-    const _setNewGame = (initialConditions) => {
-        _setTurns();
-        _setResults();
-        _setBoard();
-    };
         const getAllColumns = () => {
             return _getGroupByProperty("column");
         };
@@ -628,7 +620,6 @@ const game = (() => {
                 return winner;
             };
 
-    const start = () => {};
             if (_currentTurn > 4) {
                 if (_isEachCellFilled) {
                     score.done = true;
@@ -646,11 +637,6 @@ const game = (() => {
                 }
             }
 
-    return {
-        start,
-        setGameType,
-        setDifficultyLevel,
-    };
             return { ...score };
         };
 
