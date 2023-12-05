@@ -91,7 +91,12 @@ const game = (() => {
                     return id;
                 });
             };
-            return { getPlayer, getAllPlayersId };
+            const getAllPlayersToken = () => {
+                return Object.values(_base).map(({ token }) => {
+                    return token;
+                });
+            };
+            return { getPlayer, getAllPlayersId, getAllPlayersToken };
         })();
 
         const reset = () => {
