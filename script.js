@@ -664,3 +664,53 @@ const game = (() => {
 
 // este modulo sera el encargado de traer datos externos como las src de las imágenes de los avatares
 const externalResource = (() => {})();
+const pubSub = (() => {
+    const _subscribers = {};
+
+    const _validator = (() => {
+        const _validEvents = [];
+        const isValidEvent = (event) => {
+            return _validEvents.includes(event);
+        };
+        const isValidHandler = (handler) => {
+            return typeof handler === "function";
+        };
+        return { isValidEvent, isValidHandler };
+    })();
+
+    const subscribe = (event, handler) => {
+        if (!_validator.isValidEvent(event) || !_validator.isValidHandler(handler)) return;
+        if (_subscribers[event]) {
+            _subscribers[event].push(handler);
+        } else {
+            _subscribers[event] = [handler];
+        }
+    };
+
+    const unsubscribe = (event, handler) => {
+        if (!utilities.isIterable(_subscribers[event])) return;
+        _subscribers[event] = Array.from(_subscribers[event]).filter((item) => {
+            return item !== handler;
+        });
+    };
+
+    const publish = (event, data) => {
+        if (!utilities.isIterable(_subscribers[event])) return;
+        const handlerList = Array.from(_subscribers[event]);
+        handlerList.forEach((handler) => {
+            handler(data);
+        });
+    };
+
+    const getAllSubscribers = () => {
+        const entries = Object.entries(_subscribers).map(([key, value]) => {
+            value = value.map((handler) => {
+                return handler.name;
+            });
+            return [key, value];
+        });
+        return Object.fromEntries(entries);
+    };
+
+    return { subscribe, unsubscribe, publish, getAllSubscribers };
+})();
