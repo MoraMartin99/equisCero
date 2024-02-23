@@ -156,4 +156,45 @@
                         </div>
                     </form>
                 </div>
+                <div id="difficultyScreen" class="screen">
+                    <form action="" id="difficultyMenu sessionForm">
+                        <p class="menuTitle">Dificultad</p>
+                        <div class="optionContainer">
+                            <label for="normalDifficultyRadio" class="option">
+                                <input
+                                    class="unstyledRadio"
+                                    type="radio"
+                                    name="difficultyRadio"
+                                    id="normalDifficultyRadio"
+                                    checked
+                                />
+                                <div class="iconContainer left">
+                                    <img
+                                        src="./img/normal.svg"
+                                        alt="dificultad normal"
+                                        class="difficultyIcon"
+                                        id="normalDifficulty"
+                                    />
+                                </div>
+                                <p class="optionLabel">Normal</p>
+                            </label>
+                            <label for="hardDifficultyRadio" class="option">
+                                <input class="unstyledRadio" type="radio" name="difficultyRadio" id="hardDifficultyRadio" />
+                                <div class="iconContainer right">
+                                    <img
+                                        src="./img/hard.svg"
+                                        alt="dificultad difícil"
+                                        class="difficultyIcon"
+                                        id="hardDifficulty"
+                                    />
+                                </div>
+                                <p class="optionLabel">Difícil</p>
+                            </label>
+                        </div>
+                        <div class="navigationButtonContainer">
+                            <button type="button" class="navigationButton previous"></button>
+                            <button type="button" class="navigationButton next"></button>
+                        </div>
+                    </form>
+                </div>
 </html>
