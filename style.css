@@ -250,3 +250,45 @@ body {
 
 /* -------------------------------------------------------------------------------------------------------------- */
 
+/* header */
+/* -------------------------------------------------------- */
+header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    background-color: var(--colorPrimary600);
+    place-items: center;
+    padding-block: var(--headerPaddingBlock);
+}
+
+#homeContainer {
+    font-size: var(--homeContainerFontSize);
+    position: relative;
+}
+
+#homeContainer::before {
+    position: absolute;
+    font-size: inherit;
+    display: block;
+    width: var(--homeContainerIconSize);
+    height: var(--homeContainerIconSize);
+    content: "";
+    background-image: url("./img/homeLogo.svg");
+    background-size: 100%;
+    left: var(--homeContainerIconHorizontalOffset);
+    top: var(--homeContainerIconVerticalOffset);
+}
+
+#homeTitle {
+    font-size: inherit;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--colorSecondary100);
+}
+
+header .pauseButton {
+    display: none;
+}
+/* -------------------------------------------------------- */
+
