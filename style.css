@@ -1,0 +1,252 @@
+/* Estilos globales */
+/* -------------------------------------------------------------------------------------------------------------- */
+
+/* Fuentes */
+/* -------------------------------------------------------- */
+@font-face {
+    font-family: lugati;
+    src: url(./fonts/woff2/lugati_bld-webfont.woff2) format("woff2"), url(./fonts/woff/lugati_bld-webfont.woff) format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: lugati;
+    src: url(./fonts/woff2/lugati_rglr-webfont.woff2) format("woff2"), url(./fonts/woff/lugati_rglr-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: lugati;
+    src: url(./fonts/woff2/lugati_rglr_itlk-webfont.woff2) format("woff2"),
+        url(./fonts/woff/lugati_rglr_itlk-webfont.woff) format("woff");
+    font-weight: 400;
+    font-style: italic;
+}
+/* -------------------------------------------------------- */
+
+html {
+    /* Colors */
+    /* -------------------------------------------------------- */
+    --colorPrimary100: #e685bf;
+    --colorPrimary200: #cc76a9;
+    --colorPrimary300: #b36794;
+    --colorPrimary400: #99587f;
+    --colorPrimary500: #80496a;
+    --colorPrimary600: #663a54;
+    --colorPrimary700: #4d2c3f;
+    --colorPrimary800: #331d2a;
+    --colorSecondary100: #e6cb45;
+    --colorSecondary200: #ccb33c;
+    --colorSecondary300: #b39d34;
+    --colorSecondary400: #99862d;
+    --colorSecondary500: #807225;
+    --colorSecondary600: #665a1d;
+    --colorSecondary700: #4d4516;
+    --colorSecondary800: #332e0f;
+    --colorAccent1: #ffd700;
+    --colorAccent1Disabled: #ccb33c;
+    --colorPlayer1-100: #81fcff;
+    --colorPlayer2-100: #ffeb84;
+    --colorDraw100: #8fff85;
+    --colorInvalid100: #ffb396;
+    --colorInvalidInputTextBackground: #fee3d9;
+    --colorInvalidInputTextFont: #b35f3f;
+    --colorValid100: #9bff96;
+    --colorValidInputTextBackground: #e9ffe6;
+    --colorValidInputTextFont: #269d24;
+    --colorInputTextBackground: #ffe6f5;
+    --colorInputTextFont: #ffc7e8;
+    --menuContainerBackgroundColor: #06060666;
+    /* -------------------------------------------------------- */
+
+    /* Fonts */
+    /* -------------------------------------------------------- */
+    --homeContainerFontSize: clamp(1.375rem, 0.6607rem + 3.5714vw, 2.375rem);
+    --homeMenuFontSize: clamp(1.125rem, 0.5671rem + 2.7893vw, 1.906rem);
+    --homeMenuPlayerNameFontSize: calc(1em * (20 / 18));
+    --playerNameMenuFontSize: clamp(1.188rem, 0.6751rem + 2.5643vw, 1.906rem);
+    --playerNameInputFontSize: calc(1em * (18 / 19));
+    --inputInvalidMessageFontSize: calc(1em * (15 / 19));
+    --difficultyMenuFontSize: clamp(1rem, 0.576rem + 2.12vw, 1.594rem);
+    --difficultyMenuMenuTitleFontSize: calc(1em * (19 / 16));
+    --difficultyMenuOptionLabelFontSize: calc(1em * (13.91 / 16));
+    --playersContainerPlayerNameFontSize: clamp(0.921rem, 4.6vw, 2.209rem);
+    --currentPlayerPlayersContainerPlayerNameFontSize: clamp(1.188rem, 5.94vw, 2.85rem);
+    --pauseMenuPauseOptionButtonFontSize: clamp(1.25rem, 0.692rem + 2.79vw, 2.031rem);
+    --pauseMenuMenuTitleFontSize: clamp(1.875rem, 1.049rem + 4.13vw, 3.031rem);
+    --confirmationMenuTitleFontSize: clamp(1.25rem, 0.692rem + 2.79vw, 2.031rem);
+    --resultMessageFontSize: clamp(1.125rem, 0.634rem + 2.46vw, 1.813rem);
+    /* -------------------------------------------------------- */
+
+    /* Size */
+    /* -------------------------------------------------------- */
+    --homeContainerIconSize: calc(1em * (50 / 22));
+    --githubIconWidth: clamp(30px, 12.1376px + 5.5821vw, 55px);
+    --homeMenuAvatarImageSize: clamp(65px, 31.7968px + 10.3786vw, 111.5px);
+    --homeMenuVSIconSize: calc(1em * (52.74 / 18));
+    --homeMenuGameTypeOptionWidth: calc(1em * (149.26 / 18));
+    --sessionMenuWidth: clamp(280px, 158.5712px + 37.9464vw, 450px);
+    --avatarDecoratorSize: calc(100% * (14 / 60));
+    --playerNameMenuAvatarImageSize: clamp(60px, 34.288px + 8.04vw, 96px);
+    --playerNameInputWidth: calc(1em * (120 / 18));
+    --inputInvalidMessageIconSize: clamp(18px, 10.144px + 2.46vw, 29px);
+    --navigationButtonSize: clamp(35px, 20px + 4.69vw, 56px);
+    --navigationButtonBackgroundSize: calc(100% * (30 / 35));
+    --difficultyIconSize: clamp(60.9px, 34.752px + 8.17vw, 97.5px);
+    --difficultyIconCheckedSize: clamp(70px, 39.632px + 9.49vw, 112.51px);
+    --iconContainerDecoratorSize: clamp(20px, 11.424px + 2.68vw, 32px);
+    --playersContainerAvatarImageSize: clamp(42.63px, 13.32vw, 102.312px);
+    --playersContainerVSIconWidth: clamp(29.49px, 1.584px + 8.72vw, 68.55px);
+    --currentPlayerPlayersContainerAvatarImageSize: clamp(55px, 17.19vw, 132px);
+    --currentPlayerPlayerNameDecoratorWidthSize: clamp(10.99px, 3.43vw, 26.3759px);
+    --currentPlayerPlayerCardContainerWidth: calc(12ch + (-2 * var(--currentPlayerPlayerNameDecoratorOffset)));
+    --currentPlayerPlayerCardContainerHeight: calc(
+        var(--currentPlayerPlayersContainerPlayerNameFontSize) + (-1 * var(--currentPlayerPlayerNameDecoratorOffset)) +
+            var(--currentPlayerPlayersContainerColumnGap) + var(--currentPlayerPlayersContainerAvatarImageSize)
+    );
+    --boardCellSize: clamp(90.67px, 50.432px + 12.57vw, 147px);
+    --cellTokenSize: clamp(80px, 44.288px + 11.16vw, 130px);
+    --cellInvalidMoveBackgroundSize: calc(100% * 130 / 147);
+    --roundIndicatorWidth: clamp(10px, 5.36px + 1.45vw, 16.5px);
+    --roundIndicatorHeight: clamp(15px, 8.208px + 2.12vw, 24.5px);
+    --pauseButtonIconWidth: clamp(50px, 28.576px + 6.7vw, 80px);
+    --pauseButtonIconHeight: calc(var(--pauseButtonIconWidth) / 2);
+    --pauseMenuPauseOptionIconSize: clamp(25px, 13.936px + 3.46vw, 40.5px);
+    --playButtonIconWidth: clamp(50px, 28.576px + 6.7vw, 80px);
+    --playButtonIconHeight: calc(var(--playButtonIconWidth) / 2);
+    --confirmationMenuConfirmationButtonSize: clamp(60px, 33.216px + 8.37vw, 97.5px);
+    --confirmationMenuConfirmationButtonBGSize: calc(100% * (45 / 60));
+    --winnerAvatarSize: clamp(150px, 82.864px + 20.98vw, 244px);
+    --winnerAvatarContainerBannerWidth: clamp(250px, 138.576px + 34.82vw, 406px);
+    --resultMenuResultButtonWidth: clamp(70px, 38.928px + 9.71vw, 113.5px);
+    --resultMenuResultButtonHeight: clamp(35px, 19.28px + 4.91vw, 57px);
+    --resultMenuResultButtonIconSize: clamp(30px, 16.784px + 4.13vw, 48.5px);
+    --winnerAvatarContainerDecoratorSize: calc(100% * (100 / 150));
+    --drawWinnerAvatarContainerColumnWidth: clamp(6px, 3.312px + 0.84vw, 9.76px);
+    /* -------------------------------------------------------- */
+
+    /* gap */
+    /* -------------------------------------------------------- */
+    --homeContainerColumnGap: calc(1em * (10 / 22));
+    --homeMenuRowGap: clamp(10px, -4.2864px + 4.4643vw, 30px);
+    --gameTypeFieldsetRowGap: clamp(5px, 2.5168px + 0.7786vw, 8.5px);
+    --legendContainerColumnGap: calc(1em * (5 / 18));
+    --playerContainerRowGap: var(--legendContainerColumnGap);
+    --playerNameMenuRowGap1: var(--sessionMenuPaddingBottom);
+    --playerNameMenuRowGap2: clamp(8.5px, 4.928px + 1.12vw, 13.5px);
+    --playerNameMenuInputContainerRowGap: clamp(8.5px, 4.928px + 1.12vw, 13.5px);
+    --inputInvalidMessageColumnGap: clamp(5px, 2.864px + 0.67vw, 8px);
+    --navigationButtonContainerColumnGap: clamp(20px, 11.424px + 2.68vw, 32px);
+    --difficultyMenuRowGap: clamp(5.5px, 3.424px + 0.65vw, 8.4px);
+    --difficultyMenuOptionContainerColumnGap: clamp(30px, 15.712px + 4.46vw, 50px);
+    --difficultyMenuOptionRowGap: clamp(6.96px, 3.712px + 1.01vw, 11.5px);
+    --gameScreenRowGap1: clamp(20.34px, 9.408px + 3.42vw, 35.65px);
+    --gameScreenRowGap2: clamp(10px, -0.72px + 3.35vw, 25px);
+    --playersContainerPlayerCardGap: clamp(3.88px, 1.21vw, 9.312px);
+    --playersContainerColumnGap: clamp(5.32px, 1.66vw, 12.768px);
+    --currentPlayerPlayersContainerColumnGap: clamp(5px, 1.56vw, 12px);
+    --boardGap: clamp(2px, 0.058rem + 0.33vw, 3.5px);
+    --pauseMenuRowGap: clamp(34px, 19.184px + 4.63vw, 54.75px);
+    --pauseMenuButtonContainerRowGap: clamp(15px, 8.208px + 2.12vw, 24.5px);
+    --pauseOptionButtonColumnGap: clamp(5px, 2.864px + 0.67vw, 8px);
+    --confirmationMenuRowGap: clamp(9px, 4.72px + 1.34vw, 15px);
+    --confirmationMenuButtonContainerColumnGap: clamp(30px, 15.712px + 4.46vw, 50px);
+    --resultMenuRowGap: clamp(15px, 8.576px + 2.01vw, 24px);
+    /* -------------------------------------------------------- */
+
+    /* Offset */
+    /* -------------------------------------------------------- */
+    --homeContainerIconHorizontalOffset: calc(-1 * (var(--homeContainerIconSize) + var(--homeContainerColumnGap)));
+    --homeContainerIconVerticalOffset: calc(-1 * (var(--homeContainerIconSize) - 100%) / 2);
+    --avatarDecoratorOffset: calc(100% * (3 / 60) * -1);
+    --playerNameMenuAvatarContainerTop: calc(-1 * clamp(17px, 9.68px + 2.29vw, 27.25px));
+    --iconContainerDecoratorOffset: calc(-1 * clamp(5px, 2.864px + 0.67vw, 8px));
+    --currentPlayerPlayerNameDecoratorOffset: calc(-1 * clamp(3px, 0.94vw, 7.2px));
+    --roundIndicatorContainerTop: calc(-1 * clamp(5.53px, 3.76px + 0.55vw, 8px));
+    --roundIndicatorContainerLeft: 50%;
+    --winnerAvatarContainerBannerLeft: calc(-1 / 2 * (var(--winnerAvatarContainerBannerWidth) - 100%));
+    --winnerAvatarContainerBannerTop: calc(-1 * clamp(10px, 5.36px + 1.45vw, 16.5px));
+    --winnerAvatarContainerDecoratorLeft: calc(100% * (-22.72 / 150));
+    --winnerAvatarContainerDecoratorTop: calc(100% * (-82.67 / 150));
+    /* -------------------------------------------------------- */
+
+    /* padding */
+    /* -------------------------------------------------------- */
+    --headerPaddingBlock: clamp(21px, 10.3216px + 3.3393vw, 35.97rem);
+    --gameTypeFieldsetPaddingBlock: clamp(6.77px, 2.5392px + 1.3214vw, 12.69px);
+    --gameTypeFieldsetPaddingInLine: clamp(8.63px, 4.1664px + 1.3929vw, 14.87px);
+    --footerPaddingBlock: clamp(10px, 4.64px + 1.675vw, 17.5px);
+    --homeMenuGameTypeOptionPaddingBlock: clamp(4.93px, 2.4368px + 0.7786vw, 8.41px);
+    --playerNameMenuPaddingTop: clamp(51px, 29.04px + 6.86vw, 81.75px);
+    --sessionMenuPaddingBottom: clamp(15px, 8.576px + 2.01vw, 24px);
+    --playerNameInputPaddingInLine: calc((1em * (16 / 18)) - var(--playerNameInputBorderWidth));
+    --playerNameInputPaddingBlock: calc(clamp(6.5px, 3.712px + 0.87vw, 10.4px) - var(--playerNameInputBorderWidth));
+    --difficultyMenuPaddingBlock: clamp(15px, 8.432px + 2.05vw, 24.19px);
+    --difficultyMenuIconContainerPadding: clamp(2.175px, 1.232px + 0.3vw, 3.5px);
+    --difficultyMenuIconContainerCheckedPadding: clamp(2.5px, 1.424px + 0.33vw, 4px);
+    --roundIndicatorContainerBlockPadding: clamp(2.5px, 1.424px + 0.33vw, 4px);
+    --roundIndicatorContainerInLinePadding: clamp(5px, 2.864px + 0.67vw, 8px);
+    --confirmationMenuPaddingBlock: clamp(15px, 8.288px + 2.1vw, 24.39px);
+    /* -------------------------------------------------------- */
+
+    /* border */
+    /* -------------------------------------------------------- */
+    --gameTypeFieldsetBorderWidth: clamp(1px, 0.5056px + 0.1571vw, 1.714684338574782px);
+    --playerNameInputBorderWidth: clamp(2px, 1.28px + 0.22vw, 3px);
+    --navigationButtonBorderWidth: clamp(1px, 0.576px + 0.13vw, 1.6034793915639722px);
+    --resultMenuResultButtonBorderWidth: clamp(1px, 0.288px + 0.22vw, 2px);
+    /* -------------------------------------------------------- */
+
+    /* filter */
+    /* -------------------------------------------------------- */
+    --iconContainerBrightness: 70%;
+    --currentPlayerIconContainerBrightness: 100%;
+    /* -------------------------------------------------------- */
+
+    /* transition */
+    /* -------------------------------------------------------- */
+    --currentPlayerTransitionDeclaration: all var(--ShiftChangeTimer) linear;
+    /* -------------------------------------------------------- */
+
+    /* time */
+    /* -------------------------------------------------------- */
+    --ShiftChangeTimer: 0.25s;
+    --nopeRotationTimer: 0.75s;
+    /* -------------------------------------------------------- */
+
+    /* rotation */
+    /* -------------------------------------------------------- */
+    --nopeRotationAngle: 15deg;
+    /* -------------------------------------------------------- */
+
+    font-size: 100%;
+}
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 0rem;
+    font-family: lugati, Arial, Verdana, Tahoma, "Trebuchet MS";
+    text-decoration: none;
+    border-style: none;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr max-content;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    position: relative;
+}
+
+/* -------------------------------------------------------------------------------------------------------------- */
+
