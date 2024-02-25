@@ -306,3 +306,80 @@ main {
     overflow-x: visible;
 }
 
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inactiveRightScreen {
+    transform: translateX(100%);
+}
+
+.inactiveLeftScreen {
+    transform: translateX(-100%);
+}
+
+.activeScreen {
+    transform: translateX(0);
+}
+
+.slideLeftToCenter {
+    animation: 0.5s linear slideLeftToCenter;
+}
+
+@keyframes slideLeftToCenter {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slideCenterToRight {
+    animation: 0.5s linear slideCenterToRight;
+}
+
+@keyframes slideCenterToRight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.slideRightToCenter {
+    animation: 0.5s linear slideRightToCenter;
+}
+
+@keyframes slideRightToCenter {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slideCenterToLeft {
+    animation: 0.5s linear slideCenterToLeft;
+}
+
+@keyframes slideCenterToLeft {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
