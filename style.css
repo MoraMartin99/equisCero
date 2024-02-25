@@ -437,6 +437,19 @@ main {
     align-items: center;
 }
 
+.skeleton {
+    animation: skeletonLoading 1s linear infinite alternate;
+}
+
+@keyframes skeletonLoading {
+    from {
+        background-color: var(--colorSkeleton1);
+    }
+
+    to {
+        background-color: var(--colorSkeleton2);
+    }
+}
 
 #homeMenu .avatarImage {
     --colorSkeleton1: var(--colorPrimary500);
