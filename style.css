@@ -666,3 +666,119 @@ main {
     background-image: url("./img/rightArrow.svg");
 }
 
+#difficultyMenu {
+    padding-block: var(--difficultyMenuPaddingBlock);
+    font-size: var(--difficultyMenuFontSize);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr max-content;
+    grid-template-areas:
+        "title"
+        "options"
+        "buttonContainer";
+    row-gap: var(--difficultyMenuRowGap);
+    background-color: var(--colorPrimary600);
+    width: var(--sessionMenuWidth);
+    justify-items: center;
+}
+
+#difficultyMenu .menuTitle {
+    grid-area: title;
+    font-size: var(--difficultyMenuMenuTitleFontSize);
+    color: var(--colorPrimary100);
+    font-weight: 700;
+    line-height: 1;
+}
+
+#difficultyMenu .optionContainer {
+    grid-area: options;
+    font-size: inherit;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "left right";
+    column-gap: var(--difficultyMenuOptionContainerColumnGap);
+}
+
+#difficultyMenu .option {
+    font-size: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: var(--difficultyMenuOptionRowGap);
+}
+
+#difficultyMenu .option input[type="radio"] {
+    background-color: #fff;
+}
+
+#difficultyMenu .iconContainer {
+    padding: var(--difficultyMenuIconContainerPadding);
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    background-color: var(--colorPrimary300);
+    filter: brightness(var(--iconContainerBrightness));
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer {
+    --iconContainerBrightness: 100%;
+    --difficultyMenuIconContainerPadding: var(--difficultyMenuIconContainerCheckedPadding);
+    position: relative;
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer::after,
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer::before {
+    position: absolute;
+    content: "";
+    background-size: 100%;
+    width: var(--iconContainerDecoratorSize);
+    height: var(--iconContainerDecoratorSize);
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer.left::after {
+    background-image: url("./img/dificultyDecoratorTopLeft.svg");
+    left: var(--iconContainerDecoratorOffset);
+    top: var(--iconContainerDecoratorOffset);
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer.right::after {
+    background-image: url("./img/dificultyDecoratorTopRight.svg");
+    right: var(--iconContainerDecoratorOffset);
+    top: var(--iconContainerDecoratorOffset);
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer.left::before {
+    background-image: url("./img/dificultyDecoratorBottomRight.svg");
+    right: var(--iconContainerDecoratorOffset);
+    bottom: var(--iconContainerDecoratorOffset);
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer.right::before {
+    background-image: url("./img/dificultyDecoratorBottomLeft.svg");
+    left: var(--iconContainerDecoratorOffset);
+    bottom: var(--iconContainerDecoratorOffset);
+}
+
+#difficultyMenu .difficultyIcon {
+    width: var(--difficultyIconSize);
+    height: var(--difficultyIconSize);
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .iconContainer .difficultyIcon {
+    --difficultyIconSize: var(--difficultyIconCheckedSize);
+}
+
+#difficultyMenu .optionLabel {
+    font-size: var(--difficultyMenuOptionLabelFontSize);
+    color: var(--colorAccent1Disabled);
+    font-weight: 700;
+    line-height: 1;
+}
+
+#difficultyMenu .option input[type="radio"]:checked ~ .optionLabel {
+    font-size: inherit;
+    color: var(--colorAccent1);
+}
+
