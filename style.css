@@ -798,3 +798,122 @@ main {
     justify-items: center;
 }
 
+#playersContainer {
+    grid-area: players;
+    font-size: var(--currentPlayerPlayersContainerPlayerNameFontSize);
+    display: grid;
+    grid-template-columns: var(--currentPlayerPlayerCardContainerWidth) max-content var(--currentPlayerPlayerCardContainerWidth);
+    grid-template-rows: var(--currentPlayerPlayerCardContainerHeight);
+    grid-template-areas: "left center right";
+    place-items: center;
+    column-gap: var(--playersContainerColumnGap);
+}
+
+#playersContainer .playerCardContainer {
+    font-size: inherit;
+    transition: var(--currentPlayerTransitionDeclaration);
+}
+
+#playersContainer .playerCardContainer.currentPlayer {
+    display: flex;
+    justify-content: center;
+    font-size: var(--currentPlayerPlayersContainerPlayerNameFontSize);
+    min-width: var(--currentPlayerPlayerCardContainerWidth);
+}
+
+#playersContainer .left {
+    grid-area: left;
+}
+
+#playersContainer .right {
+    grid-area: right;
+}
+
+#playersContainer .playerCard {
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-areas:
+        "name"
+        "avatar";
+    row-gap: var(--playersContainerPlayerCardGap);
+    justify-items: center;
+    font-size: inherit;
+    transition: var(--currentPlayerTransitionDeclaration);
+}
+
+#playersContainer .currentPlayer .playerCard {
+    row-gap: var(--currentPlayerPlayersContainerColumnGap);
+    transition: var(--currentPlayerTransitionDeclaration);
+}
+
+#playersContainer .avatarImage {
+    --colorSkeleton1: var(--colorPrimary500);
+    --colorSkeleton2: var(--colorPrimary400);
+    width: var(--playersContainerAvatarImageSize);
+    height: var(--playersContainerAvatarImageSize);
+    filter: brightness(var(--iconContainerBrightness));
+    transition: var(--currentPlayerTransitionDeclaration);
+}
+
+#playersContainer .currentPlayer .avatarImage {
+    --playersContainerAvatarImageSize: var(--currentPlayerPlayersContainerAvatarImageSize);
+    --iconContainerBrightness: var(--currentPlayerIconContainerBrightness);
+}
+
+#playersContainer .avatarImage[src=""] {
+    --iconContainerBrightness: 100%;
+}
+
+#playersContainer .playerName {
+    font-size: var(--playersContainerPlayerNameFontSize);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--colorPrimary500);
+    transition: var(--currentPlayerTransitionDeclaration);
+}
+
+#playersContainer .currentPlayer .playerName {
+    font-size: inherit;
+    color: var(--colorPrimary700);
+    position: relative;
+}
+
+#playersContainer .currentPlayer .playerName::after,
+#playersContainer .currentPlayer .playerName::before {
+    position: absolute;
+    width: var(--currentPlayerPlayerNameDecoratorWidthSize);
+    height: var(--currentPlayerPlayerNameDecoratorWidthSize);
+    content: "";
+    background-size: 100%;
+}
+
+#playersContainer .currentPlayer.left .playerName::after {
+    background-image: url("./img/playerCardDecoratorTopLeft.svg");
+    top: var(--currentPlayerPlayerNameDecoratorOffset);
+    left: var(--currentPlayerPlayerNameDecoratorOffset);
+}
+
+#playersContainer .currentPlayer.left .playerName::before {
+    background-image: url("./img/playerCardDecoratorBottomRight.svg");
+    bottom: var(--currentPlayerPlayerNameDecoratorOffset);
+    right: var(--currentPlayerPlayerNameDecoratorOffset);
+}
+
+#playersContainer .currentPlayer.right .playerName::after {
+    background-image: url("./img/playerCardDecoratorTopRight.svg");
+    top: var(--currentPlayerPlayerNameDecoratorOffset);
+    right: var(--currentPlayerPlayerNameDecoratorOffset);
+}
+
+#playersContainer .currentPlayer.right .playerName::before {
+    background-image: url("./img/playerCardDecoratorBottomLeft.svg");
+    bottom: var(--currentPlayerPlayerNameDecoratorOffset);
+    left: var(--currentPlayerPlayerNameDecoratorOffset);
+}
+
+#playersContainer .VSIcon {
+    grid-area: center;
+    width: var(--playersContainerVSIconWidth);
+}
+
