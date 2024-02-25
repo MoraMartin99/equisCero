@@ -782,3 +782,19 @@ main {
     color: var(--colorAccent1);
 }
 
+#gameScreen {
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows:
+        max-content var(--gameScreenRowGap1) max-content var(--gameScreenRowGap2)
+        var(--pauseButtonIconHeight);
+    grid-template-areas:
+        "players"
+        "."
+        "board"
+        "."
+        "pauseButton";
+    place-content: center;
+    justify-items: center;
+}
+
