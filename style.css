@@ -917,3 +917,8 @@ main {
     width: var(--playersContainerVSIconWidth);
 }
 
+#boardContainer {
+    grid-area: board;
+    position: relative;
+}
+
