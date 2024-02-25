@@ -299,3 +299,10 @@ main {
     background-color: var(--colorPrimary200);
 }
 
+#carrousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: visible;
+}
+
