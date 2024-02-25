@@ -383,3 +383,101 @@ main {
     }
 }
 
+#homeScreen {
+    flex-direction: column;
+}
+
+#homeMenu {
+    height: 100%;
+    align-content: center;
+    font-size: var(--homeMenuFontSize);
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows:
+        max-content minmax(calc(var(--homeMenuRowGap) / 2), var(--homeMenuRowGap))
+        max-content;
+    grid-template-areas:
+        "PVSP"
+        "."
+        "PVSCPU";
+}
+
+#homeMenu .gameTypeFieldset {
+    padding-block: var(--gameTypeFieldsetPaddingBlock);
+    padding-inline: var(--gameTypeFieldsetPaddingInLine);
+    font-size: inherit;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--gameTypeFieldsetRowGap);
+    background-color: var(--colorPrimary600);
+    border: var(--gameTypeFieldsetBorderWidth) solid var(--colorAccent1);
+    align-items: center;
+}
+
+#PVSPFieldset {
+    grid-area: PVSP;
+}
+
+#PVSCPUFieldset {
+    grid-area: PVSCPU;
+}
+
+#homeMenu .legendContainer {
+    font-size: inherit;
+    display: flex;
+    column-gap: var(--legendContainerColumnGap);
+    align-items: center;
+}
+
+#homeMenu .playerContainer {
+    font-size: inherit;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--playerContainerRowGap);
+    align-items: center;
+}
+
+
+#homeMenu .avatarImage {
+    --colorSkeleton1: var(--colorPrimary500);
+    --colorSkeleton2: var(--colorPrimary400);
+    width: var(--homeMenuAvatarImageSize);
+    height: var(--homeMenuAvatarImageSize);
+}
+
+#homeMenu .playerName {
+    font-size: var(--homeMenuPlayerNameFontSize);
+    font-weight: 700;
+    line-height: 1;
+}
+
+#homeMenu .playerName.player1 {
+    color: var(--colorPlayer1-100);
+}
+
+#homeMenu .playerName.player2 {
+    color: var(--colorPlayer2-100);
+}
+
+#homeMenu .VSIcon {
+    font-size: inherit;
+    width: var(--homeMenuVSIconSize);
+}
+
+#homeMenu .gameTypeLabel {
+    display: flex;
+    justify-content: center;
+    font-size: inherit;
+    line-height: 1;
+    color: var(--colorPrimary700);
+    width: var(--homeMenuGameTypeOptionWidth);
+    padding-block: var(--homeMenuGameTypeOptionPaddingBlock);
+    background-color: var(--colorSecondary100);
+}
+
+.unstyledRadio {
+    /*  -webkit-appearance: none;
+    appearance: none; */
+    display: none;
+}
+
