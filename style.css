@@ -494,3 +494,175 @@ main {
     display: none;
 }
 
+.playerNameMenu {
+    padding-block: var(--playerNameMenuPaddingTop) var(--sessionMenuPaddingBottom);
+    font-size: var(--playerNameMenuFontSize);
+    width: var(--sessionMenuWidth);
+    background-color: var(--colorPrimary600);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:
+        max-content var(--playerNameMenuRowGap1) max-content var(--playerNameMenuRowGap2)
+        max-content;
+    grid-template-areas:
+        "label"
+        "."
+        "inputContainer"
+        "."
+        "buttonContainer";
+    justify-items: center;
+    position: relative;
+}
+
+.playerNameMenu .avatarContainer {
+    position: absolute;
+    top: var(--playerNameMenuAvatarContainerTop);
+}
+
+.playerNameMenu .avatarContainer::after,
+.playerNameMenu .avatarContainer::before {
+    position: absolute;
+    content: "";
+    width: var(--avatarDecoratorSize);
+    height: var(--avatarDecoratorSize);
+    background-size: 100%;
+}
+
+.playerNameMenu .avatarContainer::after {
+    background-image: url("./img/avatarDecoratorTopLeft.svg");
+    top: var(--avatarDecoratorOffset);
+    left: var(--avatarDecoratorOffset);
+}
+
+.playerNameMenu .avatarContainer::before {
+    background-image: url("./img/avatarDecoratorBottomRight.svg");
+    bottom: var(--avatarDecoratorOffset);
+    right: var(--avatarDecoratorOffset);
+}
+
+.playerNameMenu .avatarImage {
+    --colorSkeleton1: var(--colorPrimary500);
+    --colorSkeleton2: var(--colorPrimary400);
+    width: var(--playerNameMenuAvatarImageSize);
+    height: var(--playerNameMenuAvatarImageSize);
+    display: block;
+}
+
+.playerNameMenu .menuTitle {
+    grid-area: label;
+    font-size: inherit;
+    color: var(--colorPrimary100);
+}
+
+.playerNameMenu .inputContainer {
+    grid-area: inputContainer;
+    font-size: inherit;
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-rows: repeat(2, max-content);
+    grid-template-areas:
+        ". input indicator"
+        "message message message";
+    row-gap: var(--playerNameMenuInputContainerRowGap);
+}
+
+.playerNameMenu .playerNameInput {
+    grid-area: input;
+    font-size: var(--playerNameInputFontSize);
+    line-height: 1;
+    width: var(--playerNameInputWidth);
+    padding-inline: var(--playerNameInputPaddingInLine);
+    padding-block: var(--playerNameInputPaddingBlock);
+    border: var(--playerNameInputBorderWidth) solid var(--colorPrimary100);
+    color: var(--colorPrimary300);
+    background-color: var(--colorInputTextBackground);
+    text-align: center;
+}
+
+.playerNameMenu .playerNameInput::placeholder {
+    color: var(--colorPrimary100);
+}
+
+.playerNameMenu .activeTextInput:valid {
+    background-color: var(--colorValidInputTextBackground);
+    color: var(--colorValidInputTextFont);
+    border-color: var(--colorValid100);
+}
+
+.playerNameMenu .activeTextInput:invalid {
+    background-color: var(--colorInvalidInputTextBackground);
+    color: var(--colorInvalidInputTextFont);
+    border-color: var(--colorInvalid100);
+}
+
+.playerNameMenu .inputIndicator {
+    visibility: hidden;
+    grid-area: indicator;
+    content: "";
+    background-size: 100%;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1 / 1;
+    justify-self: end;
+}
+
+.playerNameMenu .activeTextInput:valid ~ .inputIndicator {
+    visibility: visible;
+    background-image: url("./img/thumbUp.svg");
+}
+
+.playerNameMenu .activeTextInput:invalid ~ .inputIndicator {
+    visibility: visible;
+    background-image: url("./img/thumbDown.svg");
+}
+
+.playerNameMenu .inputInvalidMessage {
+    visibility: hidden;
+    grid-area: message;
+    display: flex;
+    column-gap: var(--inputInvalidMessageColumnGap);
+    font-size: inherit;
+    align-items: center;
+}
+
+.playerNameMenu .activeTextInput:invalid ~ .inputInvalidMessage {
+    visibility: visible;
+}
+
+.inputInvalidMessage .messageText {
+    font-size: var(--inputInvalidMessageFontSize);
+    font-style: italic;
+    color: var(--colorInvalid100);
+}
+
+.inputInvalidMessage .messageIcon {
+    width: var(--inputInvalidMessageIconSize);
+    height: var(--inputInvalidMessageIconSize);
+    background-image: url("./img/warning.svg");
+    background-size: 100%;
+}
+
+.navigationButtonContainer {
+    grid-area: buttonContainer;
+    display: flex;
+    column-gap: var(--navigationButtonContainerColumnGap);
+}
+
+.navigationButton {
+    width: var(--navigationButtonSize);
+    height: var(--navigationButtonSize);
+    background-color: var(--colorPrimary500);
+    border: var(--navigationButtonBorderWidth) solid var(--colorSecondary200);
+    background-origin: border-box;
+    background-size: var(--navigationButtonBackgroundSize);
+    background-position: center;
+}
+
+.navigationButton.previous {
+    background-image: url("./img/leftArrow.svg");
+}
+
+.navigationButton.next {
+    background-image: url("./img/rightArrow.svg");
+}
+
