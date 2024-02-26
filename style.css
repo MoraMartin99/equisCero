@@ -1051,3 +1051,24 @@ main {
     background-color: var(--colorPrimary200);
 }
 
+#gameScreen .pauseButton {
+    grid-area: pauseButton;
+}
+
+.pauseButtonIcon {
+    width: var(--pauseButtonIconWidth);
+    height: var(--pauseButtonIconHeight);
+}
+
+.pauseButtonIcon .base {
+    fill: var(--colorPrimary700);
+    fill-opacity: 1;
+}
+
+.pauseButtonIcon .fills {
+    fill: var(--colorPrimary100);
+    fill-opacity: 1;
+}
+
+/* -------------------------------------------------------- */
+
