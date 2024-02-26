@@ -1018,3 +1018,36 @@ main {
     fill: var(--colorDraw100);
 }
 
+#roundIndicatorContainer {
+    padding: var(--roundIndicatorContainerBlockPadding) var(--roundIndicatorContainerInLinePadding);
+    position: absolute;
+    background-color: var(--colorPrimary600);
+    top: var(--roundIndicatorContainerTop);
+    left: var(--roundIndicatorContainerLeft);
+    transform: translate(-50%, -100%);
+    display: flex;
+    column-gap: var(--roundIndicatorContainerInLinePadding);
+}
+
+#roundIndicatorContainer .roundIndicator {
+    width: var(--roundIndicatorWidth);
+    height: var(--roundIndicatorHeight);
+    background-color: var(--colorPrimary500);
+}
+
+#roundIndicatorContainer .roundIndicator.player1 {
+    background-color: var(--colorPlayer1-100);
+}
+
+#roundIndicatorContainer .roundIndicator.player2 {
+    background-color: var(--colorPlayer2-100);
+}
+
+#roundIndicatorContainer .roundIndicator.draw {
+    background-color: var(--colorDraw100);
+}
+
+#roundIndicatorContainer .roundIndicator.current {
+    background-color: var(--colorPrimary200);
+}
+
