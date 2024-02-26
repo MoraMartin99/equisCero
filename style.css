@@ -1191,3 +1191,42 @@ footer {
     fill-opacity: 1;
 }
 
+#confirmationMenu {
+    padding-block: var(--confirmationMenuPaddingBlock);
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, max-content);
+    row-gap: var(--confirmationMenuRowGap);
+    background-color: var(--colorPrimary200);
+    justify-items: center;
+}
+
+#confirmationMenu .menuTitle {
+    font-size: var(--confirmationMenuTitleFontSize);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--colorPrimary700);
+}
+
+#confirmationMenu .buttonContainer {
+    display: flex;
+    column-gap: var(--confirmationMenuButtonContainerColumnGap);
+}
+
+#confirmationMenu .confirmationButton {
+    width: var(--confirmationMenuConfirmationButtonSize);
+    height: var(--confirmationMenuConfirmationButtonSize);
+    background-color: var(--colorPrimary800);
+    background-size: var(--confirmationMenuConfirmationButtonBGSize);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#acceptButton {
+    background-image: url("./img/thumbUp.svg");
+}
+
+#cancelButton {
+    background-image: url("./img/thumbDown.svg");
+}
+
