@@ -1121,3 +1121,73 @@ footer {
     height: 100%;
 }
 
+#pauseMenu {
+    row-gap: var(--pauseMenuRowGap);
+    background-color: var(--colorSecondary100);
+    grid-template-columns: max-content;
+    grid-template-rows: repeat(3, max-content);
+    place-items: center;
+    place-content: center;
+}
+
+#pauseMenu .menuTitle {
+    color: var(--colorSecondary800);
+    font-size: var(--pauseMenuMenuTitleFontSize);
+    font-weight: 400;
+    line-height: 1;
+}
+
+#pauseMenu .radioContainer {
+    display: grid;
+    grid-template-columns: max-content;
+    grid-template-rows: repeat(3, max-content);
+    row-gap: var(--pauseMenuButtonContainerRowGap);
+}
+
+/* #pauseMenu .pauseOptionButton {
+    font-size: var(--pauseMenuPauseOptionButtonFontSize);
+    display: flex;
+    column-gap: var(--pauseOptionButtonColumnGap);
+    background-color: inherit;
+    color: var(--colorSecondary700);
+    font-weight: 700;
+    line-height: 1;
+    align-items: center;
+} */
+
+#pauseMenu .pauseOptionLabel {
+    font-size: var(--pauseMenuPauseOptionButtonFontSize);
+    display: flex;
+    column-gap: var(--pauseOptionButtonColumnGap);
+    background-color: inherit;
+    color: var(--colorSecondary700);
+    font-weight: 700;
+    line-height: 1;
+    align-items: center;
+}
+
+#pauseMenu .pauseOptionIcon {
+    width: var(--pauseMenuPauseOptionIconSize);
+    height: var(--pauseMenuPauseOptionIconSize);
+}
+
+#pauseMenu .pauseOptionIcon .fills {
+    fill: var(--colorSecondary700);
+    fill-opacity: 1;
+}
+
+#playButtonIcon {
+    width: var(--playButtonIconWidth);
+    height: var(--playButtonIconHeight);
+}
+
+#playButtonIcon .base {
+    fill: var(--colorSecondary800);
+    fill-opacity: 1;
+}
+
+#playButtonIcon .fills {
+    fill: var(--colorSecondary100);
+    fill-opacity: 1;
+}
+
