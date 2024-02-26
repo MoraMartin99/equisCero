@@ -1230,3 +1230,166 @@ footer {
     background-image: url("./img/thumbDown.svg");
 }
 
+#resultMenu {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, max-content);
+    align-content: center;
+    justify-items: center;
+    background-color: var(--colorPrimary700);
+    row-gap: var(--resultMenuRowGap);
+}
+
+#winnerAvatarContainer {
+    position: relative;
+}
+
+#maskContainer {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--drawWinnerAvatarContainerColumnWidth) max-content;
+    grid-template-rows: max-content;
+    background-color: black;
+}
+
+#winnerAvatarContainer .winnerAvatar {
+    --colorSkeleton1: var(--colorPrimary500);
+    --colorSkeleton2: var(--colorPrimary600);
+    display: block;
+    position: relative;
+    width: var(--winnerAvatarSize);
+    height: var(--winnerAvatarSize);
+}
+
+.draw #winnerAvatarContainer .winnerAvatar.left {
+    mask-image: url("./img/mask1.svg");
+    -webkit-mask-image: url("./img/mask1.svg");
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+}
+
+.draw #winnerAvatarContainer .winnerAvatar.right {
+    mask-image: url("./img/mask2.svg");
+    -webkit-mask-image: url("./img/mask2.svg");
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+}
+
+#winnerAvatarContainer::before {
+    position: absolute;
+    width: var(--winnerAvatarContainerBannerWidth);
+    height: 100%;
+    content: "";
+    background-size: 100%;
+    background-repeat: no-repeat;
+    top: var(--winnerAvatarContainerBannerTop);
+    left: var(--winnerAvatarContainerBannerLeft);
+}
+
+.gameResult.player1 #winnerAvatarContainer::after,
+.gameResult.player2 #winnerAvatarContainer::after {
+    position: absolute;
+    width: var(--winnerAvatarContainerDecoratorSize);
+    height: var(--winnerAvatarContainerDecoratorSize);
+    content: "";
+    background-image: url("./img/crown.svg");
+    background-size: 100%;
+    transform: rotate(350deg);
+    top: var(--winnerAvatarContainerDecoratorTop);
+    left: var(--winnerAvatarContainerDecoratorLeft);
+}
+
+.player1 #winnerAvatarContainer::before {
+    background-image: url("./img/pattern1.svg");
+}
+
+.gameResult.player1 #winnerAvatarContainer::before {
+    background-image: url("./img/pattern4.svg");
+}
+
+.player2 #winnerAvatarContainer::before {
+    background-image: url("./img/pattern2.svg");
+}
+
+.gameResult.player2 #winnerAvatarContainer::before {
+    background-image: url("./img/pattern5.svg");
+}
+
+.draw #winnerAvatarContainer::before {
+    background-image: url("./img/pattern3.svg");
+}
+
+.gameResult.draw #winnerAvatarContainer::before {
+    background-image: url("./img/pattern6.svg");
+}
+
+#resultMessage,
+#messageAccent {
+    font-size: var(--resultMessageFontSize);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--colorPrimary100);
+}
+
+.player1 #messageAccent {
+    color: var(--colorPlayer1-100);
+}
+
+.player2 #messageAccent {
+    color: var(--colorPlayer2-100);
+}
+
+.draw #messageAccent {
+    color: var(--colorDraw100);
+}
+
+#resultMenu .resultButtonContainer {
+    display: flex;
+    column-gap: var(--resultMenuRowGap);
+}
+
+#resultMenu .resultButton {
+    width: var(--resultMenuResultButtonWidth);
+    height: var(--resultMenuResultButtonHeight);
+    border: var(--resultMenuResultButtonBorderWidth) var(--colorPrimary100) solid;
+    background-color: var(--colorPrimary600);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#resultMenu.player1 .resultButton {
+    border-color: var(--colorPlayer1-100);
+}
+
+#resultMenu.player2 .resultButton {
+    border-color: var(--colorPlayer2-100);
+}
+
+#resultMenu.draw .resultButton {
+    border-color: var(--colorDraw100);
+}
+
+#resultMenu .resultButtonIcon {
+    width: var(--resultMenuResultButtonIconSize);
+    height: var(--resultMenuResultButtonIconSize);
+}
+
+#resultMenu .resultButtonIcon .fills {
+    fill: var(--colorPrimary100);
+    fill-opacity: 1;
+}
+
+#resultMenu.player1 .resultButtonIcon .fills {
+    fill: var(--colorPlayer1-100);
+}
+
+#resultMenu.player2 .resultButtonIcon .fills {
+    fill: var(--colorPlayer2-100);
+}
+
+#resultMenu.draw .resultButtonIcon .fills {
+    fill: var(--colorDraw100);
+}
+
+/* -------------------------------------------------------- */
+
