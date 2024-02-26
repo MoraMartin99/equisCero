@@ -1072,3 +1072,23 @@ main {
 
 /* -------------------------------------------------------- */
 
+/* footer */
+/* -------------------------------------------------------- */
+footer {
+    padding-block: var(--footerPaddingBlock);
+    grid-area: footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--colorPrimary600);
+}
+
+#githubIcon {
+    width: var(--githubIconWidth);
+}
+
+#githubIcon .fills {
+    fill: var(--colorSecondary100);
+}
+/* -------------------------------------------------------- */
+
