@@ -1092,3 +1092,32 @@ footer {
 }
 /* -------------------------------------------------------- */
 
+/* menuContainer */
+/* -------------------------------------------------------- */
+.menuContainer {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuContainer::before {
+    position: fixed;
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--menuContainerBackgroundColor);
+    top: 0;
+    left: 0;
+}
+
+.menuContainer .overlayMenu {
+    position: relative;
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
