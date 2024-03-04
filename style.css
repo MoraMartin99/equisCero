@@ -964,23 +964,33 @@ main {
     background-color: var(--colorPlayer2-100);
 }
 
-#board .cell.invalidMove::before {
+.cell.invalidMove::before,
+.cell.invalidMove::after {
     position: absolute;
     content: "";
-    background-color: var(--colorPrimary600);
+    transition: all 1s;
+}
+
+#board .cell.invalidMove::before {
     width: 100%;
     height: 100%;
+    background-color: var(--colorPrimary600);
+    z-index: 1;
 }
 
 #board .cell.invalidMove::after {
-    position: absolute;
-    content: "";
     background-image: url("./img/nope.svg");
     background-size: 100%;
     width: var(--cellInvalidMoveBackgroundSize);
     height: var(--cellInvalidMoveBackgroundSize);
     transform-origin: bottom center;
     animation: nopeRotation linear infinite var(--nopeRotationTimer) alternate;
+    z-index: 2;
+}
+
+.vanish::after,
+.vanish::before {
+    opacity: 0;
 }
 
 @keyframes nopeRotation {
