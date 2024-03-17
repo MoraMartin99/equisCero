@@ -37,34 +37,31 @@
                             <label class="gameTypeLabel" for="gameTypeOptionPVSPRound1">
                                 El mejor de 1
                                 <input
-                                    data-round="1"
-                                    data-type="PVSP"
                                     type="radio"
                                     class="unstyledRadio"
                                     id="gameTypeOptionPVSPRound1"
-                                    name="gameTypeOption"
+                                    name="gameTypeRadio"
+                                    value="1 PVSP"
                                 />
                             </label>
                             <label class="gameTypeLabel" for="gameTypeOptionPVSPRound3">
                                 El mejor de 3
                                 <input
-                                    data-round="3"
-                                    data-type="PVSP"
                                     type="radio"
                                     class="unstyledRadio"
                                     id="gameTypeOptionPVSPRound3"
-                                    name="gameTypeOption"
+                                    name="gameTypeRadio"
+                                    value="3 PVSP"
                                 />
                             </label>
                             <label class="gameTypeLabel" for="gameTypeOptionPVSPRound5">
                                 El mejor de 5
                                 <input
-                                    data-round="5"
-                                    data-type="PVSP"
                                     type="radio"
                                     class="unstyledRadio"
                                     id="gameTypeOptionPVSPRound5"
-                                    name="gameTypeOption"
+                                    name="gameTypeRadio"
+                                    value="5 PVSP"
                                 />
                             </label>
                         </fieldset>
@@ -83,47 +80,50 @@
                             <label class="gameTypeLabel" for="gameTypeOptionPVSCPURound1">
                                 El mejor de 1
                                 <input
-                                    data-round="1"
-                                    data-type="PVSCPU"
                                     type="radio"
                                     class="unstyledRadio"
                                     id="gameTypeOptionPVSCPURound1"
-                                    name="gameTypeOption"
+                                    name="gameTypeRadio"
+                                    value="1 PVSCPU"
                                 />
                             </label>
                             <label class="gameTypeLabel" for="gameTypeOptionPVSCPURound5">
                                 El mejor de 3
                                 <input
-                                    data-round="3"
-                                    data-type="PVSCPU"
                                     type="radio"
                                     class="unstyledRadio"
                                     id="gameTypeOptionPVSCPURound5"
-                                    name="gameTypeOption"
+                                    name="gameTypeRadio"
+                                    value="3 PVSCPU"
                                 />
                             </label>
                             <label class="gameTypeLabel" for="gameTypeOptionPVSCPURound3">
                                 El mejor de 5
                                 <input
-                                    data-round="5"
-                                    data-type="PVSCPU"
                                     type="radio"
                                     class="unstyledRadio"
                                     id="gameTypeOptionPVSCPURound3"
-                                    name="gameTypeOption"
+                                    name="gameTypeRadio"
+                                    value="5 PVSCPU"
                                 />
                             </label>
                         </fieldset>
                     </form>
                 </div>
                 <div id="player1NameScreen" class="screen">
-                    <form action="" class="playerNameMenu sessionForm">
+                    <form action="" id="player1NameMenu" class="playerNameMenu sessionForm">
                         <div class="avatarContainer">
                             <img src="" alt="player 1 avatar" class="avatarImage avatar1 skeleton" />
                         </div>
                         <label for="player1NameInput" class="menuTitle">Nickname de player 1</label>
                         <div class="inputContainer">
-                            <input id="player1NameInput" type="text" class="playerNameInput" placeholder="Player1" />
+                            <input
+                                id="player1NameInput"
+                                name="playerName"
+                                type="text"
+                                class="playerNameInput"
+                                placeholder="Player1"
+                            />
                             <div class="inputInvalidMessage">
                                 <span class="messageIcon"></span>
                                 <p class="messageText">Max 10 caracteres y sin espacios</p>
@@ -137,13 +137,19 @@
                     </form>
                 </div>
                 <div id="player2NameScreen" class="screen">
-                    <form action="" class="playerNameMenu sessionForm">
+                    <form action="" id="player2NameMenu" class="playerNameMenu sessionForm">
                         <div class="avatarContainer">
                             <img src="" alt="player 2 avatar" class="avatarImage avatar2 skeleton" />
                         </div>
                         <label for="player2NameInput" class="menuTitle">Nickname de player 2</label>
                         <div class="inputContainer">
-                            <input id="player2NameInput" type="text" class="playerNameInput" placeholder="Player2" />
+                            <input
+                                id="player2NameInput"
+                                name="playerName"
+                                type="text"
+                                class="playerNameInput"
+                                placeholder="Player2"
+                            />
                             <div class="inputInvalidMessage">
                                 <span class="messageIcon"></span>
                                 <p class="messageText">Max 10 caracteres y sin espacios</p>
@@ -167,6 +173,7 @@
                                     name="difficultyRadio"
                                     id="normalDifficultyRadio"
                                     checked
+                                    value="normal"
                                 />
                                 <div class="iconContainer left">
                                     <img
@@ -179,7 +186,13 @@
                                 <p class="optionLabel">Normal</p>
                             </label>
                             <label for="hardDifficultyRadio" class="option">
-                                <input class="unstyledRadio" type="radio" name="difficultyRadio" id="hardDifficultyRadio" />
+                                <input
+                                    class="unstyledRadio"
+                                    type="radio"
+                                    name="difficultyRadio"
+                                    id="hardDifficultyRadio"
+                                    value="hard"
+                                />
                                 <div class="iconContainer right">
                                     <img
                                         src="./img/hard.svg"
