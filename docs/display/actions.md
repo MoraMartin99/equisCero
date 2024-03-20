@@ -28,6 +28,13 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 -   **submitSessionForm** (_navigationEvent Data: Object_) _fn_: handler para [navigationEvent](./display.md#eventos) responsable de obtener, procesar y enviar la información de los _sessionForms_ (_la información contenida en el elemento data.currentScreen.screen_) activando [sessionEvent](./display.md#eventos). Se requiere de un comportamiento especial si el jugador selecciona _PVSCPU_ el cual consiste en seleccionar aleatoriamente si el jugador sera _player1_ o _player2_ para que el juego sea mas dinámico y justo
 -   **resetSessionForms** (): handler para [interactionEvent](./display.md#eventos) de tipo _goHome_ que se encarga de resetear todos los _sessionForms_
 -   **bodyClickHandler** (_e: object_) _fn_: handler para manejar los _click events_ en _body_. Define una serie de _arrays_ de elementos y su correspondiente handler, cuando se detecta que _e.target_ esta incluido dentro de la lista se invoca al handler usando [utilities.executeIfMatch](../utilities.md#interfaz):
+-   **dropToken** (_cell: HTMLElement, token: string_) _fn_: Inserta en _cell_ el _token_ correspondiente:
+
+    -   **getTokenId** (_token: string_) _fn_: retorna _token1_ si `token === "x"`, _token2_ si `token === "0"` o `undefined` si no se cumple lo anterior
+    -   Invoca _tokenElement_ = [elements.loadElement](./elements.md#interfaz)({getTokenId(token), cell})
+    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "smoothPopOut", target: tokenElement}])
+    -   Aplica a la promesa anterior `promise.then((data) => {dropTokenEvent.emit({{eventName: "dropTokenEvent", targetCell: {value: token, id: cell.id}})})`
+
 
     -   **list**
 

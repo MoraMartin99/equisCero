@@ -43,11 +43,15 @@ Manejar la vista
     ```
     para showMenu y hideMenu
     data:{eventName:string, type: string, menu: HTMLElement}
+    ```
 
-    para dropToken
+    ```
+    para selectCell
     data:{eventName:string, type: string, cellId: string}
+    ```
 
-    para restartRound, restartGame y goHome
+    ```
+    para nextRound, restartRound, restartGame y goHome
     data:{eventName:string, type: string}
     ```
 
@@ -55,11 +59,26 @@ Manejar la vista
 
     -   showMenu
     -   hideMenu
-    -   dropToken
+    -   selectCell
     -   nextRound
     -   restartRound
     -   restartGame
     -   goHome
+
+    -   **dropTokenEvent**: activado cuando se inserta un _token_ en el _board_. Instancia de [CustomEvent](../customEvent.md)
+
+        ```
+        data:{eventName:string, targetCell: {value: string, id: string}}
+        ```
+
+        -   _targetCell.value_ puede ser _undefined_ o `player.token`
+        -   _targetCell.value_ es `cell.id` quien a su vez representa el _id_ de _HTMLElement_
+
+-   **submitEvent**: activado cuando se requiera enviar información de una estructura tipo de formulario como los _sessionForms_. Instancia de [CustomEvent](../customEvent.md)
+
+    ```
+    data: {eventName:string, senderId: string, fields: {fieldId: {id: string, ...}, ...}}
+    ```
 
 ### Métodos
 

@@ -30,7 +30,8 @@ Responsable de ejecutar las acciones en el modelo. Una **acci√≥n** es una funci√
         -   si `type.getType() ==== "PVSCPU"` entonces se inicializa [AI.init()]
         -   se invoca _initRound_
 -   **interactionEventHandler** _fn_: handler de [interactionEvent](../display/display.md#eventos) para los siguientes casos:
-    -   si `data.type === "dropToken"` entonces se invoca _tryToDropToken_
+
+    -   si `data.type === "selectCell"` entonces se invoca _tryToDropToken_
     -   si `data.type === "nextRound"` entonces se invoca _nextRound_
     -   si `data.type === "restartRound"` entonces se invoca _initRound_
     -   si `data.type === "restartGame"` entonces se invoca _restart_
@@ -40,6 +41,15 @@ Responsable de ejecutar las acciones en el modelo. Una **acci√≥n** es una funci√
     -   si `data.field === "totalRounds"` entonces se invoca [rounds.getTotalRounds](./rounds.md#interfaz)
     -   si `data.field === "difficultyLevel"` entonces se invoca [difficulty.setLevel](./difficulty.md#interfaz)
     -   si `data.field === "player"` entonces se invoca [players.setPlayer](./players.md#interfaz)
+
+-   **dropTokenEventHandler** _fn_: handler de [dropTokenEvent](../display/display.md#eventos) para los siguientes casos:
+
+    -   si [turns.getCurrentTurn()](./turns.md#interfaz) < 5 (_5 es la cantidad minima de turnos para que pueda haber un resultado_) entonces se invoca _nextPlayerEmitter_
+    -   si [turns.getCurrentTurn()](./turns.md#interfaz) >= 5 (_5 es la cantidad minima de turnos para que pueda haber un resultado_) entonces se obtiene `{winnerMove, winnerId: players.getPlayerByToken(winnerToken), result} = board.getStatus()`:
+        -   si `result === "noResult"` entonces se invoca _nextPlayerEmitter_
+        -   si `result !== "noResult" & rounds.getCurrentRound() < rounds.getTotalRounds()` entonces se invoca _roundEndEmitter({winnerMove, winnerId, result})_
+        -   si `result !== "noResult" & rounds.getCurrentRound() === rounds.getTotalRounds()` entonces se invoca _gameEndEmitter({winnerMove, winnerId, result})_
+
 -   **updatePlayerAvatarURL** _fn_: responsable de agregar las urls de los avatares a los jugadores. handler de [responseEvent](../avatarProvider.md#eventos)
 
 ## Implementaci√≥n
