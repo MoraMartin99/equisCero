@@ -17,14 +17,11 @@ Responsable de ejecutar las acciones en el modelo. Una **acci√≥n** es una funci√
 
     -   si `board.isEmpty(cellId) === true` entonces invocar `board.setCell(cellId, currentPlayer.token)` y emitir [moveEvent](./game.md#eventos) de tipo _valid_
     -   si `board.isEmpty(cellId) === false` entonces emitir [moveEvent](./game.md#eventos) de tipo _invalid_
+    -   [moveEventHandler](./game.md#eventos).subscribe(_moveEventHandler_)
 
 -   **nextPlayerEmitter** _fn_: Responsable de invocar [turns.nextTurn()](./turns.md#interfaz) y luego emitir [nextPlayerEvent](./game.md)
 -   **roundEndEmitter** _fn_: Responsable de invocar [results.setRecord(currentRound, resultType, winnerId)](./results.md) y luego emitir [roundEndEvent](./game.md#eventos)
 -   **gameEndEmitter** _fn_: Responsable de invocar [results.setRecord(currentRound, resultType, winnerId)](./results.md) y luego emitir [gameEndEvent](./game.md#eventos)
--   **moveEventHandler** _fn_: handler de [moveEvent](./game.md#eventos) para los siguientes casos:
-    -   si `status.result = "noResult"` entonces se invoca _nextPlayerEmitter_
-    -   si `status.result = "win" o "draw"` & [rounds.getCurrentRound()](./rounds.md#interfaz) < [rounds.getTotalRounds()](./rounds.md#interfaz) entonces se invoca _roundEndEmitter_
-    -   si `status.result = "win" o "draw"` & [rounds.getCurrentRound()](./rounds.md#interfaz) === [rounds.getTotalRounds()](./rounds.md#interfaz) entonces se invoca _gameEndEmitter_
 -   **navigationEventHandler** _fn_: handler de [navigationEvent](../display/display.md#eventos) para los siguientes casos:
     -   si `data.type === "next" & data.status === "end" & data.targetScreen.screen = #gameScreen` entonces:
         -   si `type.getType() ==== "PVSCPU"` entonces se inicializa [AI.init()]
@@ -42,14 +39,22 @@ Responsable de ejecutar las acciones en el modelo. Una **acci√≥n** es una funci√
     -   si `data.field === "difficultyLevel"` entonces se invoca [difficulty.setLevel](./difficulty.md#interfaz)
     -   si `data.field === "player"` entonces se invoca [players.setPlayer](./players.md#interfaz)
 
--   **dropTokenEventHandler** _fn_: handler de [dropTokenEvent](../display/display.md#eventos) para los siguientes casos:
 
-    -   si [turns.getCurrentTurn()](./turns.md#interfaz) < 5 (_5 es la cantidad minima de turnos para que pueda haber un resultado_) entonces se invoca _nextPlayerEmitter_
-    -   si [turns.getCurrentTurn()](./turns.md#interfaz) >= 5 (_5 es la cantidad minima de turnos para que pueda haber un resultado_) entonces se obtiene `{winnerMove, winnerId: players.getPlayerByToken(winnerToken), result} = board.getStatus()`:
-        -   si `result === "noResult"` entonces se invoca _nextPlayerEmitter_
-        -   si `result !== "noResult" & rounds.getCurrentRound() < rounds.getTotalRounds()` entonces se invoca _roundEndEmitter({winnerMove, winnerId, result})_
-        -   si `result !== "noResult" & rounds.getCurrentRound() === rounds.getTotalRounds()` entonces se invoca _gameEndEmitter({winnerMove, winnerId, result})_
 
 -   **updatePlayerAvatarURL** _fn_: responsable de agregar las urls de los avatares a los jugadores. handler de [responseEvent](../avatarProvider.md#eventos)
 
 ## Implementaci√≥n
+
+-   **moveEventHandler** _fn_: handler de [moveEvent](./game.md#eventos) para los siguientes casos:
+
+    -   Si `data.type === "valid"` entonces:
+
+        -   si [turns.getCurrentTurn()](./turns.md#interfaz) < 5 (_5 es la cantidad minima de turnos para que pueda haber un resultado_) entonces se invoca _nextPlayerEmitter_
+
+        -   si [turns.getCurrentTurn()](./turns.md#interfaz) >= 5 (_5 es la cantidad minima de turnos para que pueda haber un resultado_) entonces se obtiene `{winnerMove, winnerId: players.getPlayerByToken(winnerToken), result} = board.getStatus()`:
+
+            -   si `result === "noResult"` entonces se invoca _nextPlayerEmitter_
+
+            -   si `result !== "noResult" & rounds.getCurrentRound() < rounds.getTotalRounds()` entonces se invoca _roundEndEmitter({winnerMove, winnerId, result})_
+
+            -   si `result !== "noResult" & rounds.getCurrentRound() === rounds.getTotalRounds()` entonces se invoca _gameEndEmitter({winnerMove, winnerId, result})_

@@ -33,7 +33,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   **getTokenId** (_token: string_) _fn_: retorna _token1_ si `token === "x"`, _token2_ si `token === "0"` o `undefined` si no se cumple lo anterior
     -   Invoca _tokenElement_ = [elements.loadElement](./elements.md#interfaz)({getTokenId(token), cell})
     -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "smoothPopOut", target: tokenElement}])
-    -   Aplica a la promesa anterior `promise.then((data) => {dropTokenEvent.emit({{eventName: "dropTokenEvent", targetCell: {value: token, id: cell.id}})})`
 
 
     -   **list**

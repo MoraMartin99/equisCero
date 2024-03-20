@@ -65,7 +65,6 @@ data:{eventName:string, status: {currentRound: string, totalRounds: string, winn
 -   **[actions.updatePlayerAvatarURL](./actions.md#interfaz)** _fn_
 -   **[players.getNamePattern](./players.md#interfaz)** _fn_
 -   **[players.getNamePattern](./players.md#interfaz)** _fn_
--   **dropTokenEventHandler** _fn_: [actions.dropTokenEventHandler](./actions.md#interfaz)
 
 ## Implementación
 

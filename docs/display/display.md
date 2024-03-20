@@ -65,15 +65,6 @@ Manejar la vista
     -   restartGame
     -   goHome
 
-    -   **dropTokenEvent**: activado cuando se inserta un _token_ en el _board_. Instancia de [CustomEvent](../customEvent.md)
-
-        ```
-        data:{eventName:string, targetCell: {value: string, id: string}}
-        ```
-
-        -   _targetCell.value_ puede ser _undefined_ o `player.token`
-        -   _targetCell.value_ es `cell.id` quien a su vez representa el _id_ de _HTMLElement_
-
 -   **submitEvent**: activado cuando se requiera enviar información de una estructura tipo de formulario como los _sessionForms_. Instancia de [CustomEvent](../customEvent.md)
 
     ```
