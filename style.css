@@ -839,12 +839,11 @@ main {
     row-gap: var(--playersContainerPlayerCardGap);
     justify-items: center;
     font-size: inherit;
-    transition: var(--currentPlayerTransitionDeclaration);
+    transition: inherit;
 }
 
 #playersContainer .currentPlayer .playerCard {
     row-gap: var(--currentPlayerPlayersContainerColumnGap);
-    transition: var(--currentPlayerTransitionDeclaration);
 }
 
 #playersContainer .avatarImage {
@@ -853,7 +852,7 @@ main {
     width: var(--playersContainerAvatarImageSize);
     height: var(--playersContainerAvatarImageSize);
     filter: brightness(var(--iconContainerBrightness));
-    transition: var(--currentPlayerTransitionDeclaration);
+    transition: inherit;
 }
 
 #playersContainer .currentPlayer .avatarImage {
@@ -870,7 +869,7 @@ main {
     font-weight: 700;
     line-height: 1;
     color: var(--colorPrimary500);
-    transition: var(--currentPlayerTransitionDeclaration);
+    transition: inherit;
 }
 
 #playersContainer .currentPlayer .playerName {
