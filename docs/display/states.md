@@ -7,12 +7,16 @@ Responsable de almacenar, aplicar y eliminar los estados como _class_, _transiti
 ## Interfaz
 
 -   **setStateList** (_stateList: array, hasToWait: boolean_) _async fn_: si _hasToWait_ es _true_ (valor por default) entonces se invoca y retorna [stateQueue.add](./states/stateQueue.md#interfaz)(_stateList_) y si es _false_ se invoca y retorna [applyStateList](#implementación)(_stateList_).
+
     ```
     stateList = [stateChange:{stateId: string, target: HTMLElement}...]
     ```
--   **removeState** (_element: HTMLElement, stateId: string_) _fn_: responsable de eliminar un estado
--   **setMaxTolerableTime** (_seconds_) _fn_: responsable de establecer el _maxTolerableTime_
--   [**stateQueue.isIdle**](./states/stateQueue.md#interfaz) _boolean_
+
+-   **removeState** (_stateId: string, element: HTMLElement _) _fn_: responsable de eliminar de _element_ las clases que componen el _stateId_
+
+-   **setMaxTolerableTime** (_seconds: number_) _fn_: responsable de establecer el _maxTolerableTime_
+
+-   **isIdle** _fn_: [**stateQueue.isIdle**](./states/stateQueue.md#interfaz)
 
 ## Implementación
 
