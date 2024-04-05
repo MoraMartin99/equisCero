@@ -34,6 +34,7 @@ stateId:{stateId: string, type: string, classList: array, animationName: string 
 -   **vanish**: transición aplicada a una celda invalida para desvanecer el efecto de _invalidMove_
 -   **smoothPopOut**: transición que se aplica cuando se insertan los tokens
 -   **currentPlayer**: transición que se aplica en el cambio de turno
+-   **playing**: estado que se aplica al _board_ cuando se desea registrar y emitir [interactionEvent](../display.md#eventos) de tipo `selectCell`:
 -   **drawResult**: transición que se aplica al _board_ cuando hay un empate
 -   **player1Cell**: transición que se aplica a la _cell_ cuando forma parte de _winnerMove_ y _winnerId_ es _player1_
 -   **player2Cell**: transición que se aplica a la _cell_ cuando forma parte de _winnerMove_ y _winnerId_ es _player2_

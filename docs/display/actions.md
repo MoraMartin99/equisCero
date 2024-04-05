@@ -32,7 +32,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
         1. [carrousel.previousScreen](./carrousel.md#interfaz)
         2. **nextScreenHandler** (_target: HTMLElement_) _fn_: Intenta obtener el _form_ mas cercano utilizando [node.closest](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest), si _form_ existe se verifica si [form.checkValidity()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/checkValidity) es `true`, se invoca _submitSessionForm_ y se invoca [carrousel.nextScreen](./carrousel.md#interfaz). Si _form_ no existe se invoca [carrousel.nextScreen](./carrousel.md#interfaz)
-        3. **selectCell** (_target: HTMLElement_) _fn_: obtiene el _.cell_ mas cercano utilizando [node.closest](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest), verifica si [state.isIdle](./states.md#interfaz) es _true_ y emite un [interactionEvent](./display.md) de `type = "selectCell"`
+        3. **selectCell** (_target: HTMLElement_) _fn_: obtiene el _.cell_ mas cercano utilizando [node.closest](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest), verifica si _board_ tiene la clase _playing_ y emite un [interactionEvent](./display.md) de `type = "selectCell"`
         4. **pauseMenuVisibilityHandler** (_target: HTMLElement_) _fn_: obtiene el _.pauseButton_ o _.playButton_ mas cercano emite un [interactionEvent](./display.md) de `type = "showMenu" o "hideMenu, menu = #pauseMenuContainer"` según corresponda
         5. **showConfirmationMenu** _fn_: emite un [interactionEvent](./display.md) de `type = "showMenu", menu = #confirmationMenuContainer`
         6. **confirmationButtonHandler** (_target: HTMLElement_) _fn_: obtiene el _confirmationButton_ mas cercano, si es _cancelButton_ oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`, si es _acceptButton_ verifica si _pauseMenuContainer_ esta visible, extrae cual de los _pauseOptionLabel_ esta seleccionado y emite su respectivo [interactionEvent](display.md#eventos) y oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`
@@ -61,12 +61,16 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 -   **moveEventHandler** (_data: object_) _fn_: handler de [moveEvent](../game/game.md#eventos) para los siguientes casos:
 
     -   si `data.type === "invalid"` entonces se invoca `setInvalidCell(document.querySelector(targetCell.id))`
-    -   si `data.type === "valid"` entonces se invoca `dropToken(document.querySelector(targetCell.id), targetCell.value)`
+    -   si `data.type === "valid"` entonces:
+        -   Se invoca _disableCellSelection_
+        -   Se invoca `dropToken(document.querySelector(targetCell.id), targetCell.value)`
 
 -   **nextPlayerEventHandler** (_data: object_) _fn_: responsable de animar el cambio de turno:
 
+    -   Invoca para cada _stateId_ dentro de `[]`
     -   Invoca _setNoCurrentPlayer_
     -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayers", target: document.querySelector(\`.playerCardContainer .${data.currentPlayer.id}\`)}])
+    -   Si `data.currentPlayer.role !== "CPU"` entonces se encadenara la promesa anterior `promise.then(()=>{enableCellSelection()})`
 
 -   **roundEndEventHandler** (_data: object_) _fn_: handler de [roundEndEvent](../game/game.md#eventos) encargado de:
 
@@ -99,7 +103,22 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Oculta todos los _menuContainer_ usando _hideElementList_
     -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
 
--   **resetBoard** _fn_: regresa el _board_ a su estado inicial
+-   **enableCellSelection** _fn_: activa en el _board_ la capacidad de registrar y emitir un [interactionEvent](./display.md#eventos) de tipo `selectCell`:
+
+    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "playing", target: board}], false)
+
+-   **disableCellSelection** _fn_: desactiva en el _board_ la capacidad de registrar y emitir un [interactionEvent](./display.md#eventos) de tipo `selectCell`:
+
+    -   Invoca [states.removeState](./states.md#interfaz)("playing", board)
+
+
+-   **resetBoard** _fn_: regresa el _board_ a su estado inicial:
+
+    -   Invoca _disableCellSelection_
+    -   Invoca para cada _item_ de `["drawResult", "player1Turn", "player2Turn"]` [states.removeState](./states.md#interfaz)(item, board)
+    -   Invoca para cada _cell_ de `[cell1, ...]`:
+        -   Invoca [states.removeState](./states.md#interfaz)("invalidMove", cell)
+        -   Invoca [elements.removeElementList](./elements.md#interfaz)(Array.from(cell.querySelector(".token")))
 
 -   **resetFormList** (_[form1: HTMLElement, ...]_): resetear un _array_ de formularios usando [form.reset()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset) y elimina la clase _activeTextInput_ de cualquier _input[type=text]_ que este en el formulario usando [elements.updateElement](./elements.md#interfaz)
 

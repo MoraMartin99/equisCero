@@ -16,8 +16,6 @@ Responsable de almacenar, aplicar y eliminar los estados como _class_, _transiti
 
 -   **setMaxTolerableTime** (_seconds: number_) _fn_: responsable de establecer el _maxTolerableTime_
 
--   **isIdle** _fn_: [**stateQueue.isIdle**](./states/stateQueue.md#interfaz)
-
 ## Implementación
 
 -   [**library**](./states/library.md) _module_: responsable de almacenar los estados validos
