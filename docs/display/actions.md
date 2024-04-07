@@ -16,27 +16,27 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
         -   Invoca _SetPlayerNameInputListPattern(pattern)_
         -   Invoca _setMaxTolerableTime_ [states.setMaxTolerableTime](./states.md#interfaz)(maxTolerableTime)
 
+    -   Invoca [board.init](./board.md#interfaz)
+
     -   **bodyClickHandler** (_e: object_) _fn_: handler para manejar los _click events_ en _body_. Define una serie de _arrays_ de elementos y su correspondiente handler, cuando se detecta que _e.target_ esta incluido dentro de la lista se invoca al handler usando [utilities.executeIfMatch](../utilities.md#interfaz):
 
         -   **list**
 
         1.  **previousScreenTriggersList** _array_: contiene todos los elementos que pretenden activar un [navigationEvent](./display.md#eventos) con `data.type === "previous"` como por ejemplo los _.navigationButton.previous_
         2.  **nextScreenTriggersList** _array_: contiene todos los elementos que pretenden activar un [navigationEvent](./display.md#eventos) con `data.type === "next"` como por ejemplo los _.gameTypeLabel, .navigationButton.next_
-        3.  **cellsList** _array_: contiene todos los elementos _.cell_ y sus descendientes
-        4.  **pauseMenuVisibilityButtonList** _array_: contiene todo los elementos _.pauseButton_ y _.playButton_
-        5.  **pauseOptionLabelList** _array_: contiene todo los elementos _.pauseOptionLabel_
-        6.  **confirmationButtonList** _array_: contiene todo los elementos _.confirmationButton_
-        7.  **resultButtonList** _array_: contiene todo los elementos _.resultButton_
+        3.  **pauseMenuVisibilityButtonList** _array_: contiene todo los elementos _.pauseButton_ y _.playButton_
+        4.  **pauseOptionLabelList** _array_: contiene todo los elementos _.pauseOptionLabel_
+        5.  **confirmationButtonList** _array_: contiene todo los elementos _.confirmationButton_
+        6.  **resultButtonList** _array_: contiene todo los elementos _.resultButton_
 
         -   **callback**
 
         1. [carrousel.previousScreen](./carrousel.md#interfaz)
         2. **nextScreenHandler** (_target: HTMLElement_) _fn_: Intenta obtener el _form_ mas cercano utilizando [node.closest](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest), si _form_ existe se verifica si [form.checkValidity()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/checkValidity) es `true`, se invoca _submitSessionForm_ y se invoca [carrousel.nextScreen](./carrousel.md#interfaz). Si _form_ no existe se invoca [carrousel.nextScreen](./carrousel.md#interfaz)
-        3. **selectCell** (_target: HTMLElement_) _fn_: obtiene el _.cell_ mas cercano utilizando [node.closest](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest), verifica si _board_ tiene la clase _playing_ y emite un [interactionEvent](./display.md) de `type = "selectCell"`
-        4. **pauseMenuVisibilityHandler** (_target: HTMLElement_) _fn_: obtiene el _.pauseButton_ o _.playButton_ mas cercano emite un [interactionEvent](./display.md) de `type = "showMenu" o "hideMenu, menu = #pauseMenuContainer"` según corresponda
-        5. **showConfirmationMenu** _fn_: emite un [interactionEvent](./display.md) de `type = "showMenu", menu = #confirmationMenuContainer`
-        6. **confirmationButtonHandler** (_target: HTMLElement_) _fn_: obtiene el _confirmationButton_ mas cercano, si es _cancelButton_ oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`, si es _acceptButton_ verifica si _pauseMenuContainer_ esta visible, extrae cual de los _pauseOptionLabel_ esta seleccionado y emite su respectivo [interactionEvent](display.md#eventos) y oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`
-        7. **emitInteractionEventFromButton** (_target: HTMLElement_) _fn_: obtiene el _.resultButton_ mas cercano y emite su respectivo [interactionEvent](display.md#eventos)
+        3. **pauseMenuVisibilityHandler** (_target: HTMLElement_) _fn_: obtiene el _.pauseButton_ o _.playButton_ mas cercano emite un [interactionEvent](./display.md) de `type = "showMenu" o "hideMenu, menu = #pauseMenuContainer"` según corresponda
+        4. **showConfirmationMenu** _fn_: emite un [interactionEvent](./display.md) de `type = "showMenu", menu = #confirmationMenuContainer`
+        5. **confirmationButtonHandler** (_target: HTMLElement_) _fn_: obtiene el _confirmationButton_ mas cercano, si es _cancelButton_ oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`, si es _acceptButton_ verifica si _pauseMenuContainer_ esta visible, extrae cual de los _pauseOptionLabel_ esta seleccionado y emite su respectivo [interactionEvent](display.md#eventos) y oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`
+        6. **emitInteractionEventFromButton** (_target: HTMLElement_) _fn_: obtiene el _.resultButton_ mas cercano y emite su respectivo [interactionEvent](display.md#eventos)
 
         -   **matchCallback**: `matchCallback = (value, listItem) => listItem.contains(value.target)`
 
@@ -60,10 +60,10 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **moveEventHandler** (_data: object_) _fn_: handler de [moveEvent](../game/game.md#eventos) para los siguientes casos:
 
-    -   si `data.type === "invalid"` entonces se invoca `setInvalidCell(document.querySelector(targetCell.id))`
+    -   si `data.type === "invalid"` entonces se invoca `board.setInvalidCell(document.querySelector(targetCell.id))`
     -   si `data.type === "valid"` entonces:
-        -   Se invoca _disableCellSelection_
-        -   Se invoca `dropToken(document.querySelector(targetCell.id), targetCell.value)`
+        -   Se invoca [board.disableCellSelection](./board.md#interfaz)
+        -   Se invoca `board.dropToken(document.querySelector(targetCell.id), targetCell.value)`
 
 -   **nextPlayerEventHandler** (_data: object_) _fn_: responsable de animar el cambio de turno:
 
@@ -74,13 +74,13 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **roundEndEventHandler** (_data: object_) _fn_: handler de [roundEndEvent](../game/game.md#eventos) encargado de:
 
-    -   Invocar _animateBoardResult(winnerMove, winnerId, result)_
+    -   Invocar [board.animateResult](./board.md#interfaz)(winnerMove, winnerId, result)
     -   Invocar _animateRoundIndicator(currentRound, "player1Round" o "player2Round" o "drawRound")_
     -   Invocar _animateRoundIndicator.then(showMenu(#resultMenu, {...}, setResultMenu))_
 
 -   **gameEndEventHandler** (_data: object_) _fn_: handler de [gameEndEvent](../game/game.md#eventos) encargado de:
 
-    -   Invocar _animateBoardResult(winnerMove, winnerId, result)_
+    -   Invocar [board.animateResult](./board.md#interfaz)(winnerMove, winnerId, result)
     -   Invocar _animateRoundIndicator(currentRound, "player1Round" o "player2Round" o "drawRound")_
     -   Invocar _animateRoundIndicator.then(showMenu(#resultMenu, {...}, setResultMenu))_
 
@@ -96,29 +96,12 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **reset**: regresa la aplicación al estado inicial:
 
-    -   Invoca _resetBoard_
+    -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _resetRoundIndicator_
     -   Invoca _resetFormList([sessionForm1, ....])_
     -   Invoca _resetPlayerCardContainer_
     -   Oculta todos los _menuContainer_ usando _hideElementList_
     -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
-
--   **enableCellSelection** _fn_: activa en el _board_ la capacidad de registrar y emitir un [interactionEvent](./display.md#eventos) de tipo `selectCell`:
-
-    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "playing", target: board}], false)
-
--   **disableCellSelection** _fn_: desactiva en el _board_ la capacidad de registrar y emitir un [interactionEvent](./display.md#eventos) de tipo `selectCell`:
-
-    -   Invoca [states.removeState](./states.md#interfaz)("playing", board)
-
-
--   **resetBoard** _fn_: regresa el _board_ a su estado inicial:
-
-    -   Invoca _disableCellSelection_
-    -   Invoca para cada _item_ de `["drawResult", "player1Turn", "player2Turn"]` [states.removeState](./states.md#interfaz)(item, board)
-    -   Invoca para cada _cell_ de `[cell1, ...]`:
-        -   Invoca [states.removeState](./states.md#interfaz)("invalidMove", cell)
-        -   Invoca [elements.removeElementList](./elements.md#interfaz)(Array.from(cell.querySelector(".token")))
 
 -   **resetFormList** (_[form1: HTMLElement, ...]_): resetear un _array_ de formularios usando [form.reset()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset) y elimina la clase _activeTextInput_ de cualquier _input[type=text]_ que este en el formulario usando [elements.updateElement](./elements.md#interfaz)
 
@@ -189,24 +172,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **hideElementList** (_[element: HTMLElement, ...]_) _fn_: agrega la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {addList: ["hide"]}})
 
--   **setInvalidCell** (_cell: HTMLElement_) _fn_: configura una celda como invalida:
-
-    -   elimina las clases residuales _"invalidMove", "vanish"_ usando [states.removeState(statId, cell)](./states.md#interfaz)
-    -   invoca [states.setStateList](./states.md#interfaz)([{stateId: "invalidMove", target: cell}, {stateId: "vanish", target: cell}], false)
-    -   le añade un `.finally` a la promesa anterior para eliminar las clases residuales _"invalidMove", "vanish"_
-
--   **dropToken** (_cell: HTMLElement, token: string_) _fn_: Inserta en _cell_ el _token_ correspondiente:
-
-    -   **getTokenId** (_token: string_) _fn_: retorna _token1_ si `token === "x"`, _token2_ si `token === "0"` o `undefined` si no se cumple lo anterior
-    -   Invoca _tokenElement_ = [elements.loadElement](./elements.md#interfaz)({getTokenId(token), cell})
-    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "smoothPopOut", target: tokenElement}])
-
--   **animateBoardResult** (_winnerMove: object, winnerId: string, result: string_) _fn_: anima el tablero según el resultado proporcionado:
-
-    -   Elimina las clases residuales _"invalidMove", "vanish"_ usando [states.removeState(statId, cell)](./states.md#interfaz) de todas las _.cell_
-    -   Si `result === "draw"` entonces se invoca y retorna [states.setStateList](./states.md#interfaz)([{stateId: "drawResult", target: document.querySelector("#board")}])
-    -   Si `result === "win"` entonces para cada _cell_ dentro de _winnerMove_ (ordenado en orden alfabético) se invocara [states.setStateList](./states.md#interfaz)([{stateId: "player1Cell" o "player2Cell", target: cell}]) y se retornara la ultima promesa asociada a _.cell_
-
 -   **animateRoundIndicator** (_round: number, stateId: string, hasToWait: boolean_) _fn_: anima el _roundIndicator_ según el _stateId_ y retorna una promesa usando [states.setStateList](./states.md#interfaz).
 
 -   **setResultMenu** (_{resultMenu: HTMLElement, eventName:string, currentRound: number, winnerId: string, result: string, players: object }_) _fn_: responsable de configurar _resultMenu_:
@@ -244,21 +209,21 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 -   **nextRoundHandler** _fn_: responsable de preparar la vista para empezar el siguiente round:
 
     -   Invoca _resetPlayerCardContainer_
-    -   Invoca _resetBoard_
+    -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _hideElementList([...listaMenuContainerVisibles])_
     -   Invoca _animateRoundIndicator(nextRound, "currentRound", false)_
 
 -   **restartRoundHandler** _fn_: responsable de preparar la vista para reiniciar el round:
 
     -   Invoca _resetPlayerCardContainer_
-    -   Invoca _resetBoard_
+    -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _hideElementList([#confirmationMenuContainer, #pauseMenuContainer])_
 
 -   **restartGameHandler** _fn_: responsable de preparar la vista para reiniciar el juego:
 
     -   Para cada _round1Indicator_ se invoca [elements.updateElement](./elements.md#interfaz)(element, {classes: {removeList: ["player1", "player2", "draw", "current"]}})
     -   Invoca _resetPlayerCardContainer_
-    -   Invoca _resetBoard_
+    -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _hideElementList([#resultMenu, #confirmationMenuContainer, #pauseMenuContainer])_
     -   Invoca _animateRoundIndicator(1, "currentRound", false)_
 

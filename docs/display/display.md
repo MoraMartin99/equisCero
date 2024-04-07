@@ -75,3 +75,4 @@ Manejar la vista
 -   **[states](./states.md)** _module_
 -   **[carrousel](./carrousel.md)** _module_
 -   **[actions](./actions.md)** _module_
+-   **[board](./board.md)** _module_
