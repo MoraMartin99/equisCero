@@ -99,7 +99,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca _resetBoard_
     -   Invoca _resetRoundIndicator_
     -   Invoca _resetFormList([sessionForm1, ....])_
-    -   Invoca _setNoCurrentPlayer_
+    -   Invoca _resetPlayerCardContainer_
     -   Oculta todos los _menuContainer_ usando _hideElementList_
     -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
 
@@ -177,8 +177,12 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **setNoCurrentPlayer** _fn_: responsable de configurar un estado neutral en _playerCardContainer_:
 
-    -   Para cada _playerCardContainer_ invoca [elements.updateElement](./elements.md#interfaz)(playerCardContainer, {styles: {addList: [{propertyName: "transitionDuration", value: "0s"}]}})
     -   Para cada _playerCardContainer_ invoca [states.removeState](./states.md#interfaz)("currentPlayer", playerCardContainer)
+
+-   **resetPlayerCardContainer** _fn_: responsable de regresar a los _playerCardContainer_ a su estado inicial. La diferencia con _setNoCurrentPlayer_ es que aplica un cambio instantáneo, sin animaciones o transiciones:
+
+    -   Para cada _playerCardContainer_ invoca [elements.updateElement](./elements.md#interfaz)(playerCardContainer, {styles: {addList: [{propertyName: "transitionDuration", value: "0s"}]}})
+    -   Invoca _setNoCurrentPlayer_
     -   Para cada _playerCardContainer_ invoca [elements.updateElement](./elements.md#interfaz)(playerCardContainer, {styles: {removeList: ["transitionDuration"]}})
 
 -   **showElementList** (_[element: HTMLElement, ...]_) _fn_: remueve la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {removeList: ["hide"]}})
@@ -239,21 +243,21 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **nextRoundHandler** _fn_: responsable de preparar la vista para empezar el siguiente round:
 
-    -   Invoca _setNoCurrentPlayer_
+    -   Invoca _resetPlayerCardContainer_
     -   Invoca _resetBoard_
     -   Invoca _hideElementList([...listaMenuContainerVisibles])_
     -   Invoca _animateRoundIndicator(nextRound, "currentRound", false)_
 
 -   **restartRoundHandler** _fn_: responsable de preparar la vista para reiniciar el round:
 
-    -   Invoca _setNoCurrentPlayer_
+    -   Invoca _resetPlayerCardContainer_
     -   Invoca _resetBoard_
     -   Invoca _hideElementList([#confirmationMenuContainer, #pauseMenuContainer])_
 
 -   **restartGameHandler** _fn_: responsable de preparar la vista para reiniciar el juego:
 
     -   Para cada _round1Indicator_ se invoca [elements.updateElement](./elements.md#interfaz)(element, {classes: {removeList: ["player1", "player2", "draw", "current"]}})
-    -   Invoca _setNoCurrentPlayer_
+    -   Invoca _resetPlayerCardContainer_
     -   Invoca _resetBoard_
     -   Invoca _hideElementList([#resultMenu, #confirmationMenuContainer, #pauseMenuContainer])_
     -   Invoca _animateRoundIndicator(1, "currentRound", false)_
