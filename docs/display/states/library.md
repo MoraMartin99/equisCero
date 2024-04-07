@@ -36,6 +36,8 @@ stateId:{stateId: string, type: string, classList: array, animationName: string 
 -   **currentPlayer**: transición que se aplica en el cambio de turno
 -   **playing**: estado que se aplica al _board_ cuando se desea registrar y emitir [interactionEvent](../display.md#eventos) de tipo `selectCell`:
 -   **drawResult**: transición que se aplica al _board_ cuando hay un empate
+-   **player1Turn**: transición que se aplica al _board_ cuando ocurre un [nextPlayerEvent](../../game/game.md#eventos) con un `currentPlayer.id === "player1"`
+-   **player2Turn**: transición que se aplica al _board_ cuando ocurre un [nextPlayerEvent](../../game/game.md#eventos) con un `currentPlayer.id === "player2"`
 -   **player1Cell**: transición que se aplica a la _cell_ cuando forma parte de _winnerMove_ y _winnerId_ es _player1_
 -   **player2Cell**: transición que se aplica a la _cell_ cuando forma parte de _winnerMove_ y _winnerId_ es _player2_
 -   **player1Round**: transición que se aplica a _roundIndicator_ cuando _player1_ gano el round
