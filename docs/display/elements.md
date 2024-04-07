@@ -20,11 +20,14 @@ styles: {addList: [{propertyName: string, value: string}...], removeList: [prope
 ```
 
 -   **loadElement** (_{templateId: string, parentElement: HTMLElement, settings: object, order: number}_) _fn_: responsable de crear elementos basados en templates de [**library**](./elements/library.md) y retornarlos:
+
     -   Obtiene el _template_ asociado a _templateId_ usando [library.getItem(templateId)](../library.md#interfaz)
     -   Invoca [template.setTemplate(settings)](./elements/library.md) para configurar _template.change_
     -   Crea un elemento HTML usando _createElement(template.HTMLTag)_
     -   Configura el elemento usando _updateElement_
     -   Inserta el elemento usando _appendElement_
+
+-   **removeElementList** (_elementList: [element: HTMLElement, ...]_) _fn_: Remueve del dom todos los _element_ de _elementList_
 
 ## Implementación
 
