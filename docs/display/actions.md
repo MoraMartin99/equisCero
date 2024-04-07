@@ -65,12 +65,14 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
         -   Se invoca [board.disableCellSelection](./board.md#interfaz)
         -   Se invoca `board.dropToken(document.querySelector(targetCell.id), targetCell.value)`
 
--   **nextPlayerEventHandler** (_data: object_) _fn_: responsable de animar el cambio de turno:
+-   **nextPlayerEventHandler** (_{eventName:string, currentPlayer: object}_) _fn_: responsable de animar el cambio de turno:
 
-    -   Invoca para cada _stateId_ dentro de `[]`
+    -   Invoca [board.resetBgColor](./board.md#interfaz)
     -   Invoca _setNoCurrentPlayer_
-    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayers", target: document.querySelector(\`.playerCardContainer .${data.currentPlayer.id}\`)}])
-    -   Si `data.currentPlayer.role !== "CPU"` entonces se encadenara la promesa anterior `promise.then(()=>{enableCellSelection()})`
+    -   Si `currentPlayer.id === "player1"` entonces `boardStateId = "player1Turn"`
+    -   Si `currentPlayer.id === "player2"` entonces `boardStateId = "player2Turn"`
+    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayer", target: document.querySelector(\`.playerCardContainer.${currentPlayer.id}\`)}, {stateId: boardStateId, target: [board.getBoard](./board.md#interfaz)}])
+    -   Si `currentPlayer.role !== "CPU"` entonces se encadenara la promesa anterior `promise.then(()=>{board.enableCellSelection()})`
 
 -   **roundEndEventHandler** (_data: object_) _fn_: handler de [roundEndEvent](../game/game.md#eventos) encargado de:
 
