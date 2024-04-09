@@ -77,3 +77,4 @@ Manejar la vista
 -   **[actions](./actions.md)** _module_
 -   **[board](./board.md)** _module_
 -   **[avatarImage](./avatarImage.md)** _class_
+-   **[playerCard](./playerCard.md)** _class_
