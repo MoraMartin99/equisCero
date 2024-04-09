@@ -16,8 +16,10 @@ playerCardContainer(element: HTMLElement)
 
 -   **reset** _fn_: regresa _element_ a su estado inicial:
 
-    -   [elements.updateElement](./elements.md)(playerName, {content: ""})
-    -   avatarImage.reset()
+    -   invoca [elements.updateElement](./elements.md#interfaz)(element, {styles: {addList: [{propertyName: "transitionDuration", value: "0s"}]}})
+    -   Invoca _setCard_({name: "", isCurrentPlayer: false})
+    -   Invoca _avatarImage_.reset()
+    -   invoca [elements.updateElement](./elements.md#interfaz)(element, {styles: {removeList: ["transitionDuration"]}})
 
 -   **setCard** (_{name: string, src: string, isCurrentPlayer: boolean}_): configura _element_:
 
