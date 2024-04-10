@@ -68,10 +68,10 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 -   **nextPlayerEventHandler** (_{eventName:string, currentPlayer: object}_) _fn_: responsable de animar el cambio de turno:
 
     -   Invoca [board.resetBgColor](./board.md#interfaz)
-    -   Invoca _setNoCurrentPlayer_
+    -   Invoca [playersContainer.setNoCurrentPlayer](./playersContainer.md#interfaz)
     -   Si `currentPlayer.id === "player1"` entonces `boardStateId = "player1Turn"`
     -   Si `currentPlayer.id === "player2"` entonces `boardStateId = "player2Turn"`
-    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayer", target: document.querySelector(\`.playerCardContainer.${currentPlayer.id}\`)}, {stateId: boardStateId, target: [board.getBoard](./board.md#interfaz)}])
+    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayer", target: [playersContainer.getCard(currentPlayer.id)](./playersContainer.md#interfaz)}, {stateId: boardStateId, target: [board.getBoard](./board.md#interfaz)}])
     -   Si `currentPlayer.role !== "CPU"` entonces se encadenara la promesa anterior `promise.then(()=>{board.enableCellSelection()})`
 
 -   **roundEndEventHandler** (_data: object_) _fn_: handler de [roundEndEvent](../game/game.md#eventos) encargado de:
@@ -86,9 +86,9 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invocar _animateRoundIndicator(currentRound, "player1Round" o "player2Round" o "drawRound")_
     -   Invocar _animateRoundIndicator.then(showMenu(#resultMenu, {...}, setResultMenu))_
 
--   **setGameScreen** (_{ player1: { id: "player1", name: string, src: string }, player2: { id: "player2", name: string, src: string }, totalRounds: Number }_) _fn_: Configura _playerCardContainer_ y _roundIndicatorContainer_:
+-   **setGameScreen** (_{ player1: { playerId: "player1", name: string, src: string }, player2: { playerId: "player2", name: string, src: string }, totalRounds: Number }_) _fn_: Configura _playerCardContainer_ y _roundIndicatorContainer_:
 
-    -   Para cada _player_ invoca _setPlayerCard_
+    -   [playersContainer.setCards](./playersContainer.md#interfaz)([player1, player2])
 
     ```
     For(i = 1; i === totalRounds; i++ ) elements.loadElement({templateId: "roundIndicator", parentElement: #roundIndicatorContainer, settings: {round: i}})
@@ -101,7 +101,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _resetRoundIndicator_
     -   Invoca _resetFormList([sessionForm1, ....])_
-    -   Invoca _resetPlayerCardContainer_
+    -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Oculta todos los _menuContainer_ usando _hideElementList_
     -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
 
@@ -110,12 +110,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 -   **resetRoundIndicator** _fn_: regresa _roundIndicatorContainer_ a su estado inicial, es decir sin _children_
 
 -   **resetResultMenu** (_resultMenu: HTMLElement_) _fn_: regresa _resultMenu_ a sus estado inicial. Elimina las clases _player1_, _player2_, _draw_ y _gameResult_ de _#resultMenu_, y elimina los descendientes de _#winnerAvatarContainer_, _#resultMessageContainer_ y _.resultButtonContainer_
-
--   **setPlayerCard** (_playerCard: HTMLElement, name: string: src: string_) _fn_: Configura _playerCard_:
-
-    -   Invoca [elements.updateElement](./elements.md#interfaz)(playerCard.querySelector("#playerName"), {content: name})
-
-    -   Invoca _updateImgListSrc_([{img: playerCard.querySelector(".avatarImage"), src}])
 
 -   **interactionEventHandler** (_data: object_) _fn_: handler de [interactionEvent](./display.md#interfaz) encargado de:
 
@@ -160,16 +154,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **updateImgListSrc** (_changeList: [{img: HTMLElement, src: string}, ...]_) _fn_: responsable de actualizar el _src_ de una lista de _img_ usando [elements.updateElement](./elements.md#interfaz)
 
--   **setNoCurrentPlayer** _fn_: responsable de configurar un estado neutral en _playerCardContainer_:
-
-    -   Para cada _playerCardContainer_ invoca [states.removeState](./states.md#interfaz)("currentPlayer", playerCardContainer)
-
--   **resetPlayerCardContainer** _fn_: responsable de regresar a los _playerCardContainer_ a su estado inicial. La diferencia con _setNoCurrentPlayer_ es que aplica un cambio instantáneo, sin animaciones o transiciones:
-
-    -   Para cada _playerCardContainer_ invoca [elements.updateElement](./elements.md#interfaz)(playerCardContainer, {styles: {addList: [{propertyName: "transitionDuration", value: "0s"}]}})
-    -   Invoca _setNoCurrentPlayer_
-    -   Para cada _playerCardContainer_ invoca [elements.updateElement](./elements.md#interfaz)(playerCardContainer, {styles: {removeList: ["transitionDuration"]}})
-
 -   **showElementList** (_[element: HTMLElement, ...]_) _fn_: remueve la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {removeList: ["hide"]}})
 
 -   **hideElementList** (_[element: HTMLElement, ...]_) _fn_: agrega la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {addList: ["hide"]}})
@@ -210,21 +194,21 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **nextRoundHandler** _fn_: responsable de preparar la vista para empezar el siguiente round:
 
-    -   Invoca _resetPlayerCardContainer_
+    -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _hideElementList([...listaMenuContainerVisibles])_
     -   Invoca _animateRoundIndicator(nextRound, "currentRound", false)_
 
 -   **restartRoundHandler** _fn_: responsable de preparar la vista para reiniciar el round:
 
-    -   Invoca _resetPlayerCardContainer_
+    -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _hideElementList([#confirmationMenuContainer, #pauseMenuContainer])_
 
 -   **restartGameHandler** _fn_: responsable de preparar la vista para reiniciar el juego:
 
     -   Para cada _round1Indicator_ se invoca [elements.updateElement](./elements.md#interfaz)(element, {classes: {removeList: ["player1", "player2", "draw", "current"]}})
-    -   Invoca _resetPlayerCardContainer_
+    -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca _hideElementList([#resultMenu, #confirmationMenuContainer, #pauseMenuContainer])_
     -   Invoca _animateRoundIndicator(1, "currentRound", false)_
