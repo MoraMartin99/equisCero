@@ -79,3 +79,4 @@ Manejar la vista
 -   **[avatarImage](./avatarImage.md)** _class_
 -   **[playerCardContainer](./playerCard.md)** _class_
 -   **[playersContainer](./playerCardContainer.md)** _module_
+-   **[roundIndicator](./roundIndicator.md)** _class_
