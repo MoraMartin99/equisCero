@@ -80,3 +80,4 @@ Manejar la vista
 -   **[playerCardContainer](./playerCard.md)** _class_
 -   **[playersContainer](./playerCardContainer.md)** _module_
 -   **[roundIndicator](./roundIndicator.md)** _class_
+-   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_
