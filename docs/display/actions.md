@@ -98,7 +98,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   si `eventName === "nextRound"` entonces de invoca _nextRoundHandler_
     -   si `eventName === "restartRound"` entonces se invoca _restartRoundHandler_
     -   si `eventName === "restartGame"` entonces se invoca _restartGameHandler_
-    -   si `eventName === "goHome"` entonces se invoca _reset_ y _carrousel.goTo(#homeScreen)_
+    -   si `eventName === "goHome"` entonces se invoca _reset_ y _carrousel.goTo("#homeScreen")_
 
 -   **navigationEventHandler** _fn_: handler de [navigationEvent](./display.md#interfaz) encargado de: al llegar a gameScreen hay que colorear el roundIndicator actual
 
@@ -108,10 +108,9 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
     -   Si `data.senderId === "homeMenu"` entonces se obtiene `{type} === data.fields.gameTypeRadio`:
 
-        -   Se remueve la clase _disable_ de todas las _screen_ usando [elements.updateElement](./elements.md#interfaz)
-        -   Si `type === "PVSP"` entonces se agrega la clase _disable_ a _difficultyScreen_ usando [elements.updateElement](./elements.md#interfaz)
-        -   Si `type === "PVSCPU"` entonces se agrega la clase _disable_ a _player2NameScreen_ usando [elements.updateElement](./elements.md#interfaz)
-
+        -   Invoca [carrousel.enableAllScreens](./carrousel.md#interfaz)
+        -   Si `type === "PVSP"` entonces [carrousel.disableScreen](./carrousel.md#interfaz)("#difficultyScreen")
+        -   Si `type === "PVSCPU"` entonces [carrousel.disableScreen](./carrousel.md#interfaz)("#player2NameScreen")
 
 -   **updateImgListSrc** (_changeList: [{img: HTMLElement, src: string}, ...]_) _fn_: responsable de actualizar el _src_ de una lista de _img_ usando [elements.updateElement](./elements.md#interfaz)
 
