@@ -1146,25 +1146,14 @@ footer {
     line-height: 1;
 }
 
-#pauseMenu .radioContainer {
+#pauseMenu .pauseOptionContainer {
     display: grid;
     grid-template-columns: max-content;
     grid-template-rows: repeat(3, max-content);
     row-gap: var(--pauseMenuButtonContainerRowGap);
 }
 
-/* #pauseMenu .pauseOptionButton {
-    font-size: var(--pauseMenuPauseOptionButtonFontSize);
-    display: flex;
-    column-gap: var(--pauseOptionButtonColumnGap);
-    background-color: inherit;
-    color: var(--colorSecondary700);
-    font-weight: 700;
-    line-height: 1;
-    align-items: center;
-} */
-
-#pauseMenu .pauseOptionLabel {
+#pauseMenu .pauseOptionButton {
     font-size: var(--pauseMenuPauseOptionButtonFontSize);
     display: flex;
     column-gap: var(--pauseOptionButtonColumnGap);

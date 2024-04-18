@@ -278,8 +278,8 @@
                         <div class="menuContainer">
                             <form action="" id="pauseMenu" class="overlayMenu">
                                 <p class="menuTitle">Pausa</p>
-                                <div class="radioContainer">
-                                    <label for="goHomeRadio" class="pauseOptionLabel goHomeLabel">
+                                <div class="pauseOptionContainer">
+                                    <button type="button" class="pauseOptionButton goHomeButton">
                                         Ir al Home
                                         <svg
                                             class="pauseOptionIcon"
@@ -295,9 +295,8 @@
                                                 />
                                             </g>
                                         </svg>
-                                        <input class="unstyledRadio" type="radio" name="pauseRadio" id="goHomeRadio" />
-                                    </label>
-                                    <label for="restartRoundRadio" class="pauseOptionLabel restartRoundLabel">
+                                    </button>
+                                    <button type="button" class="pauseOptionButton restartRoundButton">
                                         Reiniciar round
                                         <svg
                                             class="pauseOptionIcon"
@@ -313,9 +312,8 @@
                                                 />
                                             </g>
                                         </svg>
-                                        <input class="unstyledRadio" type="radio" name="pauseRadio" id="restartRoundRadio" />
-                                    </label>
-                                    <label for="restartGameRadio" class="pauseOptionLabel restartGameRadioLabel">
+                                    </button>
+                                    <button type="button" class="pauseOptionButton restartGameButton">
                                         Reiniciar juego
                                         <svg
                                             class="pauseOptionIcon"
@@ -331,8 +329,7 @@
                                                 />
                                             </g>
                                         </svg>
-                                        <input class="unstyledRadio" type="radio" name="pauseRadio" id="restartGameRadio" />
-                                    </label>
+                                    </button>
                                 </div>
                                 <button type="button" id="playButton">
                                     <svg
