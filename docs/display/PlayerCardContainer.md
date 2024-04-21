@@ -1,4 +1,4 @@
-# playerCardContainer _class_
+# PlayerCardContainer _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar un _playerCardContainer_
 ## Constructor
 
 ```
-playerCardContainer(element: HTMLElement)
+PlayerCardContainer(element: HTMLElement)
 ```
 
 ## Interfaz

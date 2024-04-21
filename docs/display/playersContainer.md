@@ -39,7 +39,7 @@ playersContainer(element: HTMLElement)
 
 -   **playerCardList** _array_: Lista que contiene todos los _playerCardContainer_:
 
-    `Array.from(element.querySelector(".playerCardContainer")).map((item)=>{new playerCardContainer(item)})`
+    `Array.from(element.querySelector(".playerCardContainer")).map((item)=>{new PlayerCardContainer(item)})`
 
 -   **getCardObject** (_playerId: string_) _fn_: regresa el _item_ de _playerCardList_ que coincide con _playerId_:
 
