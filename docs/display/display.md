@@ -81,7 +81,7 @@ Manejar la vista
 -   **[PlayerCardContainer](./PlayerCardContainer.md)** _class_
 -   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_
 -   **[RoundIndicator](./RoundIndicator.md)** _class_
--   **[sessionForm](./sessionForm.md)** _class_
+-   **[SessionForm](./SessionForm.md)** _class_
 -   **[homeSessionForm](./homeSessionForm.md)** _class_
 -   **[playerNameSessionForm](./playerNameSessionForm.md)** _class_
 -   **[difficultySessionForm](./difficultySessionForm.md)** _class_

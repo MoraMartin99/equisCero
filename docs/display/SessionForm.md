@@ -1,4 +1,4 @@
-# sessionForm _class_
+# SessionForm _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar un _sessionForm_ genérico
 ## Constructor
 
 ```
-sessionForm(element: HTMLElement)
+SessionForm(element: HTMLElement)
 ```
 
 ## Interfaz

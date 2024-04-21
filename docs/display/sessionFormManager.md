@@ -2,7 +2,7 @@
 
 ## Responsabilidad
 
-Representar un _wrapper_ para manipular las instancias de [sessionForm](./sessionForm.md) (_Incluidas sus subclases_)
+Representar un _wrapper_ para manipular las instancias de [SessionForm](./SessionForm.md) (_Incluidas sus subclases_)
 
 ## Interfaz
 

@@ -2,7 +2,7 @@
 
 ## Responsabilidad
 
-Representar los _sessionForm_ del _player1NameScreen y player2NameScreen_. **Esta clase extiende [sessionForm](./sessionForm.md)**
+Representar los _sessionForm_ del _player1NameScreen y player2NameScreen_. **Esta clase extiende [SessionForm](./SessionForm.md)**
 
 ## Constructor
 

@@ -2,7 +2,7 @@
 
 ## Responsabilidad
 
-Representar el _sessionForm_ del _home_. **Esta clase extiende [sessionForm](./sessionForm.md)**
+Representar el _sessionForm_ del _home_. **Esta clase extiende [SessionForm](./SessionForm.md)**
 
 ## Constructor
 

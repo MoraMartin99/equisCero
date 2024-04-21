@@ -2,7 +2,7 @@
 
 ## Responsabilidad
 
-Representar el _difficultySessionForm_ de _difficultyScreen_. **Esta clase extiende [sessionForm](./sessionForm.md)**
+Representar el _difficultySessionForm_ de _difficultyScreen_. **Esta clase extiende [SessionForm](./SessionForm.md)**
 
 ## Constructor
 
