@@ -32,6 +32,6 @@ playerCardContainer(element: HTMLElement)
 
 -   **element** _HTMLElement_
 
--   **avatarImage** _object_: _new [avatarImage](./avatarImage.md)(cardElement.querySelector(".avatarImage"))_
+-   **avatarImage** _object_: _new [AvatarImage](./AvatarImage.md)(cardElement.querySelector(".avatarImage"))_
 
 -   **playerName** _HTMLElement_: cardElement.querySelector(".playerName")

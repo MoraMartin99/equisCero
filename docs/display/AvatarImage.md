@@ -1,4 +1,4 @@
-# avatarImage _class_
+# AvatarImage _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar una _img_ que contiene un avatar
 ## Constructor
 
 ```
-avatarImage(element: HTMLElement)
+AvatarImage(element: HTMLElement)
 ```
 
 ## Interfaz
