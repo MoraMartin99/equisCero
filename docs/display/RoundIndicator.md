@@ -1,4 +1,4 @@
-# roundIndicator _class_
+# RoundIndicator _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar un _roundIndicator_
 ## Constructor
 
 ```
-roundIndicator(element: HTMLElement)
+RoundIndicator(element: HTMLElement)
 ```
 
 ## Interfaz

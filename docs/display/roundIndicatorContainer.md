@@ -23,7 +23,7 @@ roundIndicatorContainer(element: HTMLElement)
 
     ```
     For(currentRound = 1; currentRound === totalRounds; currentRound++ ) {
-        roundIndicator = new roundIndicator(elements.loadElement({templateId: "roundIndicator", parentElement: element, settings: {round: currentRound}}))
+        roundIndicator = new RoundIndicator(elements.loadElement({templateId: "roundIndicator", parentElement: element, settings: {round: currentRound}}))
         roundIndicatorList.push(roundIndicator)
     }
     ```
@@ -50,7 +50,7 @@ roundIndicatorContainer(element: HTMLElement)
 
 -   **element** _HTMLElement_
 
--   **roundIndicatorList** _array_: Lista que contiene los [roundIndicator](./roundIndicator.md)
+-   **roundIndicatorList** _array_: Lista que contiene los [RoundIndicator](./RoundIndicator.md)
 
 -   **getRoundIndicatorObject** (_round: number_) _fn_: retorna el _roundIndicator_ dentro de _roundIndicatorList_ que coincide con _round_ de la siguiente manera:
 

@@ -79,8 +79,8 @@ Manejar la vista
 -   **[avatarImage](./avatarImage.md)** _class_
 -   **[playersContainer](./playerCardContainer.md)** _module_
 -   **[PlayerCardContainer](./PlayerCardContainer.md)** _class_
--   **[roundIndicator](./roundIndicator.md)** _class_
 -   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_
+-   **[RoundIndicator](./RoundIndicator.md)** _class_
 -   **[sessionForm](./sessionForm.md)** _class_
 -   **[homeSessionForm](./homeSessionForm.md)** _class_
 -   **[playerNameSessionForm](./playerNameSessionForm.md)** _class_
