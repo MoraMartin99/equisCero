@@ -82,7 +82,7 @@ Manejar la vista
 -   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_
 -   **[RoundIndicator](./RoundIndicator.md)** _class_
 -   **[SessionForm](./SessionForm.md)** _class_
--   **[homeSessionForm](./homeSessionForm.md)** _class_
+-   **[HomeSessionForm](./HomeSessionForm.md)** _class_
 -   **[playerNameSessionForm](./playerNameSessionForm.md)** _class_
 -   **[difficultySessionForm](./difficultySessionForm.md)** _class_
 -   **[sessionFormManager](./sessionFormManager.md)** _module_

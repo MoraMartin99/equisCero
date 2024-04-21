@@ -1,4 +1,4 @@
-# homeSessionForm _class_
+# HomeSessionForm _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar el _sessionForm_ del _home_. **Esta clase extiende [SessionForm](./S
 ## Constructor
 
 ```
-homeSessionForm(element: HTMLElement)
+HomeSessionForm(element: HTMLElement)
 ```
 
 ## Interfaz
