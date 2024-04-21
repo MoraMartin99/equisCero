@@ -1,4 +1,4 @@
-# playerNameSessionForm _class_
+# PlayerNameSessionForm _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar los _sessionForm_ del _player1NameScreen y player2NameScreen_. **Est
 ## Constructor
 
 ```
-playerNameSessionForm(element: HTMLElement)
+PlayerNameSessionForm(element: HTMLElement)
 ```
 
 ## Interfaz
