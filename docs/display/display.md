@@ -84,5 +84,5 @@ Manejar la vista
 -   **[SessionForm](./SessionForm.md)** _class_
 -   **[HomeSessionForm](./HomeSessionForm.md)** _class_
 -   **[PlayerNameSessionForm](./PlayerNameSessionForm.md)** _class_
--   **[difficultySessionForm](./difficultySessionForm.md)** _class_
+-   **[DifficultySessionForm](./DifficultySessionForm.md)** _class_
 -   **[sessionFormManager](./sessionFormManager.md)** _module_

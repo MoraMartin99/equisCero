@@ -1,4 +1,4 @@
-# difficultySessionForm _class_
+# DifficultySessionForm _class_
 
 ## Responsabilidad
 
@@ -7,7 +7,7 @@ Representar el _difficultySessionForm_ de _difficultyScreen_. **Esta clase extie
 ## Constructor
 
 ```
-difficultySessionForm(element: HTMLElement)
+DifficultySessionForm(element: HTMLElement)
 ```
 
 ## Interfaz

@@ -25,4 +25,4 @@ Representar un _wrapper_ para manipular las instancias de [SessionForm](./Sessio
 
 ## Implementación
 
--   **formList** _array_: `[new HomeSessionForm(document.querySelector("#homeMenu")), new PlayerNameSessionForm(document.querySelector("#player1NameMenu")), new PlayerNameSessionForm(document.querySelector("#player2NameMenu")), new difficultySessionForm(document.querySelector("#difficultyMenu"))]`
+-   **formList** _array_: `[new HomeSessionForm(document.querySelector("#homeMenu")), new PlayerNameSessionForm(document.querySelector("#player1NameMenu")), new PlayerNameSessionForm(document.querySelector("#player2NameMenu")), new DifficultySessionForm(document.querySelector("#difficultyMenu"))]`
