@@ -21,14 +21,11 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
         -   **list**
 
         3.  **pauseMenuVisibilityButtonList** _array_: contiene todo los elementos _.pauseButton_ y _.playButton_
-        5.  **confirmationButtonList** _array_: contiene todo los elementos _.confirmationButton_
         6.  **resultButtonList** _array_: contiene todo los elementos _.resultButton_
 
         -   **callback**
 
         3. **pauseMenuVisibilityHandler** (_target: HTMLElement_) _fn_: obtiene el _.pauseButton_ o _.playButton_ mas cercano emite un [interactionEvent](./display.md) de `type = "showMenu" o "hideMenu, menu = #pauseMenuContainer"` según corresponda
-        4. **showConfirmationMenu** _fn_: emite un [interactionEvent](./display.md) de `type = "showMenu", menu = #confirmationMenuContainer`
-        5. **confirmationButtonHandler** (_target: HTMLElement_) _fn_: obtiene el _confirmationButton_ mas cercano, si es _cancelButton_ oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`, si es _acceptButton_ verifica si _pauseMenuContainer_ esta visible, extrae cual de los _pauseOptionLabel_ esta seleccionado y emite su respectivo [interactionEvent](display.md#eventos) y oculta _.confirmationMenuContainer_ emitiendo [interactionEvent](./display.md) de `type = "hideMenu", menu = #confirmationMenuContainer`
         6. **emitInteractionEventFromButton** (_target: HTMLElement_) _fn_: obtiene el _.resultButton_ mas cercano y emite su respectivo [interactionEvent](display.md#eventos)
 
         -   **matchCallback**: `matchCallback = (value, listItem) => listItem.contains(value.target)`
