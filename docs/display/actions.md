@@ -14,13 +14,13 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [sessionFormManager.init](./sessionFormManager.md#interfaz)(pattern)
     -   Invoca _setMaxTolerableTime_ [states.setMaxTolerableTime](./states.md#interfaz)(maxTolerableTime)
     -   Invoca [board.init](./board.md#interfaz)
+    -   Invoca [pauseMenu.init](./display.md#implementación)
 
     -   **bodyClickHandler** (_e: object_) _fn_: handler para manejar los _click events_ en _body_. Define una serie de _arrays_ de elementos y su correspondiente handler, cuando se detecta que _e.target_ esta incluido dentro de la lista se invoca al handler usando [utilities.executeIfMatch](../utilities.md#interfaz):
 
         -   **list**
 
         3.  **pauseMenuVisibilityButtonList** _array_: contiene todo los elementos _.pauseButton_ y _.playButton_
-        4.  **pauseOptionLabelList** _array_: contiene todo los elementos _.pauseOptionLabel_
         5.  **confirmationButtonList** _array_: contiene todo los elementos _.confirmationButton_
         6.  **resultButtonList** _array_: contiene todo los elementos _.resultButton_
 
@@ -86,15 +86,13 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [roundIndicatorContainer.reset](./roundIndicator.md#interfaz)
     -   Invoca [sessionFormManager.reset](./sessionFormManager.md#interfaz)
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
-    -   Oculta todos los _menuContainer_ usando _hideElementList_
+    -   Oculta los _menuContainer_ usando `[pauseMenu, resultMenu].forEach((item) => {item.hide})`
     -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
 
 -   **resetResultMenu** (_resultMenu: HTMLElement_) _fn_: regresa _resultMenu_ a sus estado inicial. Elimina las clases _player1_, _player2_, _draw_ y _gameResult_ de _#resultMenu_, y elimina los descendientes de _#winnerAvatarContainer_, _#resultMessageContainer_ y _.resultButtonContainer_
 
 -   **interactionEventHandler** (_data: object_) _fn_: handler de [interactionEvent](./display.md#interfaz) encargado de:
 
-    -   si `eventName === "showMenu"` entonces se invoca _showMenu(menu)_
-    -   si `eventName === "hideMenu"` entonces se invoca _hideElementList([menu])_
     -   si `eventName === "nextRound"` entonces de invoca _nextRoundHandler_
     -   si `eventName === "restartRound"` entonces se invoca _restartRoundHandler_
     -   si `eventName === "restartGame"` entonces se invoca _restartGameHandler_
@@ -113,8 +111,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
         -   Si `type === "PVSCPU"` entonces [carrousel.disableScreen](./carrousel.md#interfaz)("#player2NameScreen")
 
 -   **updateImgListSrc** (_changeList: [{img: HTMLElement, src: string}, ...]_) _fn_: responsable de actualizar el _src_ de una lista de _img_ usando [elements.updateElement](./elements.md#interfaz)
-
--   **showElementList** (_[element: HTMLElement, ...]_) _fn_: remueve la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {removeList: ["hide"]}})
 
 -   **hideElementList** (_[element: HTMLElement, ...]_) _fn_: agrega la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {addList: ["hide"]}})
 
@@ -145,11 +141,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
         -   Si `eventName === "roundEndEvent"` entonces [elements.loadElement](./elements.md#interfaz)({templateId: "roundEndResultButton", parentElement: #resultButtonContainer})
         -   Si `eventName === "gameEndEvent"` entonces [elements.loadElement](./elements.md#interfaz)({templateId: "gameEndResultButtons", parentElement: #resultButtonContainer})
 
--   **showMenu** (_menu:HTMLElement, settings: object, setter: fn_) _fn_: configura y muestra un menu:
-
-    -   Si `isObject(settings) === true && isFunction(setter)` entonces _setter(settings)_. _setter_ es el encargado de configurar _menu_ antes de mostrarlo en pantalla
-    -   Invoca _showElementList([menu])_
-
 -   **nextRoundHandler** _fn_: responsable de preparar la vista para empezar el siguiente round:
 
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
@@ -161,12 +152,12 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
-    -   Invoca _hideElementList([#confirmationMenuContainer, #pauseMenuContainer])_
+    -   Invoca [pauseMenu](./display.md#implementación).hide
 
 -   **restartGameHandler** _fn_: responsable de preparar la vista para reiniciar el juego:
 
     -   Invoca [roundIndicatorContainer.resetIndicatorsState](./roundIndicatorContainer.md#interfaz)
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
-    -   Invoca _hideElementList([#resultMenu, #confirmationMenuContainer, #pauseMenuContainer])_
+    -   Oculta los _menuContainer_ usando `[pauseMenu, resultMenu].forEach((item) => {item.hide})`
     -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(1, "currentRound")
