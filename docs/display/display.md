@@ -88,3 +88,5 @@ Manejar la vista
 -   **[sessionFormManager](./sessionFormManager.md)** _module_
 -   **pauseMenu** _object_: _new [PauseMenu](./PauseMenu.md)(document.querySelector(".pauseMenuContainer"), document.querySelector(".confirmationMenuContainer"))_
 -   **resultMenu** _object_: _new [ResultMenu](./ResultMenu.md)(document.querySelector(".resultMenuContainer"))_
+-   **gameScreenPauseButton** _object_: _new [PauseButton](./PauseButton.md)(document.querySelector("#gameScreen .pauseButton"))_
+-   **headerPauseButton** _object_: _new [PauseButton](./PauseButton.md)(document.querySelector("header .pauseButton"))_

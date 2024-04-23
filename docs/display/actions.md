@@ -16,19 +16,8 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [board.init](./board.md#interfaz)
     -   Invoca [pauseMenu.init](./display.md#implementación)
     -   Invoca [resultMenu.init](./display.md#implementación)
-
-    -   **bodyClickHandler** (_e: object_) _fn_: handler para manejar los _click events_ en _body_. Define una serie de _arrays_ de elementos y su correspondiente handler, cuando se detecta que _e.target_ esta incluido dentro de la lista se invoca al handler usando [utilities.executeIfMatch](../utilities.md#interfaz):
-
-        -   **list**
-
-        3.  **pauseMenuVisibilityButtonList** _array_: contiene todo los elementos _.pauseButton_ y _.playButton_
-
-        -   **callback**
-
-        3. **pauseMenuVisibilityHandler** (_target: HTMLElement_) _fn_: obtiene el _.pauseButton_ o _.playButton_ mas cercano emite un [interactionEvent](./display.md) de `type = "showMenu" o "hideMenu, menu = #pauseMenuContainer"` según corresponda
-
-        -   **matchCallback**: `matchCallback = (value, listItem) => listItem.contains(value.target)`
-
+    -   Invoca [gameScreenPauseButton.init](./display.md#implementación)
+    -   Invoca [headerPauseButton.init](./display.md#implementación)
     -   [interactionEvent](./display.md#eventos).subscribe(_interactionEventHandler_)
     -   [navigationEvent](./display.md#eventos).subscribe(_navigationEventHandler_)
     -   [submitEvent](./display.md#eventos).subscribe(_submitEventHandler_)
