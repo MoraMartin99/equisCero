@@ -87,3 +87,4 @@ Manejar la vista
 -   **[DifficultySessionForm](./DifficultySessionForm.md)** _class_
 -   **[sessionFormManager](./sessionFormManager.md)** _module_
 -   **pauseMenu** _object_: _new [PauseMenu](./PauseMenu.md)(document.querySelector(".pauseMenuContainer"), document.querySelector(".confirmationMenuContainer"))_
+-   **resultMenu** _object_: _new [ResultMenu](./ResultMenu.md)(document.querySelector(".resultMenuContainer"))_

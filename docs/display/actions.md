@@ -15,18 +15,17 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca _setMaxTolerableTime_ [states.setMaxTolerableTime](./states.md#interfaz)(maxTolerableTime)
     -   Invoca [board.init](./board.md#interfaz)
     -   Invoca [pauseMenu.init](./display.md#implementación)
+    -   Invoca [resultMenu.init](./display.md#implementación)
 
     -   **bodyClickHandler** (_e: object_) _fn_: handler para manejar los _click events_ en _body_. Define una serie de _arrays_ de elementos y su correspondiente handler, cuando se detecta que _e.target_ esta incluido dentro de la lista se invoca al handler usando [utilities.executeIfMatch](../utilities.md#interfaz):
 
         -   **list**
 
         3.  **pauseMenuVisibilityButtonList** _array_: contiene todo los elementos _.pauseButton_ y _.playButton_
-        6.  **resultButtonList** _array_: contiene todo los elementos _.resultButton_
 
         -   **callback**
 
         3. **pauseMenuVisibilityHandler** (_target: HTMLElement_) _fn_: obtiene el _.pauseButton_ o _.playButton_ mas cercano emite un [interactionEvent](./display.md) de `type = "showMenu" o "hideMenu, menu = #pauseMenuContainer"` según corresponda
-        6. **emitInteractionEventFromButton** (_target: HTMLElement_) _fn_: obtiene el _.resultButton_ mas cercano y emite su respectivo [interactionEvent](display.md#eventos)
 
         -   **matchCallback**: `matchCallback = (value, listItem) => listItem.contains(value.target)`
 
@@ -59,7 +58,12 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Si `result === "win"` entonces:
         -   Si `winnerId === "player1"` entonces `roundIndicatorState = "player1Round"`
         -   Si `winnerId === "player2"` entonces `roundIndicatorState = "player2Round"`
-    -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(currentRound, roundIndicatorState).then(showMenu(#resultMenu, {...}, setResultMenu))
+    -   ```
+        roundIndicatorContainer.setIndicatorState(currentRound, roundIndicatorState).then(() => {
+            resultMenu.setMenu({eventName, currentRound, winnerId, result, players})
+            resultMenu.show
+        })
+        ```
 
 -   **gameEndEventHandler** (_{eventName:string, currentRound: number, winnerMove: object, player1TotalWins: number, player2TotalWins: number, totalDraws: number, result: string, winnerId: string, players: object }_) _fn_: handler de [gameEndEvent](../game/game.md#eventos) encargado de:
 
@@ -68,7 +72,12 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Si `result === "win"` entonces:
         -   Si `winnerId === "player1"` entonces `roundIndicatorState = "player1Round"`
         -   Si `winnerId === "player2"` entonces `roundIndicatorState = "player2Round"`
-    -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(currentRound, roundIndicatorState).then(showMenu(#resultMenu, {...}, setResultMenu))
+    -   ```
+        roundIndicatorContainer.setIndicatorState(currentRound, roundIndicatorState).then(() => {
+            resultMenu.setMenu({eventName, currentRound, winnerId, result, players})
+            resultMenu.show
+        })
+        ```
 
 -   **setGameScreen** (_{ player1: { playerId: "player1", name: string, src: string }, player2: { playerId: "player2", name: string, src: string }, totalRounds: Number }_) _fn_: Configura _playerCardContainer_ y _roundIndicatorContainer_:
 
@@ -85,8 +94,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Oculta los _menuContainer_ usando `[pauseMenu, resultMenu].forEach((item) => {item.hide})`
     -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
-
--   **resetResultMenu** (_resultMenu: HTMLElement_) _fn_: regresa _resultMenu_ a sus estado inicial. Elimina las clases _player1_, _player2_, _draw_ y _gameResult_ de _#resultMenu_, y elimina los descendientes de _#winnerAvatarContainer_, _#resultMessageContainer_ y _.resultButtonContainer_
 
 -   **interactionEventHandler** (_data: object_) _fn_: handler de [interactionEvent](./display.md#interfaz) encargado de:
 
@@ -109,40 +116,11 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **updateImgListSrc** (_changeList: [{img: HTMLElement, src: string}, ...]_) _fn_: responsable de actualizar el _src_ de una lista de _img_ usando [elements.updateElement](./elements.md#interfaz)
 
--   **hideElementList** (_[element: HTMLElement, ...]_) _fn_: agrega la clase _hide_ de _element_ usando [elements.updateElement](./elements.md#interfaz)(element, {classes: {addList: ["hide"]}})
-
--   **setResultMenu** (_{resultMenu: HTMLElement, eventName:string, currentRound: number, winnerId: string, result: string, players: object }_) _fn_: responsable de configurar _resultMenu_:
-
-    -   Invoca _resetResultMenu(resultMenu)_
-
-    -   **setMenuClasses** (_eventName: string, winnerId: string, result: string_) _fn_:
-
-        -   Si `winnerId === "player1"` entonces [elements.updateElement](./elements.md#interfaz)(resultMenu, {classes: {addList: [player1]}})
-        -   Si `winnerId === "player2"` entonces [elements.updateElement](./elements.md#interfaz)(resultMenu, {classes: {addList: [player2]}})
-        -   Si `result === "draw"` entonces [elements.updateElement](./elements.md#interfaz)(resultMenu, {classes: {addList: [draw]}})
-        -   Si `eventName === "gameEndEvent"` entonces [elements.updateElement](./elements.md#interfaz)(resultMenu, {classes: {addList: [gameResult]}})
-
-    -   **loadAvatars** (_winnerId: string, result: string, players: object_) _fn_:
-
-        -   Si `result === "win"` [elements.loadElement](./elements.md#interfaz)({templateId: "winnerAvatar", parentElement: #winnerAvatarContainer, settings: {src: players[winnerId].getAvatarURL()}})
-        -   Si `result === "draw"` [elements.loadElement](./elements.md#interfaz)({templateId: "maskContainer", parentElement: #winnerAvatarContainer, settings: {src1: players.player1.getAvatarURL(), src2: players.player2.getAvatarURL()}})
-
-    -   **loadMessage** (_{currentRound: number, winnerId: string, result: string, players: object}_) _fn_:
-
-        -   Si `result === "win" & eventName === "roundEndEvent"` [elements.loadElement](./elements.md#interfaz)({templateId: "resultMessage1", parentElement: #resultMessageContainer, settings: {name: players[winnerId].name, round: currentRound}})
-        -   Si `result === "win" & eventName === "gameEndEvent"` [elements.loadElement](./elements.md#interfaz)({templateId: "resultMessage2", parentElement: #resultMessageContainer, settings: {name: players[winnerId].name}})
-        -   Si `result === "draw"` [elements.loadElement](./elements.md#interfaz)({templateId: "resultMessage3", parentElement: #resultMessageContainer})
-
-    -   **loadButtons** (_eventName: string_) _fn_:
-
-        -   Si `eventName === "roundEndEvent"` entonces [elements.loadElement](./elements.md#interfaz)({templateId: "roundEndResultButton", parentElement: #resultButtonContainer})
-        -   Si `eventName === "gameEndEvent"` entonces [elements.loadElement](./elements.md#interfaz)({templateId: "gameEndResultButtons", parentElement: #resultButtonContainer})
-
 -   **nextRoundHandler** _fn_: responsable de preparar la vista para empezar el siguiente round:
 
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
-    -   Invoca _hideElementList([...listaMenuContainerVisibles])_
+    -   Invoca [resultMenu](./display.md#implementación).hide
     -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)([roundIndicatorContainer.getNextRoundIndicator](./roundIndicatorContainer.md#interfaz), "currentRound")
 
 -   **restartRoundHandler** _fn_: responsable de preparar la vista para reiniciar el round:
