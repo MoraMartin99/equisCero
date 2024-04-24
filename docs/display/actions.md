@@ -22,7 +22,11 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   [navigationEvent](./display.md#eventos).subscribe(_navigationEventHandler_)
     -   [submitEvent](./display.md#eventos).subscribe(_submitEventHandler_)
 
--   **responseEventHandler** (_data: object_) _fn_: handler de [responseEvent](../avatarProvider.md#eventos) que carga el atributo _src_ de los _avatarImage_ en el _homeScreen_ usando _updateImgListSrc_ según corresponda
+-   **responseEventHandler** (_data:{eventName:string, responseType: string, resource:{url: string, id: string}}_) _fn_: handler de [responseEvent](../avatarProvider.md#eventos) que carga el atributo _src_ de los _avatarImage_ en los _sessionForm_:
+
+    ```
+    sessionFormManager.setAvatarSources(url, id)
+    ```
 
 -   **moveEventHandler** (_data: object_) _fn_: handler de [moveEvent](../game/game.md#eventos) para los siguientes casos:
 
@@ -82,7 +86,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [sessionFormManager.reset](./sessionFormManager.md#interfaz)
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Oculta los _menuContainer_ usando `[pauseMenu, resultMenu].forEach((item) => {item.hide})`
-    -   Elimina los _src_ de todas las _img_ que contengan avatares usando _updateImgListSrc_
 
 -   **interactionEventHandler** (_data: object_) _fn_: handler de [interactionEvent](./display.md#interfaz) encargado de:
 
@@ -102,8 +105,6 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
         -   Invoca [carrousel.enableAllScreens](./carrousel.md#interfaz)
         -   Si `type === "PVSP"` entonces [carrousel.disableScreen](./carrousel.md#interfaz)("#difficultyScreen")
         -   Si `type === "PVSCPU"` entonces [carrousel.disableScreen](./carrousel.md#interfaz)("#player2NameScreen")
-
--   **updateImgListSrc** (_changeList: [{img: HTMLElement, src: string}, ...]_) _fn_: responsable de actualizar el _src_ de una lista de _img_ usando [elements.updateElement](./elements.md#interfaz)
 
 -   **nextRoundHandler** _fn_: responsable de preparar la vista para empezar el siguiente round:
 
