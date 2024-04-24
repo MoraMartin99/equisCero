@@ -14,12 +14,12 @@ PlayerNameSessionForm(element: HTMLElement)
 
 -   **reset** _fn_: configura _element_ a sus valores iniciales:
 
-    -   Invoca [form.reset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset)
+    -   Invoca _super_.reset
     -   Invoca [states.removeState](./states.md#interfaz)( (stateId: "activeTextInput", element: playerNameInput))
 
 -   **init** (_pattern: string_) _fn_: Inicializa _element_:
 
-    -   Invoca _element_.addEventListener("click", _clickHandler_)
+    -   Invoca _super_.init
     -   Invoca _playerNameInput_.addEventListener("focusout", _focusOutHandler_)
     -   Invoca [elements.updateElement](./elements.md#interfaz)(_playerNameInput_, {attributes: {addList: [{name: "pattern", value: pattern}...]}})
 
