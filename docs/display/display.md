@@ -67,7 +67,7 @@ Manejar la vista
 -   **nextPlayerEventHandler** _fn_: [actions.nextPlayerEventHandler](./actions.md#interfaz)
 -   **roundEndEventHandler** _fn_: [actions.roundEndEventHandler](./actions.md#interfaz)
 -   **gameEndEventHandler** _fn_: [actions.gameEndEventHandler](./actions.md#interfaz)
--   **setGameScreen** _fn_: [actions.setPlayerCards](./actions.md#interfaz)
+-   **setGameScreen** _fn_: [actions.setGameScreen](./actions.md#interfaz)
 
 ## Implementación
 
@@ -75,16 +75,9 @@ Manejar la vista
 -   **[states](./states.md)** _module_
 -   **[carrousel](./carrousel.md)** _module_
 -   **[actions](./actions.md)** _module_
--   **[board](./board.md)** _module_
--   **[avatarImage](./avatarImage.md)** _class_
--   **[playersContainer](./playerCardContainer.md)** _module_
--   **[PlayerCardContainer](./PlayerCardContainer.md)** _class_
--   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_
--   **[RoundIndicator](./RoundIndicator.md)** _class_
--   **[SessionForm](./SessionForm.md)** _class_
--   **[HomeSessionForm](./HomeSessionForm.md)** _class_
--   **[PlayerNameSessionForm](./PlayerNameSessionForm.md)** _class_
--   **[DifficultySessionForm](./DifficultySessionForm.md)** _class_
+-   **[board](./board.md)** _module_: `board(document.querySelector("#board"))`
+-   **[playersContainer](./playersContainer.md)** _module_: `playersContainer(document.querySelector("#playersContainer"))`
+-   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_: `roundIndicatorContainer(document.querySelector("#roundIndicatorContainer"))`
 -   **[sessionFormManager](./sessionFormManager.md)** _module_
 -   **pauseMenu** _object_: _new [PauseMenu](./PauseMenu.md)(document.querySelector(".pauseMenuContainer"), document.querySelector(".confirmationMenuContainer"))_
 -   **resultMenu** _object_: _new [ResultMenu](./ResultMenu.md)(document.querySelector(".resultMenuContainer"))_
