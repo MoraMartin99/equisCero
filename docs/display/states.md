@@ -1,4 +1,4 @@
-# States _module_
+# states _module_
 
 ## Responsabilidad
 
@@ -15,6 +15,8 @@ Responsable de almacenar, aplicar y eliminar los estados como _class_, _transiti
 -   **removeState** (_stateId: string, element: HTMLElement _) _fn_: responsable de eliminar de _element_ las clases que componen el _stateId_
 
 -   **setMaxTolerableTime** (_seconds: number_) _fn_: responsable de establecer el _maxTolerableTime_
+
+-   **isApplied** (_element: HTMLElement, stateIdList: [stateId: string, ...]_) _fn_: Retorna un `true` si _element_ tiene aplicada todas las _classList_ asociadas con todos los _stateId_ dentro de _stateIdList_, de lo contrario retorna `false`
 
 ## Implementación
 
