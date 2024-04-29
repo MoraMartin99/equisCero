@@ -19,3 +19,24 @@ AnimationState(classList: [class1: string, ...], animationName: string){
 ## Implementación
 
 -   **animationName** _string_: es la _animationName_ que reportará _animationEndEvent_
+
+-   **createStateObserver** (_state: object, target: HTMLElement_) _fn_: Retorna un _stateObserver_ que cuando se inicializa con _stateObserver.init(onSuccessCallback)_ invoca _onSuccessCallback_ al confirmar que se aplicaron los cambios en _target_ especificados por _state_:
+
+    ```
+    function handler (e){
+        const onSuccessCallback = this.onSuccessCallback
+        const animationName = e.animationName
+        if(animationName === state.animationName) onSuccessCallback()
+    }
+    let eventSettings =  {name: "transitionEnd", handler}
+    const {name, handler} = eventSettings
+
+    const init = (onSuccessCallback: function) => {
+        eventSettings = {...eventSettings, onSuccessCallback}
+        element.addEventListener(name, handler)
+    }
+
+    const disable = () => element.removeEventListener(name, handler)
+
+    return {init, disable}
+    ```
