@@ -9,8 +9,7 @@ Representar un estado que se desea aplicar a un _HTMLElement_ utilizando sus cla
 ```
 AnimationState(classList: [class1: string, ...], animationName: string){
     super(classList)
-    this.type = "animation"
-    this.animationName = animationName
+    this.properties = {...this.properties, type = "animation", animationName}
 }
 ```
 
@@ -18,9 +17,11 @@ AnimationState(classList: [class1: string, ...], animationName: string){
 
 ## Implementación
 
--   **animationName** _string_: es la _animationName_ que reportará _animationEndEvent_
+-   **properties** _object_: Estructura que almacena las propiedades de _state_:
 
 -   **createStateObserver** (_state: object, target: HTMLElement_) _fn_: Retorna un _stateObserver_ que cuando se inicializa con _stateObserver.init(onSuccessCallback)_ invoca _onSuccessCallback_ al confirmar que se aplicaron los cambios en _target_ especificados por _state_:
+    -   **animationName** _string_: es la _animationName_ que reportará _animationEndEvent_
+
 
     ```
     function handler (e){
