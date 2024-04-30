@@ -62,7 +62,6 @@ Manejar la vista
 
 -   **init** _fn_: **[actions.init](./actions.md#interfaz)**
 -   **responseEventHandler** _fn_: **[actions.responseEventHandler](./actions.md#interfaz)**
--   **setMaxTolerableTime** _fn_: **[states.setMaxTolerableTime](./states.md#interfaz)**
 -   **moveEventHandler** _fn_: [actions.moveEventHandler](./actions.md#interfaz)
 -   **nextPlayerEventHandler** _fn_: [actions.nextPlayerEventHandler](./actions.md#interfaz)
 -   **roundEndEventHandler** _fn_: [actions.roundEndEventHandler](./actions.md#interfaz)
@@ -72,7 +71,7 @@ Manejar la vista
 ## Implementación
 
 -   **[elements](./elements.md)** _module_
--   **[states](./states.md)** _module_
+-   **[stateQueue(10)](./stateQueue.md)** _module_
 -   **[carrousel](./carrousel.md)** _module_
 -   **[actions](./actions.md)** _module_
 -   **[board](./board.md)** _module_: `board(document.querySelector("#board"))`

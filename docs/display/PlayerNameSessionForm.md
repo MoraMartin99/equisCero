@@ -15,7 +15,7 @@ PlayerNameSessionForm(element: HTMLElement)
 -   **reset** _fn_: configura _element_ a sus valores iniciales:
 
     -   Invoca _super_.reset
-    -   Invoca [states.removeState](./states.md#interfaz)( (stateId: "activeTextInput", element: playerNameInput))
+    -   Invoca `activeTextInputState.remove(playerNameInput)`
 
 -   **init** (_pattern: string_) _fn_: Inicializa _element_:
 
@@ -33,10 +33,18 @@ PlayerNameSessionForm(element: HTMLElement)
 
 -   **focusOutHandler** (_e: event_) _fn_: handler para los _focusOut events_:
 
-    -   [states.setStateList](./states.md#interfaz)(stateList: [{stateId: "activeTextInput", element: e.currentTarget}], hasToWait: false)
+    ```
+    activeTextInputState.apply(e.currentTarget)
+    ```
 
 -   **submitSessionForm** _fn_: extrae del _form_ la información necesaria para emitir un _submitEvent_:
 
     -   `fields = Object.fromEntries(new FormData(form))`
     -   `{playerName: value} = fields`
     -   _submitEvent_.trigger({eventName:"submitEvent", senderId: _element_.id, fields: {playerName: {id: "playerName", value}}})
+
+-   **activeTextInputState** _object_: Estado aplicado a _playerNameInput_ cuando ocurre un _focusout event_ y que refleja que ha sido utilizado por el usuario
+
+    ```
+    State(["activeTextInput"])
+    ```

@@ -24,8 +24,8 @@ PlayerCardContainer(element: HTMLElement)
 -   **setCard** (_{name: string, src: string, isCurrentPlayer: boolean}_): configura _element_:
 
     -   [elements.updateElement](./elements.md)(playerName, {content: name})
-    -   Si `isCurrentPlayer === true` entonces invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayer", target: _element_}])
-    -   Si `isCurrentPlayer === false` entonces invoca [states.removeState](./states.md#interfaz)("currentPlayer", _element_)
+    -   Si `isCurrentPlayer === true` entonces invoca `currentPlayerState.apply(element)`
+    -   Si `isCurrentPlayer === false` entonces invoca `currentPlayerState.remove(element)`
     -   _avatarImage_.setSrc(src)
 
 ## Implementación
@@ -35,3 +35,9 @@ PlayerCardContainer(element: HTMLElement)
 -   **avatarImage** _object_: _new [AvatarImage](./AvatarImage.md)(cardElement.querySelector(".avatarImage"))_
 
 -   **playerName** _HTMLElement_: cardElement.querySelector(".playerName")
+
+-   **currentPlayerState** _object_: transición que se aplica en el cambio de turno al _playerCardContainer_
+
+        ```
+        new TransitionState(["currentPlayer"], ["background-color", "row-gap", "color", "font-size", "height", "width"])
+        ```

@@ -19,7 +19,6 @@ PauseMenu(pauseMenuElement: HTMLElement, confirmationMenuElement: HTMLElement)
 
 -   **hide** _fn_: agrega la clase _hide_ a _element_ y oculta _confirmationMenu_:
 
-    -   Invoca `states.setStateList([{stateId: "hide", target: element}], false)`
     -   Invoca `event.trigger({eventName: "interactionEvent", type: "hideMenu", menu: element})`
     -   Invoca _confirmationMenu_.hide
 

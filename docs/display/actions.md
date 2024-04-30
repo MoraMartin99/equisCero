@@ -12,7 +12,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 -   **init** (_conditions: {pattern: string, maxTolerableTime: number}_)_fn_: responsable de inicializar la vista:
 
     -   Invoca [sessionFormManager.init](./sessionFormManager.md#interfaz)(pattern)
-    -   Invoca _setMaxTolerableTime_ [states.setMaxTolerableTime](./states.md#interfaz)(maxTolerableTime)
+    -   Invoca [stateQueue.setMaxTolerableTime](./stateQueue.md#interfaz)(maxTolerableTime)
     -   Invoca [board.init](./board.md#interfaz)
     -   Invoca [pauseMenu.init](./display.md#implementación)
     -   Invoca [resultMenu.init](./display.md#implementación)
@@ -37,20 +37,30 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **nextPlayerEventHandler** (_{eventName:string, currentPlayer: object}_) _fn_: responsable de animar el cambio de turno:
 
+    -   **currentPlayerState** _object_: transición que se aplica en el cambio de turno al _playerCardContainer_
+
+        ```
+        new TransitionState(["currentPlayer"], ["background-color", "row-gap", "color", "font-size", "height", "width"])
+        ```
+
+    -   **boardState** _object_: transición que se aplica al _board_ para colorearlo según el color del _currentPlayer_:
+
+        ```
+        new TransitionState([currentPlayer.id], ["background-color"])
+        ```
+
     -   Invoca [board.resetBgColor](./board.md#interfaz)
     -   Invoca [playersContainer.setNoCurrentPlayer](./playersContainer.md#interfaz)
-    -   Si `currentPlayer.id === "player1"` entonces `boardStateId = "player1Turn"`
-    -   Si `currentPlayer.id === "player2"` entonces `boardStateId = "player2Turn"`
-    -   Invoca [states.setStateList](./states.md#interfaz)([{stateId: "currentPlayer", target: [playersContainer.getCard(currentPlayer.id)](./playersContainer.md#interfaz)}, {stateId: boardStateId, target: [board.getBoard](./board.md#interfaz)}])
+    -   Invoca [stateQueue.add](./stateQueue.md#interfaz)([{state: currentPlayerState, target: [playersContainer.getCard(currentPlayer.id)](./playersContainer.md#interfaz)}, {state: boardState, target: [board.getBoard](./board.md#interfaz)} ])
     -   Si `currentPlayer.role !== "CPU"` entonces se encadenara la promesa anterior `promise.then(()=>{board.enableCellSelection()})`
 
 -   **roundEndEventHandler** (_{eventName:string, currentRound: number, winnerMove: object, winnerId: string, result: string, players: object }_) _fn_: handler de [roundEndEvent](../game/game.md#eventos) encargado de:
 
     -   Invocar [board.animateResult](./board.md#interfaz)(winnerMove, winnerId, result)
-    -   Si `result === "draw"` entonces`roundIndicatorState = "drawRound"`
+    -   Si `result === "draw"` entonces`roundIndicatorState = "drawRoundState"`
     -   Si `result === "win"` entonces:
-        -   Si `winnerId === "player1"` entonces `roundIndicatorState = "player1Round"`
-        -   Si `winnerId === "player2"` entonces `roundIndicatorState = "player2Round"`
+        -   Si `winnerId === "player1"` entonces `roundIndicatorState = "player1RoundState"`
+        -   Si `winnerId === "player2"` entonces `roundIndicatorState = "player2RoundState"`
     -   ```
         roundIndicatorContainer.setIndicatorState(currentRound, roundIndicatorState).then(() => {
             resultMenu.setMenu({eventName, currentRound, winnerId, result, players})
@@ -96,7 +106,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **navigationEventHandler** _fn_: handler de [navigationEvent](./display.md#interfaz) encargado de: al llegar a gameScreen hay que colorear el roundIndicator actual
 
-    -   Si `targetScreen.id === "gameScreen" && status === "end"` entonces invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(1, "currentRound")
+    -   Si `targetScreen.id === "gameScreen" && status === "end"` entonces invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(1, "currentRoundState")
 
 -   **submitEventHandler** _fn_: handler de [submitEvent](./display.md#eventos) para los siguientes casos:
 
@@ -111,7 +121,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
     -   Invoca [resultMenu](./display.md#implementación).hide
-    -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)([roundIndicatorContainer.getNextRoundIndicator](./roundIndicatorContainer.md#interfaz), "currentRound")
+    -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)([roundIndicatorContainer.getNextRoundIndicator](./roundIndicatorContainer.md#interfaz), "currentRoundState")
 
 -   **restartRoundHandler** _fn_: responsable de preparar la vista para reiniciar el round:
 
@@ -125,4 +135,4 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   Invoca [playersContainer.reset](./playersContainer.md#interfaz)
     -   Invoca [board.reset](./board.md#interfaz)
     -   Oculta los _menuContainer_ usando `[pauseMenu, resultMenu].forEach((item) => {item.hide})`
-    -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(1, "currentRound")
+    -   Invoca [roundIndicatorContainer.setIndicatorState](./roundIndicatorContainer.md#interfaz)(1, "currentRoundState")

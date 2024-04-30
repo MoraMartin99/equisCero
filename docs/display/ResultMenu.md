@@ -33,7 +33,7 @@ ResultMenu(element: HTMLElement)
 -   **reset** _fn_: regresa _element_ a sus estado inicial:
 
     ```
-    ["player1Result", "player2Result", "drawResult", "gameResult"].forEach((item) => {states.removeState (item, element)})
+    [player1ResultState, player2ResultState, drawResultState, gameResultState].forEach((state) => {state.remove(element)})
 
     [winnerAvatarContainer, resultMessageContainer, resultButtonContainer].forEach((item) => {
         elements.removeElementList(Array.from(item.querySelectorAll("> *")))
@@ -44,10 +44,10 @@ ResultMenu(element: HTMLElement)
 
 -   **setMenuClasses** (_eventName: string, winnerId: string, result: string_) _fn_: configura las classes de _element_
 
-    -   Si `winnerId === "player1"` entonces [states.setStateList](./states.md#interfaz)([{stateId: "player1Result", target: element}], false)
-    -   Si `winnerId === "player2"` entonces [states.setStateList](./states.md#interfaz)([{stateId: "player2Result", target: element}], false)
-    -   Si `result === "draw"` entonces [states.setStateList](./states.md#interfaz)([{stateId: "drawResult", target: element}], false)
-    -   Si `eventName === "gameEndEvent"` entonces [states.setStateList](./states.md#interfaz)([{stateId: "gameResult", target: element}], false)
+    -   Si `winnerId === "player1"` entonces `player1ResultState.apply(element)`
+    -   Si `winnerId === "player2"` entonces `player2ResultState.apply(element)`
+    -   Si `result === "draw"` entonces `drawResultState.apply(element)`
+    -   Si `eventName === "gameEndEvent"` entonces `gameResultState.apply(element)`
 
 -   **loadAvatars** (_winnerId: string, result: string, players: object_) _fn_: carga y configura _avatares_
 
@@ -74,3 +74,27 @@ ResultMenu(element: HTMLElement)
         -   `value === e.target.closest(".resultButton").value`
         -   Si `eventTypeList.includes(value) === true` entonces:
             -   `event.trigger({eventName: "interactionEvent", type: value})`
+
+-   **player1ResultState** _object_: estado aplicado al _element_ cuando _player1_ ganó el round o el juego
+
+    ```
+    new State(["player1"])
+    ```
+
+-   **player2ResultState** _object_: estado aplicado al _element_ cuando _player2_ ganó el round o el juego
+
+    ```
+    new State(["player2"])
+    ```
+
+-   **drawResultState**: estado aplicado al _element_ cuando es un empate
+
+    ```
+    new State(["draw"])
+    ```
+
+-   **gameResultState**: estado aplicado al _resultMenu_ cuando ocurre un [gameEndEvent](../../game/game.md#eventos)
+
+    ```
+    new State(["gameResult"])
+    ```
