@@ -37,6 +37,12 @@ State(classList: [class1: string, ...]){
         return applyStatePromise
         ```
 
+-   **remove** (_target: HTMLElement_) _fn_: remueve de _target_ las clases dentro de _properties.classList_
+
+    ```
+    elements.updateElement(target, {classes: {removeList: [...getProperty("classList")]}})
+    ```
+
 -   **getProperty** (_name: string_) _fn_: Retorna la propiedad asociada a _name_:
 
     ```
