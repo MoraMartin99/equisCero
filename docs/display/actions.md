@@ -30,7 +30,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
 
 -   **moveEventHandler** (_data: object_) _fn_: handler de [moveEvent](../game/game.md#eventos) para los siguientes casos:
 
-    -   si `data.type === "invalid"` entonces se invoca `board.setInvalidCell(document.querySelector(targetCell.id))`
+    -   si `data.type === "invalid"` entonces se invoca `board.setInvalidCell(targetCell.id)`
     -   si `data.type === "valid"` entonces:
         -   Se invoca [board.disableCellSelection](./board.md#interfaz)
         -   Se invoca `board.dropToken(document.querySelector(targetCell.id), targetCell.value)`

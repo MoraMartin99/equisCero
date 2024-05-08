@@ -38,8 +38,9 @@ board(boardElement: HTMLElement)
         -   Invoca `resetCellState(cell)`
         -   Invoca [elements.removeElementList](./elements.md#interfaz)(Array.from(cell.querySelector(".token")))
 
--   **setInvalidCell** (_cell: HTMLElement_) _fn_: configura una celda como invalida:
+-   **setInvalidCell** (_cellId: string_) _fn_: configura una celda como invalida:
 
+    -   `cell = cellList.find((item) => {item.id === cellId})`
     -   Invoca `resetCellState(cell)`
     -   Invoca `invalidMoveState.apply(cell, 0)`
     -   Invoca `vanishState.apply(cell).finally(() => {resetCellState(cell)})`
