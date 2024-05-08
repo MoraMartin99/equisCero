@@ -11,12 +11,12 @@ Manejar el juego
 -   **moveEvent**: activado cuando el jugador hace un movimiento. Es una instancia de [CustomEvent](../customEvent.md)
 
     ```
-    data:{eventName:string, type: string, targetCell: {value: string, id: string}}
+    data:{eventName:string, type: string, targetCell: object, player: object}
     ```
 
-    -   _targetCell.value_ puede ser _undefined_ o `player.token`
-    -   _targetCell.value_ es `cell.id` quien a su vez representa el _id_ de _HTMLElement_
-    -   type puede ser _valid_ o _invalid_
+    -   _type_ puede ser `valid` o `invalid`
+    -   _targetCell_ es un objeto que representa la celda donde se intento aplicar el movimiento
+    -   _player_ es un objeto que representa al jugador que intento hacer el movimiento
 
 -   **nextPlayerEvent**: activado cuando hay cambio de turno. Es una instancia de [CustomEvent](../customEvent.md)
 
