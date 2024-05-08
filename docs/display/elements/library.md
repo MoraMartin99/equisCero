@@ -29,4 +29,4 @@ templateId: {HTMLTag: string, change: object, setTemplate (settings: {}): fn}
 -   **resultMessage3**: es el _p_ que representa el mensaje de felicitaciones cuando no existe un ganador en _resultMenu_.
 -   **roundEndResultButton**: es el _nextRoundButton_ en _resultMenu_.
 -   **gameEndResultButtons**: es el _restartGameButton_ y _goHomeButton_ en _resultMenu_.
--   **roundIndicator**: es el elemento dentro de _roundIndicatorContainer_ que representa cada round. En sus _settings_ se especifica el atributo _round_ que codifica su _id_
+-   **roundIndicator**: es el elemento dentro de _roundIndicatorContainer_ que representa cada round. En sus _settings_ se especifica el atributo _round_ que codifica su _id_ y el atributo _data-round_
