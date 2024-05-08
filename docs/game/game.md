@@ -8,63 +8,50 @@ Manejar el juego
 
 ### Eventos
 
--   **moveEvent**: activado cuando el jugador hace un movimiento
+-   **moveEvent**: activado cuando el jugador hace un movimiento. Es una instancia de [CustomEvent](../customEvent.md)
 
-```
-data:{eventName:string, type: string, targetCell: {value, id}, status: {winnerMove: object, winnerToken: string, result: string}, currentPlayerId: string}
+    ```
+    data:{eventName:string, type: string, targetCell: {value: string, id: string}}
+    ```
 
-- type puede ser valid o invalid
-```
+    -   _targetCell.value_ puede ser _undefined_ o `player.token`
+    -   _targetCell.value_ es `cell.id` quien a su vez representa el _id_ de _HTMLElement_
+    -   type puede ser _valid_ o _invalid_
 
-```
-    si type es invalid
-   data:{eventName:string, type: string, targetCell: {value, id}}
+-   **nextPlayerEvent**: activado cuando hay cambio de turno. Es una instancia de [CustomEvent](../customEvent.md)
 
-   si type es valid
-   data:{eventName:string, type: string, targetCell: {value, id}, status: {currentRound: string, totalRounds: string, winnerMove: object, winnerId: string, resultType: string, stage: string }, results:{roundN:{round: string, resultType: string, winnerId: string},total:{player1TotalWins: string, player2TotalWins: string, totalDraws: string, resultType:string, winnerId: string}}}
+    ```
+    data:{eventName:string, currentPlayer: object}
+    ```
 
-   Nota: status debería ser un reporte de board module
+-   **roundEndEvent**: activado cuando finaliza un round. Es una instancia de [CustomEvent](../customEvent.md)
 
-    donde type puede ser:
-    - valid
-    - invalid
+    ```
+    data:{eventName:string, currentRound: number, winnerMove: object, winnerId: string, result: string, players: object }
+    ```
 
-   donde winnerId puede ser:
-   - player1
-   - player2
-   - null
+    -   los valores de _winnerMove_ y _result_ son explicados en [board.getStatus](./board.md#interfaz)
 
-   donde resultType puede ser:
-   - null
-   - win
-   - draw
+-   **gameEndEvent**: activado cuando finaliza el juego. Es una instancia de [CustomEvent](../customEvent.md)
 
-   donde stage puede ser:
-   - playing
-   - roundEnd
-   - gameEnd
-```
+    ```
+    data:{eventName:string, currentRound: number, winnerMove: object, player1TotalWins: number, player2TotalWins: number, totalDraws: number, result: string, winnerId: string, players: object }
+    ```
 
--   **nextPlayerEvent**: activado cuando hay cambio de turno
-
-```
-data:{eventName:string, currentPlayerId: string, nextPlayerId: string}
-```
-
--   **roundEndEvent**: activado cuando finaliza un round
-
-```
-data:{eventName:string, status: {currentRound: string, totalRounds: string, winnerMove: object, winnerId: string, resultType: string, stage: string }}
-```
-
--   **gameEndEvent**: activado cuando finaliza el juego
+    -   los valores de _winnerMove_ y _result_ son explicados en [board.getStatus](./board.md#interfaz)
 
 ### Métodos
 
--   **[actions.reset](./actions.md#interfaz)** _fn_
--   **[actions.updatePlayerAvatarURL](./actions.md#interfaz)** _fn_
--   **[players.getNamePattern](./players.md#interfaz)** _fn_
--   **[players.getNamePattern](./players.md#interfaz)** _fn_
+-   **reset** _fn_: [actions.reset](./actions.md#interfaz)
+-   **updatePlayerAvatarUR** _fn_: [actions.updatePlayerAvatarURL](./actions.md#interfaz)
+-   **getNamePattern** _fn_: [players.getNamePattern](./players.md#interfaz)
+-   **init** _fn_: [actions.init](./actions.md#interfaz)
+-   **navigationEventHandler** _fn_: [actions.navigationEventHandler](./actions.md#interfaz)
+-   **interactionEventHandler** _fn_: [actions.interactionEventHandler](./actions.md#interfaz)
+-   **sessionEventHandler** _fn_: [actions.sessionEventHandlerr](./actions.md#interfaz)
+-   **getPlayerById** _fn_: [players.getPlayerById](./players.md#interfaz)
+-   **getType** _fn_: [type.getType](./type.md#interfaz)
+-   **getTotalRounds** _fn_ [rounds.getTotalRounds](./rounds.md#interfaz)
 
 ## Implementación
 
