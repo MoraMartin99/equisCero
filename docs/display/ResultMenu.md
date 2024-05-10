@@ -49,22 +49,151 @@ ResultMenu(element: HTMLElement)
     -   Si `result === "draw"` entonces `drawResultState.apply(element)`
     -   Si `eventName === "gameEndEvent"` entonces `gameResultState.apply(element)`
 
+-   **createAvatarImgElement** (_src: string, classList: array_) _fn_: Retorna _avatarImage_:
+
+    ```
+    classList = [...Array.of(classList).flat(), "skeleton",  "winnerAvatar"]
+    attributeList = [{name: "src", value: src}, {name: "alt", value: "avatar"}]
+    return elements.updateElement(document.createElement("img"), { classes: {addList: classList}, attributes: {addList: attributeList} })
+    ```
+
+-   **createMaskContainerElement** (_settings: {leftImg: { src: string, classList: array }, rightImg: { src: string, classList: array }}_) _fn_: Retorna _maskContainerElement_:
+
+    ```
+    leftImg.classList = [...Array.of(classList).flat(), "left"]
+    rightImg.classList = [...Array.of(classList).flat(), "right"]
+    maskContainerElement = elements.updateElement(document.createElement("div"), {HTMLId: "maskContainer"})
+    [leftImg, rightImg].forEach(({src, classList}) => {
+        elements.appendElement(createAvatarImgElement(src, classList), maskContainerElement)
+    })
+    return maskContainerElement
+    ```
+
 -   **loadAvatars** (_winnerId: string, result: string, players: object_) _fn_: carga y configura _avatares_
 
-    -   Si `result === "win"` [elements.loadElement](./elements.md#interfaz)({templateId: "winnerAvatar", parentElement: winnerAvatarContainer, settings: {src: players[winnerId].getAvatarURL()}})
-    -   Si `result === "draw"` [elements.loadElement](./elements.md#interfaz)({templateId: "maskContainer", parentElement: winnerAvatarContainer, settings: {src1: players.player1.getAvatarURL(), src2: players.player2.getAvatarURL()}})
+    -   Si `result === "win"` entonces:
+
+        -   `elements.appendElement(createAvatarImgElement(players[winnerId].getAvatarURL(), winnerId), winnerAvatarContainer)`
+
+    -   Si `result === "draw"` entonces:
+
+        -   `settingArr = Object.values(players).map(({id, getAvatarURL}) => {return {src: getAvatarURL(), classList: [id]}})`
+        -   `elements.appendElement(createMaskContainerElement({leftImg: settingArr[0], rightImg: settingArr[1]}), winnerAvatarContainer)`
+
+-   **getAccentMessage** (_string: string_) _fn_: Retorna _string_ formateada para ser utilizada dentro del _innerHTML_ de _resultMessageElement_ como un _messageAccent_:
+
+    ```
+    return "<span id="messageAccent">${string}</span>"
+    ```
+
+-   **createResultMessageElement** (_content: string_) _fn_: Retorna _resultMessageElement_ genérico:
+
+    ```
+    HTMLId = "resultMessage"
+    return elements.updateElement(document.createElement("p"), {HTMLId, content})
+    ```
+
+-   **createDrawResultMessageElement** _fn_: Retorna _resultMessageElement_ correspondiente a un empate:
+
+    ```
+    content = "¡Es un ${getAccentMessage("Empate")}!"
+    createResultMessageElement(content)
+    ```
+
+-   **createWinResultMessageElement** (_playerName: string, round: number_) _fn_: Retorna _resultMessageElement_ correspondiente a una victoria:
+
+    ```
+    if(!Boolean(typeof playerName === "string")) return createResultMessageElement("")
+    if(Number.isInteger(round)) return createResultMessageElement("¡${playerName} gana Round ${round}!")
+    return createResultMessageElement("¡${playerName} es el ganador!")
+    ```
 
 -   **loadMessage** (_{currentRound: number, winnerId: string, result: string, players: object}_) _fn_: carga y configura _resultMessage_:
 
-    -   Si `result === "win" & eventName === "roundEndEvent"` [elements.loadElement](./elements.md#interfaz)({templateId: "resultMessage1", parentElement: resultMessageContainer, settings: {name: players[winnerId].name, round: currentRound}})
-    -   Si `result === "win" & eventName === "gameEndEvent"` [elements.loadElement](./elements.md#interfaz)({templateId: "resultMessage2", parentElement: resultMessageContainer, settings: {name: players[winnerId].name}})
-    -   Si `result === "draw"` [elements.loadElement](./elements.md#interfaz)({templateId: "resultMessage3", parentElement: resultMessageContainer})
+    -   Si `result === "win" & eventName === "roundEndEvent"` entonces `resultMessageElement = createWinResultMessageElement(players[winnerId].name, currentRound)`
+    -   Si `result === "win" & eventName === "gameEndEvent"` entonces `resultMessageElement = createWinResultMessageElement(players[winnerId].name)`
+    -   Si `result === "draw"` entonces `resultMessageElement = createDrawResultMessageElement()`
+    -   `elements.appendElement(resultMessageElement, resultMessageContainer)`
+
+-   **createResultButtonElement** _(classList: array, value: string, content: string) fn_: Retorna un _resultButton_ genérico:
+
+    ```
+    classList = [...Array.of(classList).flat(), "resultButton"]
+    attributeList = [{name: "value", value}, {name: "type", value: "button"}]
+    return elements.updateElement(document.createElement("button"), { classes: {addList: classList}, attributes: {addList: attributeList}, content })
+    ```
+
+-   **createNextRoundButtonElement** _fn_: Retorna _nextRoundButtonElement_:
+
+    ```
+    classList = ["nextRoundButton"]
+    value = "nextRound"
+    content = "<svg
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="-webkit-print-color-adjust: exact"
+                    viewBox="6803 654 30 30"
+                    class="resultButtonIcon"
+                >
+                    <g style="fill: #000">
+                        <path
+                            d="m6819.464 669.001-6.187-6.187 1.768-1.768 7.955 7.955-7.955 7.955-1.768-1.768 6.187-6.187Z"
+                            class="fills"
+                        />
+                    </g>
+                </svg>"
+    return createResultButtonElement(classList, value, content)
+    ```
+
+-   **createRestartGameButtonElement** _fn_: Retorna _restartGameButtonElement_:
+
+    ```
+    classList = ["restartGameButton"]
+    value = "restartGame"
+    content = "<svg
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="-webkit-print-color-adjust: exact"
+                    viewBox="7498.5 654 30 30"
+                    class="resultButtonIcon"
+                >
+                    <g style="fill: #000">
+                        <path
+                            d="M7505.328 659.541a12.45 12.45 0 0 1 8.172-3.041c6.904 0 12.5 5.596 12.5 12.5 0 2.67-.837 5.145-2.264 7.176L7519.75 669h3.75c0-5.523-4.477-10-10-10a9.964 9.964 0 0 0-6.925 2.786l-1.247-2.245Zm16.344 18.918a12.452 12.452 0 0 1-8.172 3.041c-6.904 0-12.5-5.597-12.5-12.5 0-2.67.837-5.145 2.264-7.176l3.986 7.176h-3.75c0 5.523 4.477 10 10 10a9.967 9.967 0 0 0 6.925-2.785l1.247 2.244Z"
+                            class="fills"
+                        />
+                    </g>
+                </svg>"
+    return createResultButtonElement(classList, value, content)
+    ```
+
+-   **createGoHomeButtonElement** _fn_: Retorna _goHomeButtonElement_:
+
+    ```
+    classList = ["goHomeButton"]
+    value = "goHome"
+    content = "<svg
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="-webkit-print-color-adjust: exact"
+                    viewBox="7583.5 654 30 30"
+                    class="resultButtonIcon"
+                >
+                    <g style="fill: #000">
+                        <path
+                            d="M7608.5 679c0 .691-.56 1.25-1.25 1.25h-17.5a1.25 1.25 0 0 1-1.25-1.25v-11.25h-3.75l12.909-11.735a1.25 1.25 0 0 1 1.682 0l12.909 11.735h-3.75V679Zm-10-6.25a3.125 3.125 0 1 0 0-6.25 3.125 3.125 0 0 0 0 6.25Z"
+                            class="fills"
+                        />
+                    </g>
+                </svg>"
+    return createResultButtonElement(classList, value, content)
+    ```
 
 -   **loadButtons** (_eventName: string_) _fn_:carga y configura los _resultButton_:
 
-    -   Si `eventName === "roundEndEvent"` entonces [elements.loadElement](./elements.md#interfaz)({templateId: "roundEndResultButton", parentElement: resultButtonContainer})
-    -   Si `eventName === "gameEndEvent"` entonces [elements.loadElement](./elements.md#interfaz)({templateId: "gameEndResultButtons", parentElement: resultButtonContainer})
-    -   `resultButtonList = Array.from(element.querySelectorAll(".resultButton"))`
+    -   Si `eventName === "roundEndEvent"` entonces `buttonList = [createNextRoundButtonElement()]`
+    -   Si `eventName === "gameEndEvent"` entonces `buttonList = [createRestartGameButtonElement(), createGoHomeButtonElement()]`
+    -   `buttonList.forEach((item) => {elements.appendElement(item, resultButtonContainer)})`
 
 -   **eventTypeList** _array_: `["restartGame", "goHome", "nextRound"]`
 
