@@ -6,12 +6,20 @@ configurar a los _players_
 
 ## Interfaz
 
--   **setPlayer** (_settings: {playerId: string, name: string, role: string}_) _fn_: responsable de configurar a los jugadores.
+-   **setPlayer** (_settings: {id: string, name: string, role: string}_) _fn_: responsable de configurar a los jugadores.
+
 -   **reset** _fn_: responsable de resetear los _playersGroup_ y _avatarURL_ a sus valores iniciales
--   **getPlayerById** (_playerId: string_) _fn_: retorna el jugador asociado con _playerId_ usando [utilities.basicDeepCopy](../utilities.md#interfaz), si no existe retorna `{}`
+
+-   **getPlayerById** (_id: string_) _fn_: retorna el jugador asociado con _id_ usando [utilities.basicDeepCopy](../utilities.md#interfaz), si no existe retorna `{}`
+
+-   **getAllPlayers** _fn_: retorna _playersGroup_ usando [utilities.basicDeepCopy](../utilities.md#interfaz)
+
 -   **getPlayerByToken** (_token: string_) _fn_: retorna el jugador asociado con _token_ usando [utilities.basicDeepCopy](../utilities.md#interfaz), si no existe retorna `{}`
+
 -   **getPlayersIdList** _fn_: retorna un _array_ que contiene los _id_ de los jugadores ordenados según su _token_, primero las _x_ y luego los _0_. Si no existe retorna `[]`
+
 -   **getCPUPlayer** _fn_: retorna al _player_ `player.type === "CPU"`, si no existe regresa `{}`
+
 -   **getNamePattern** _fn_: retorna _namePattern_
 
 ## Implementación
@@ -21,13 +29,13 @@ configurar a los _players_
     ```
     valores iniciales
 
-    playersGroup: {player1: {playerId: "player1", name: "player1", type: undefined, getAvatarURL: fn, token: "x"},
-    player2: {playerId: "player2", name: "player2", role: undefined, getAvatarURL: fn, token: "0"}}
+    playersGroup: {player1: {id: "player1", name: "player1", role: undefined, getAvatarURL: fn, token: "x"},
+    player2: {id: "player2", name: "player2", role: undefined, getAvatarURL: fn, token: "0"}}
 
     getAvatarURL = ()=>{
         if(this.role === "CPU")return avatarURL.CPU
         if(this.role === "user")return avatarURL.player1
-        return avatarURL[this.playerId]
+        return avatarURL[this.id]
     }
     ```
 
