@@ -43,7 +43,7 @@ Manejar el juego
 ### Métodos
 
 -   **reset** _fn_: [actions.reset](./actions.md#interfaz)
--   **updatePlayerAvatarUR** _fn_: [actions.updatePlayerAvatarURL](./actions.md#interfaz)
+-   **responseEventHandler** _fn_: [actions.responseEventHandler](./actions.md#interfaz)
 -   **getNamePattern** _fn_: [players.getNamePattern](./players.md#interfaz)
 -   **init** _fn_: [actions.init](./actions.md#interfaz)
 -   **navigationEventHandler** _fn_: [actions.navigationEventHandler](./actions.md#interfaz)

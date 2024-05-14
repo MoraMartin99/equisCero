@@ -73,7 +73,7 @@ ResultMenu(element: HTMLElement)
 
     -   Si `result === "win"` entonces:
 
-        -   `elements.appendElement(createAvatarImgElement(players[winnerId].getAvatarURL(), winnerId), winnerAvatarContainer)`
+        -   `elements.appendElement(createAvatarImgElement(players[winnerId].avatarSource, winnerId), winnerAvatarContainer)`
 
     -   Si `result === "draw"` entonces:
 

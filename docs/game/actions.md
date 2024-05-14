@@ -34,7 +34,11 @@ Responsable de ejecutar las acciones en el modelo. Una **acción** es una funci�
     -   si `data.changeList.field === "difficultyLevel"` entonces se invoca [difficulty.setLevel](./difficulty.md#interfaz)
     -   si `data.changeList.field === "player"` entonces se invoca [players.setPlayer](./players.md#interfaz)
 
--   **updatePlayerAvatarURL** _fn_: responsable de agregar las urls de los avatares a los jugadores. handler de [responseEvent](../avatarProvider.md#eventos)
+-   **responseEventHandler** (_data:{eventName:string, responseType: string, resource:{url: string, id: string}}_) _fn_: handler de [responseEvent](../avatarProvider.md#eventos):
+
+    ```
+    players.setAvatarSource(resource)
+    ```
 
 ## Implementación
 

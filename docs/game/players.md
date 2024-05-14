@@ -1,60 +1,90 @@
-# Players _module_
+# players _module_
 
 ## Responsabilidad
 
-configurar a los _players_
+Configurar y manejar a los _players_
 
 ## Interfaz
 
--   **setPlayer** (_settings: {id: string, name: string, role: string}_) _fn_: responsable de configurar a los jugadores.
+-   **setPlayer** (_settings: {id: string, name: string, role: string}_) _fn_: Responsable crear un _player_:
 
--   **reset** _fn_: responsable de resetear los _playersGroup_ y _avatarURL_ a sus valores iniciales
+    ```
+    if(!Boolean(typeof id === "string") OR !Boolean(id)) return
+    playersGroup.set(id, new Player({id, name, role, avatarSources}))
+    ```
 
--   **getPlayerById** (_id: string_) _fn_: retorna el jugador asociado con _id_ usando [utilities.basicDeepCopy](../utilities.md#interfaz), si no existe retorna `{}`
+-   **reset** _fn_: responsable de resetear los _playersGroup_ y _avatarSources_ a sus valores iniciales:
 
--   **getAllPlayers** _fn_: retorna _playersGroup_ usando [utilities.basicDeepCopy](../utilities.md#interfaz)
+    ```
+    [playersGroup, avatarSources].forEach((item) => {item.clear()})
+    ```
 
--   **getPlayerByToken** (_token: string_) _fn_: retorna el jugador asociado con _token_ usando [utilities.basicDeepCopy](../utilities.md#interfaz), si no existe retorna `{}`
+-   **getPlayerById** (_id: string_) _fn_: retorna el jugador asociado con _id_ , si no existe retorna `{}`:
 
--   **getPlayersIdList** _fn_: retorna un _array_ que contiene los _id_ de los jugadores ordenados según su _token_, primero las _x_ y luego los _0_. Si no existe retorna `[]`
+    ```
+    return Object(Object(playersGroup.get(id)).getAllProperties())
+    ```
 
--   **getCPUPlayer** _fn_: retorna al _player_ `player.type === "CPU"`, si no existe regresa `{}`
+-   **getAllPlayers** _fn_: retorna _playersGroup_:
+
+    ```
+    return Object.fromEntries([...playersGroup].map(([key]) => {[key, getPlayerById(key)]}))
+    ```
+
+-   **getPlayerByToken** (_token: string_) _fn_: retorna el jugador asociado con _token_ , si no existe retorna `{}`:
+
+    ```
+    return getPlayerByPropertyValue("token", token)
+    ```
+
+-   **getPlayersIdList** _fn_: retorna un _array_ que contiene los _id_ de los jugadores ordenados según su _order_, si no existe retorna `[]`
+
+    ```
+    return Object.values(getAllPlayers).sort((a, b) => {a.order - b.order}).map((item) => {item.id})
+    ```
+
+-   **getCPUPlayer** _fn_: retorna al _player_ `player.role === "CPU"`, si no existe regresa `{}`
+
+    ```
+    return getPlayerByPropertyValue("role", "CPU")
+    ```
 
 -   **getNamePattern** _fn_: retorna _namePattern_
 
+-   **setAvatarSource** _({url: string, id: string}) fn_: Agrega un _source_ a _avatarSources_:
+
+    ```
+    if(!Boolean(typeof id === "string") OR !Boolean(id)) return
+    avatarSources.set(id, url)
+    ```
+
 ## Implementación
 
--   **playersGroup** _object_: estructura que contiene a los _players_
-
-    ```
-    valores iniciales
-
-    playersGroup: {player1: {id: "player1", name: "player1", role: undefined, getAvatarURL: fn, token: "x"},
-    player2: {id: "player2", name: "player2", role: undefined, getAvatarURL: fn, token: "0"}}
-
-    getAvatarURL = ()=>{
-        if(this.role === "CPU")return avatarURL.CPU
-        if(this.role === "user")return avatarURL.player1
-        return avatarURL[this.id]
-    }
-    ```
-
-    -   _role_ es exclusivo para `type.getType() === "PVSCPU"` y sus valores pueden ser _CPU_ para identificar al _player_ que representa a la computadora y _user_ para representar al usuario
-
--   **avatarURL** _object_: estructura en la que se almacenan los urls de los avatares:
-
-    ```
-    valores iniciales
-    avatarURL: {player1: undefined, player2: undefined, CPU: undefined}
-    ```
-
 -   **namePattern** _string_: expresión regular ([ajustada a la sintaxis del atributo _pattern_](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern#examples)) que define los valores aceptados para _player.name_:
+
     ```
     namePattern = ""
     ```
 
-Requerimientos:
+-   **playersGroup** _map_: Estructura que contiene a los _players_:
 
--   existen _player1_ con el `token = "x"` y _player2_ con el `token = "0"`
--   se pueden modificar los _players_ en cualquier momento y sin fricción
--   en caso que el cliente requiera jugar contra cpu, aleatoriamente se decidirá si el cliente sera _player1_ o _player2_
+    ```
+    {player1: object, player2: object}
+    ```
+
+    -   Su valor inicial es un _map_ vacío
+
+-   **avatarSources** _map_: Estructura en la que se almacenan los urls de los avatares:
+
+    ```
+    {player1: string, player2: string, CPU: string}
+    ```
+
+    -   Su valor inicial es un _map_ vacío
+
+-   **getPlayerByPropertyValue** _(name: string, value: anything) fn_: retorna un _player_ según el valor de una propiedad:
+
+    ```
+    id = Object([...playersGroup.entries()].find((item) => {item.getProperty(name) === value})).getProperty("id")
+    return getPlayerById(id)
+    ```

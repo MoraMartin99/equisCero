@@ -14,3 +14,7 @@ Manejar la vista y el modelo
 -   **matchInputWithSession** (_data_: object de navigationEvent): método para reflejar los datos de session en la interfaz como por ejemplo cargar los nombres en los input y seleccionar correctamente los radio de dificultad. Activado por un [_navigationEvent_](./display/display.md) de tipo previous. Obtiene la información de [_game.session_](./game/game.md) e invoca [_display.action.updateSessionInput_](./display/actions.md) para aplicar los cambios.
         -   [display.dropTokenEvent](./display/display.md#eventos).subscribe(_game.dropTokenEventHandler_)
         -   [game.moveEvent](./game/game.md#eventos).subscribe([display.moveEventHandler](./display/display.md#interfaz), _true_)
+    -   subscribirse a los eventos de _avatarProvider_:
+
+        -   [responseEvent](./avatarProvider.md#eventos).subscribe([game.responseEventHandler](./game/game.md))
+
