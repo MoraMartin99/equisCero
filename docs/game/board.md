@@ -14,19 +14,17 @@ manejar las acciones y estado del tablero
 
     ```
     status: {winnerMove: object, winnerToken: string, result: string}
-
-    - winnerMove es un objeto que contiene las 3 cells de una jugada ganadora en caso que exista, de lo contrario es un objeto vacío
-    - winnerToken contiene el cell.token de winnerMove, si no hay ganador entonces contiene undefined
-    - result puede ser "win" cuando hay un ganador, "draw" cuando es un empate y "noResult" cuando no se cumple ninguno de los anteriores
     ```
+
+    -   _winnerMove_ es un objeto que contiene las 3 _cells_ de una jugada ganadora en caso que exista, de lo contrario es un objeto vacío
+    -   _winnerToken_ contiene el _cell.token_ de _winnerMove_, si no hay ganador entonces contiene _undefined_
+    -   _result_ puede ser _"win"_ cuando hay un ganador, _"draw"_ cuando es un empate y _"noResult"_ cuando no se cumple ninguno de los anteriores
 
 -   **getGroups** _fn_: retorna un objeto con todos los grupos de _cells_ necesarias para aplicar una jugada ganadora
 
     ```
     group: { rows: object, columns: object, diagonals: object, center: object, corners: object, edges: object }
     ```
-
--   **getRandomEmptyCell** _fn_: retorna una celda vacía aleatoria
 
 ## Implementación
 
