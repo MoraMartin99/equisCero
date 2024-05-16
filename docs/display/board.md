@@ -66,8 +66,8 @@ board(boardElement: HTMLElement)
         const cellState = winnerId === "player1"? player1CellState : player2CellState
 
         const sortedCellList = Object.values(winnerMove)
-        .sort((a,b) => {a.cellId.localeCompare(b.cellId)})
-        .map((item) => {boardElement.querySelector(`#${item.cellId}`)})
+        .sort((a,b) => {a.id.localeCompare(b.id)})
+        .map((item) => {boardElement.querySelector(`#${item.id}`)})
 
         sortedCellList.forEach((cell) => {stateQueue.add([ {state: cellState, target: cell} ])})
         ```

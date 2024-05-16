@@ -12,6 +12,7 @@ Responsable de ejecutar las acciones en el modelo. Una **acci√≥n** es una funci√
 -   **init** _fn_: responsable de inicializar el modelo:
 
     -   [moveEventHandler](./game.md#eventos).subscribe(_moveEventHandler_)
+    -   [board.init](./board.md)
 
 -   **navigationEventHandler** _fn_: handler de [navigationEvent](../display/display.md#eventos) para los siguientes casos:
 
