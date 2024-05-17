@@ -72,7 +72,7 @@ Manejar la vista
 
 -   **[elements](./elements.md)** _module_
 -   **[stateQueue(10)](./stateQueue.md)** _module_
--   **[carrousel](./carrousel.md)** _module_
+-   **[carrousel](./carrousel.md)** _module_: `carrousel(document.querySelector("#carrousel"))`
 -   **[actions](./actions.md)** _module_
 -   **[board](./board.md)** _module_: `board(document.querySelector("#board"))`
 -   **[playersContainer](./playersContainer.md)** _module_: `playersContainer(document.querySelector("#playersContainer"))`
