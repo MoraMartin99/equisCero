@@ -79,7 +79,7 @@ State(classList: [class1: string, ...]){
         observer.init(resolve)
         setTimeout(() => {
             reject("maxTolerableTime reached")
-            }, maxTolerableTime)
+            }, maxTolerableTime * 1000)
     })
 
     promise.finally(() => {
