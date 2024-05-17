@@ -4,6 +4,12 @@
 
 Responsable de la navegación entre screens
 
+## Constructor
+
+```
+carrousel(carrouselElement: HTMLElement)
+```
+
 ## Interfaz
 
 -   **nextScreen** _fn_: Responsable de desplazar al usuario a la siguiente _screen_ usando [slideScreen](#implementación). Activa los [navigationEvent](./display.md#eventos). Omite las _screen_ que contienen la clase _disable_:
@@ -68,6 +74,7 @@ Responsable de la navegación entre screens
 
 ## Implementación
 
+-   **carrouselElement** _HTMLElement_
 
 -   **slideScreen** (_settings: {currentScreen: {screen: HTMLElement, state: instancia de [State](./State.md)}, targetScreen: {screen: HTMLElement, state: instancia de [State](./State.md)}}_) _async fn_: **Retorna una promesa** que representa la ejecución del movimiento entre pantallas.
 
@@ -93,8 +100,24 @@ Responsable de la navegación entre screens
     }
     ```
 
+-   **getScreenList** _fn_: retorna `Array.from(carrouselElement.querySelector(".screen"))`
 
 -   **getActiveScreen** _fn_: Retorna `getScreenList().find((item) => {item.matches(".activeScreen")})`
+
+-   **getSiblingScreen** (_referenceScreen: HTMLElement, indexOffset: number_): Retorna el _screen_ con un _index_ relativo a _referenceScreen_ desplazado las posiciones indicadas por _indexOffset_. Ignora las _screen_ con la clase _disable_. Transforma _indexOffset_ para que siempre este contenido dentro de la longitud de la lista de _screens_. Si no se puede regresar _screen_, retorna `undefined`:
+
+    ```
+    screenList = getScreenList().filter((screen) => {
+        return !disableScreenState.getProperty("classList").every((class) => {screen.classList.contains(class)})
+        })
+
+    referenceIndex = screenList.indexOf(referenceScreen)
+    length = screenList.length
+    if(referenceIndex < 0 OR !Number.isInteger(indexOffset)) return undefined
+    targetIndex = (referenceIndex + indexOffset) % length > 0 ? (referenceIndex + indexOffset) % length : length + (referenceIndex + indexOffset) % length
+    return screenList[targetIndex]
+    ```
+
 -   **disableScreenState** _object_: Estado aplicado a _screen_ cuando desee ignorarse dentro de _carrousel_ y no ser transitable. Aplica la clase _disable_
 
     ```
@@ -125,10 +148,8 @@ Responsable de la navegación entre screens
     AnimationState(["slideCenterToLeft", "inactiveLeftScreen"], "slideCenterToLeft")
     ```
 
--   **screenList** _array_: `Array.from(document.querySelector("#carrousel .screen"))`
 -   **resetScreenListState** (_screenList: [screenElement1, ...]_): Elimina de cada _item_ dentro de _screenList_ _slideLeftToCenterState_, _slideCenterToRightState_, _slideRightToCenterState_ y _slideCenterToLeftState_:
 
--   **getCurrentScreen** _fn_: Retorna `screenList.find((item) => {item.matches("")})`
     ```
     screenList.forEach((item) => {
         [slideLeftToCenterState, slideCenterToRightState, slideRightToCenterState, slideCenterToLeftState].forEach((state) => {state.remove(item)})
