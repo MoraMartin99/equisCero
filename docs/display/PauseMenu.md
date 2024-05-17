@@ -14,12 +14,12 @@ PauseMenu(pauseMenuElement: HTMLElement, confirmationMenuElement: HTMLElement)
 
 -   **init** _fn_: inicializa _element_:
 
-    -   Invoca `element.addEventListener("click", clickHandler)`
+    -   Invoca `super.init`
     -   Invoca `confirmationMenu.init`
 
 -   **hide** _fn_: agrega la clase _hide_ a _element_ y oculta _confirmationMenu_:
 
-    -   Invoca `event.trigger({eventName: "interactionEvent", type: "hideMenu", menu: element})`
+    -   Invoca `super.hide`
     -   Invoca _confirmationMenu_.hide
 
 ## Implementación
