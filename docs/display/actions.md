@@ -33,7 +33,7 @@ Responsable de ejecutar las acciones en la vista. Una **acción** es una funció
     -   si `data.type === "invalid"` entonces se invoca `board.setInvalidCell(targetCell.id)`
     -   si `data.type === "valid"` entonces:
         -   Se invoca [board.disableCellSelection](./board.md#interfaz)
-        -   Se invoca `board.dropToken(document.querySelector(targetCell.id), targetCell.value)`
+        -   Se invoca `board.dropToken(targetCell.id, player.token, player.id)`
 
 -   **nextPlayerEventHandler** (_{eventName:string, currentPlayer: object}_) _fn_: responsable de animar el cambio de turno:
 
