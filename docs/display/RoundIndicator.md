@@ -20,7 +20,7 @@ RoundIndicator(element: HTMLElement)
     [player1RoundState, player2RoundState, drawRoundState, currentRoundState].forEach((state) => {state.remove(element)})
     ```
 
--   **setState** (_stateId: string_) _async fn_: configura el _state_ de _element_. Retorna un promesa:
+-   **setState** (_stateId: string_) _async fn_: configura el _state_ de _element_. **Retorna un promesa**:
 
     -   Invoca _reset_
 
