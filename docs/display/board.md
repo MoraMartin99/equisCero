@@ -14,11 +14,15 @@ board(boardElement: HTMLElement)
 
 -   **init**: inicializa el board:
 
-    -   `boardElement.addEventListener("click", selectCell)`
+    ```
+    boardElement.addEventListener("click", selectCell)
+    ```
 
 -   **enableCellSelection** _fn_: activa en el _board_ la capacidad de registrar y emitir un [interactionEvent](./display.md#eventos) de tipo `selectCell`:
 
-    -   Invoca _playingState_.apply(boardElement, 0)
+    ```
+    playingState.apply(boardElement, 0)
+    ```
 
 -   **disableCellSelection** _fn_: desactiva en el _board_ la capacidad de registrar y emitir un [interactionEvent](./display.md#eventos) de tipo `selectCell`:
 
@@ -28,7 +32,9 @@ board(boardElement: HTMLElement)
 
 -   **resetBgColor** _fn_: regresa el _background-color_ del _board_ a sus estado inicial:
 
-    -   Invoca `elements.updateElement(boardElement, {classes: {removeList: [...drawResultState.getProperty("classList"), "player1", "player2"]}})`
+    ```
+    elements.updateElement(boardElement, {classes: {removeList: [...drawResultState.getProperty("classList"), "player1", "player2"]}})
+    ```
 
 -   **reset**: regresa el _board_ a su estado inicial:
 
@@ -40,7 +46,7 @@ board(boardElement: HTMLElement)
 
 -   **setInvalidCell** (_cellId: string_) _fn_: configura una celda como invalida:
 
-    -   `cell = cellList.find((item) => {item.id === cellId})`
+    -   `cell = getCell(cellId)`
     -   Invoca `resetCellState(cell)`
     -   Invoca `invalidMoveState.apply(cell, 0)`
     -   Invoca `vanishState.apply(cell).finally(() => {resetCellState(cell)})`
@@ -80,11 +86,17 @@ board(boardElement: HTMLElement)
 
 -   **cellList** _array_: `Array.from(boardElement.querySelectorAll(".cell"))`
 
+-   **getCell** (_cellId: string_): Retorna la _cell_ asociada a _cellId_ dentro de _cellList_, so no es posible retorna `undefined`:
+
+    ```
+    return cell = cellList.find((item) => {item.id === cellId})
+    ```
+
 -   **resetCellState** (_cell: HTMLElement_) _fn_: Elimina de _cell_ _invalidMoveState_, _vanishState_, _player1CellState_ y _player2CellState_
 
-        ```
-        [invalidMoveState, vanishState, player1CellState, player2CellState].forEach((state) => {state.remove(cell)})
-        ```
+    ```
+    [invalidMoveState, vanishState, player1CellState, player2CellState].forEach((state) => {state.remove(cell)})
+    ```
 
 -   **selectCell** (_e: event_): _click handler del board_. Obtiene el _.cell_ mas cercano utilizando _node.closest_, verifica si _board_ tiene la clase _playing_ y emite un [interactionEvent](./display.md) de `type = "selectCell"`
 
