@@ -15,10 +15,10 @@ ResultMenu(element: HTMLElement)
 -   **setMenu** (_{eventName:string, currentRound: number, winnerId: string, result: string, players: object}_) _fn_: configura _element_:
 
     -   Invoca _reset_
-    -   Invoca _setMenuClasses_.(eventName, winnerId, result)
-    -   Invoca _loadAvatars_ (winnerId, result, players)
-    -   Invoca _loadMessage_.({currentRound, winnerId, result, players})
-    -   Invoca _loadButtons_.(eventName)
+    -   Invoca _setMenuClasses_(eventName, winnerId, result)
+    -   Invoca _loadAvatars_(winnerId, result, players)
+    -   Invoca _loadMessage_({currentRound, winnerId, result, players})
+    -   Invoca _loadButtons_(eventName)
 
 ## Implementación
 
@@ -28,7 +28,11 @@ ResultMenu(element: HTMLElement)
 
 -   **resultButtonContainer** _HTMLelement_: `element.querySelector("> .resultButtonContainer")`
 
--   **resultButtonList** _array_: Lista que contiene todos los _resultButton_
+-   **getResultButtonList** _fn_: Retorna una lista que contiene todos los _resultButton_
+
+    ```
+    return Array.from(resultButtonContainer.querySelectorAll(".resultButton"))
+    ```
 
 -   **reset** _fn_: regresa _element_ a sus estado inicial:
 
@@ -38,8 +42,6 @@ ResultMenu(element: HTMLElement)
     [winnerAvatarContainer, resultMessageContainer, resultButtonContainer].forEach((item) => {
         elements.removeElementList(Array.from(item.querySelectorAll("> *")))
     })
-
-    resultButtonList = []
     ```
 
 -   **setMenuClasses** (_eventName: string, winnerId: string, result: string_) _fn_: configura las classes de _element_
@@ -199,7 +201,7 @@ ResultMenu(element: HTMLElement)
 
 -   **clickHandler** (_e: event_): handler para los _click events_:
 
-    -   Si `resultButtonList.some((item) => {item.contains(e.target)}) === true` entonces:
+    -   Si `getResultButtonList().some((item) => {item.contains(e.target)}) === true` entonces:
         -   `value === e.target.closest(".resultButton").value`
         -   Si `eventTypeList.includes(value) === true` entonces:
             -   `event.trigger({eventName: "interactionEvent", type: value})`
