@@ -2,17 +2,23 @@
 
 ## Responsabilidad
 
-manejar el _gameType_
+Manejar el _gameType_
 
 ## Interfaz
 
--   **SetType** (_type: string_) _fn_: si _isValidType(type) = true_ entonces actualiza el nuevo valor de _type_
--   **getType** _fn_: retorna _type_
--   **reset** _fn_: regresa a _type_ a sus valores iniciales
+-   **setType** (_type: string_) _fn_: Configura el valor de _currentType_:
+
+    ```
+    if(isValidType(type)) currentType = type
+    ```
+
+-   **getType** _fn_: retorna _currentType_
+
+-   **reset** _fn_: regresa a _currentType_ a sus valores iniciales
 
 ## Implementación
 
--   **type** _let_: variable que contiene el _type_ actual. Su valor inicial es _undefined_
+-   **currentType** _string_: variable que contiene el _type_ actual. Su valor inicial es `undefined`
 
 -   **typeList** _array_: Lista que contiene todos los tipos de juego:
 
