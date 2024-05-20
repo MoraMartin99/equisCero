@@ -20,5 +20,11 @@ manejar los rounds:
 
 -   **totalRounds** _string_: rounds totales de la partida. Valor inicial _undefined_
 -   **currentRound** _string_: round actual. Valor inicial 1
--   [library](./rounds/library.md) _module_
--   **isValidTotalRounds** (_totalRounds: string_) _fn_: comprueba que _totalRounds_ esta incluido en _library.getItem("validTotalRoundList")_. Retorna _boolean_
+
+-   **totalRoundList** _array_: Lista que contiene todos los _totalRounds_ válidos:
+
+    ```
+    ["1", "3", "5]
+    ```
+
+-   **isValidTotalRounds** (_totalRounds: string_) _fn_: Retorna `true` si _totalRounds_ esta incluido dentro de _totalRoundList_, de lo contrario retorna `false`

@@ -13,5 +13,11 @@ Manejar el nivel de dificultad del juego
 ## Implementación
 
 -   **level** _string_: almacena el nivel de dificultad, su valor inicial es `undefined`
--   **[library](./difficulty/library.md)** _module_
--   **isValid** (_level: string_) _fn_: valida si _level_ esta incluido dentro de [library.getItem("validLevelList")](./difficulty/library.md)
+
+-   **levelList** _array_: Lista que contiene los niveles de dificultad validos:
+
+    ```
+    ["normal", "hard"]
+    ```
+
+-   **isValid** (_level: string_) _fn_: retorna `true` si _level_ esta incluido dentro de _levelList_, de lo contrario retorna `false`

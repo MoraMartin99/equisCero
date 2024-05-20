@@ -13,5 +13,11 @@ manejar el _gameType_
 ## Implementación
 
 -   **type** _let_: variable que contiene el _type_ actual. Su valor inicial es _undefined_
--   [library](./type/library.md)
--   **isValidType** (_type: string_) _fn_: comprueba que _type_ esta incluido en _library.getItem("validTypeList")_. Retorna _boolean_
+
+-   **typeList** _array_: Lista que contiene todos los tipos de juego:
+
+    ```
+    ["PVSP", "PVSCPU"]
+    ```
+
+-   **isValidType** (_type: string_) _fn_: Retorna `true` si _type_ esta incluido dentro de _typeList_, de lo contrario retorna `false`
