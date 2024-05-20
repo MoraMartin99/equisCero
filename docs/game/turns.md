@@ -11,6 +11,7 @@ Manejar los turnos. Se invoca con `turns(players.getPlayersIdList())`
     -   si `queue.length = 0` entonces `queue.push(playersIdList[0])`
     -   si `queue.length > 0 & queue[lastIndex] == playersIdList[0]` entonces `queue.push(playersIdList[1])`
     -   si `queue.length > 0 & queue[lastIndex] == playersIdList[1]` entonces `queue.push(playersIdList[0])`
+-   **getCurrentTurn** _fn_: retorna `playersIdList.length`
 -   **reset** _fn_: configura _queue_ a su valor inicial
 
 ## Implementación
