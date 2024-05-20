@@ -6,13 +6,19 @@ Manejar el nivel de dificultad del juego
 
 ## Interfaz
 
--   **reset** _fn_: actualiza _level_ a su valor inicial
--   **setLevel** (_level: string_) _fn_: si `isValid(level) === true` entonces actualiza el valor de _level_
--   **getLevel** _fn_: retorna _level_
+-   **reset** _fn_: actualiza _currentLevel_ a su valor inicial
+
+-   **setLevel** (_level: string_) _fn_: Configura el valor de _currentLevel_:
+
+    ```
+    if(isValid(level)) currentLevel = level
+    ```
+
+-   **getLevel** _fn_: retorna _currentLevel_
 
 ## Implementación
 
--   **level** _string_: almacena el nivel de dificultad, su valor inicial es `undefined`
+-   **currentLevel** _string_: almacena el nivel de dificultad actual, su valor inicial es `undefined`
 
 -   **levelList** _array_: Lista que contiene los niveles de dificultad validos:
 
