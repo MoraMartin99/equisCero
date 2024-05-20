@@ -9,17 +9,31 @@ manejar los rounds:
 
 ## Interfaz
 
--   **setTotalRounds** (_totalRounds: string_) _fn_: comprueba si _isValidTotalRounds(totalRounds) = true_ y actualiza el valor de _totalRounds_
+-   **setTotalRounds** _(rounds: string) fn_: Configura _totalRounds_:
+
+    ```
+    if(isValidTotalRounds(rounds)) totalRounds = rounds
+    ```
+
 -   **getTotalRounds** _fn_: retorna _totalRounds_
+
 -   **getCurrentRound** _fn_: retorna _currentRound_
--   **next** _fn_: se actualiza el valor de _currentRound_ a `currentRound++`
+
+-   **next** _fn_: Incrementa en 1 el valor de _currentRound_:
+
+    ```
+    currentRound++
+    ```
+
 -   **reset** _fn_: actualiza _totalRounds_ y _currentRound_ a sus valores iniciales
+
 -   **resetCurrentRound** _fn_: actualiza _currentRound_ a sus valor inicial
 
 ## Implementación
 
--   **totalRounds** _string_: rounds totales de la partida. Valor inicial _undefined_
--   **currentRound** _string_: round actual. Valor inicial 1
+-   **totalRounds** _number_: rounds totales de la partida. Valor inicial _undefined_
+
+-   **currentRound** _number_: round actual. **Valor inicial 1**
 
 -   **totalRoundList** _array_: Lista que contiene todos los _totalRounds_ válidos:
 
