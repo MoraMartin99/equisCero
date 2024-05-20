@@ -73,13 +73,23 @@ const game = (() => {
             _currentRound = 1;
         };
 
-        return { reset, getCurrentRound, setTotalRounds, getTotalRounds, next, validRounds };
+        return {
+            reset,
+            getCurrentRound,
+            setTotalRounds,
+            getTotalRounds,
+            next,
+            validRounds,
+        };
     })();
 
     const _players = (() => {
         const _playerArr = [];
         const basePlayers = (() => {
-            const _base = { player1: { id: "player1", token: "x" }, player2: { id: "player2", token: "0" } };
+            const _base = {
+                player1: { id: "player1", token: "x" },
+                player2: { id: "player2", token: "0" },
+            };
             const getPlayer = (id) => {
                 return { ..._base[id] };
             };
@@ -158,7 +168,15 @@ const game = (() => {
             return regex.test(name);
         };
 
-        return { basePlayers, reset, getAllPlayers, getPlayerById, getPlayerByToken, setPlayer, isValidName };
+        return {
+            basePlayers,
+            reset,
+            getAllPlayers,
+            getPlayerById,
+            getPlayerByToken,
+            setPlayer,
+            isValidName,
+        };
     })();
 
     const _difficultyLevel = (() => {
@@ -433,8 +451,7 @@ const game = (() => {
             const requiredRecordList = _rounds.validRounds.getRoundList().map((round) => {
                 return `round${round}`;
             });
-            const hasRequiredLength =
-                keys.length === requiredRecordList.length && keys.length === _rounds.getTotalRounds();
+            const hasRequiredLength = keys.length === requiredRecordList.length && keys.length === _rounds.getTotalRounds();
             const containsAllItems = keys.every((key) => {
                 return requiredRecordList.includes(key);
             });
@@ -465,9 +482,15 @@ const game = (() => {
         const getTotal = () => {
             const result = {};
             if (_hasAllRecords()) {
-                result["player1TotalWins"] = _countPropertyValue({ winnerId: "player1" });
-                result["player2TotalWins"] = _countPropertyValue({ winnerId: "player2" });
-                result["totalDraws"] = _countPropertyValue({ resultType: "draw" });
+                result["player1TotalWins"] = _countPropertyValue({
+                    winnerId: "player1",
+                });
+                result["player2TotalWins"] = _countPropertyValue({
+                    winnerId: "player2",
+                });
+                result["totalDraws"] = _countPropertyValue({
+                    resultType: "draw",
+                });
                 result["resultType"] = "win";
                 if (result["player1TotalWins"] > result["player2TotalWins"]) {
                     result["winnerId"] = "player1";
@@ -481,10 +504,18 @@ const game = (() => {
             return result;
         };
 
-        return { setRecord, reset, getRecord, getTotal, validResultType, getAllRecords };
+        return {
+            setRecord,
+            reset,
+            getRecord,
+            getTotal,
+            validResultType,
+            getAllRecords,
+        };
     })();
 
     const _board = (() => {
+        /* mejorar este modulo, deberia haber un metodo que permita testear si una jugada es valida o invalida, tambien valorar si es posible incluir el id en cada cells. tiene mas sentido que getSCore sea getStatus  */
         const _cells = {};
 
         const validCells = (() => {
@@ -544,7 +575,10 @@ const game = (() => {
                     if (!group[recordId]) {
                         group[recordId] = { ...recordValue };
                     } else {
-                        group[recordId] = { ...group[recordId], ...recordValue };
+                        group[recordId] = {
+                            ...group[recordId],
+                            ...recordValue,
+                        };
                     }
                 }
             }
@@ -584,6 +618,7 @@ const game = (() => {
             const _currentTurn = _turns.getCurrentTurn();
             const _currentRound = _rounds.getCurrentRound();
             const score = {
+                /* deberia llamarse isDone */
                 done: false,
                 turn: _currentTurn,
                 round: _currentRound,
@@ -658,12 +693,84 @@ const game = (() => {
             console.log(asciiBoard);
         };
 
-        return { validCells, getCell, setCell, reset, getAllRows, getAllColumns, getAllDiagonals, getScore, print };
+        return {
+            validCells,
+            getCell,
+            setCell,
+            reset,
+            getAllRows,
+            getAllColumns,
+            getAllDiagonals,
+            getScore,
+            print,
+        };
     })();
 })();
 
 // este modulo sera el encargado de traer datos externos como las src de las imágenes de los avatares
-const externalResource = (() => {})();
+const externalResource = (() => {
+    //debo crear una funcion que obtenga los avatars a demanda, de esta manera podre usar en pageLoad y tambien si el usuraio decide regresar a home
+})();
+
+// este modulo sera el encargado de manejar utilidades generales
+const utilities = (() => {
+    const isFunction = (value) => typeof value === "function";
+
+    const isElement = (element) => element instanceof Element || element instanceof HTMLDocument;
+
+    const isIterable = (obj) => {
+        if (obj == null) return false;
+        return isFunction(obj[Symbol.iterator]);
+    };
+
+    const isObjectLiteral = (value) => {
+        if (typeof value === "object" && value !== null) return Object.getPrototypeOf(value) === Object.prototype;
+        return false;
+    };
+
+    const basicDeepCopy = (value) => {
+        const isValidIterable = (value) => isIterable(value) && typeof value !== "string";
+        const unpack = (value) => {
+            const unpackObjectLiteral = (object) => ({ ...object });
+            const unpackIterable = (iterable) => [...Array.from(iterable)];
+            if (isObjectLiteral(value)) return unpackObjectLiteral(value);
+            if (isValidIterable(value)) return unpackIterable(value);
+            return value;
+        };
+        value = unpack(value);
+        if (isValidIterable(value)) {
+            return value.map((item) => {
+                if (isObjectLiteral(value) || isValidIterable(value)) return basicDeepCopy(item);
+                return item;
+            });
+        }
+        if (isObjectLiteral(value)) {
+            Object.keys(value).forEach((key) => {
+                if (isObjectLiteral(value[key]) || isValidIterable(value[key])) value[key] = basicDeepCopy(value[key]);
+            });
+        }
+        return value;
+    };
+
+    const isDescendantOf = (element, ancestorElement) => {
+        const areElements = [element, ancestorElement].every((currentElement) => utilities.isElement(currentElement));
+        if (areElements) return ancestorElement.contains(element);
+        return false;
+    };
+
+    const isInPage = (element) => isDescendantOf(element, document.body);
+
+    return {
+        isIterable,
+        isObjectLiteral,
+        isFunction,
+        basicDeepCopy,
+        isElement,
+        isDescendantOf,
+        isInPage,
+    };
+})();
+
 const pubSub = (() => {
     const _subscribers = {};
 
@@ -714,3 +821,477 @@ const pubSub = (() => {
 
     return { subscribe, unsubscribe, publish, getAllSubscribers };
 })();
+
+const display = (() => {
+    const _elements = (() => {
+        const library = (() => {
+            const _library = {};
+            //elementId:{elementId, HTMLId, HTMLTag, classObject, attributes, events, styles, stateIDList, setElement(data)}
+            const getElement = (elementId) => {
+                if (isObjectLiteral(_library[elementId])) return utilities.basicDeepCopy(_library[elementId]);
+                return {};
+            };
+            const getAllElements = () => {
+                return utilities.basicDeepCopy(_library);
+            };
+            return { getElement, getAllElements };
+        })();
+
+        const _setClass = (element, settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            const forEachClass = (element, classList, callback) => {
+                if (utilities.isIterable(classList)) {
+                    for (const currentClass of classList) {
+                        if (typeof currentClass === "string") callback(element, currentClass);
+                    }
+                }
+            };
+            const { addList, removeList } = settings;
+            forEachClass(element, addList, (element, currentClass) => element.classList.add(currentClass));
+            forEachClass(element, removeList, (element, currentClass) => element.classList.remove(currentClass));
+        };
+
+        const _setAttribute = (element, settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            Object.entries(settings).forEach(([name, value]) => {
+                if (typeof value === "string") element.setAttribute(name, value);
+            });
+        };
+
+        const _setContent = (element, settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            const { textContent, innerHTML } = settings;
+            if (typeof textContent === "string") {
+                element.textContent = textContent;
+            } else if (typeof innerHTML === "string") {
+                element.innerHTML = innerHTML;
+            }
+        };
+
+        const _setEvents = (element, settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            const forEachEvent = (element, eventList, callback) => {
+                if (utilities.isIterable(eventList)) {
+                    for (const eventObject of eventList) {
+                        const { event, handler } = utilities.isObjectLiteral(eventObject) ? eventObject : {};
+                        if (!typeof event === "string" || !utilities.isFunction(handler)) return;
+                        callback(element, event, handler);
+                    }
+                }
+            };
+            const { addEventList, removeEventList } = settings;
+            forEachEvent(element, addEventList, (element, event, handler) => element.addEventListener(event, handler));
+            forEachEvent(element, removeEventList, (element, event, handler) => {
+                element.removeEventListener(event, handler);
+            });
+        };
+
+        const _setStyle = (element, settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            Object.entries(settings).forEach(([property, value]) => {
+                if (typeof value === "string") element.style[property] = value;
+            });
+        };
+
+        const updateElement = (element, settings = {}) => {
+            if (!utilities.isElement(element || !utilities.isObjectLiteral(settings))) return;
+            const { HTMLId, classObject, attributes, content, events, styles } = settings;
+            if (typeof HTMLId === "string") element.id = HTMLId;
+            _setEvents(element, events);
+            _setClass(element, classObject);
+            _setAttribute(element, attributes);
+            _setContent(element, content);
+            _setStyle(element, styles);
+        };
+
+        const _createElement = (settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            const { HTMLTag } = settings;
+            const element = document.createElement(`${HTMLTag}`);
+            updateElement(element, settings);
+            return element;
+        };
+
+        const _appendElement = (element, parentElement, order = {}) => {
+            const isValid = (element, parentElement, order) => {
+                const tests = [utilities.isElement(element), utilities.isInPage(parentElement), utilities.isObjectLiteral(order)];
+                return tests.every((test) => test);
+            };
+            if (!isValid(element, parentElement, order)) return;
+            const { type, before } = order;
+            const appendBefore = (element, parentElement, referenceElement) => {
+                parentElement.insertBefore(element, referenceElement);
+            };
+            const appendLast = (element, parentElement) => appendBefore(element, parentElement, null);
+            const appendFirst = (element, parentElement) => {
+                appendBefore(element, parentElement, parentElement.firstChild);
+            };
+            if (type === undefined || type === "lastChild") {
+                appendLast(element, parentElement);
+                return;
+            }
+            if (type === "firstChild") {
+                appendFirst(element, parentElement);
+                return;
+            }
+            if (utilities.isDescendantOf(before, parentElement)) appendBefore(element, parentElement, before);
+        };
+
+        const loadElement = (settings = {}) => {
+            //pendiente conectar con state
+            if (!utilities.isObjectLiteral(settings)) return;
+            const { elementId, appendSettings = {}, data = {}, state = {} } = settings;
+            const { parentElement, order } = utilities.isObjectLiteral(appendSettings) ? appendSettings : {};
+            const elementObject = library.getElement(elementId);
+            if (Object.hasOwn(elementObject, "setElement")) elementObject.setElement(data);
+            const element = _createElement(elementObject);
+            _appendElement(element, parentElement, order);
+        };
+
+        const removeElements = (elementList) => {
+            if (!utilities.isIterable(elementList)) return;
+            for (const element of elementList) if (utilities.isInPage(element)) element.remove();
+        };
+
+        return { library, updateElement, loadElement, removeElements };
+    })();
+    const _states = (() => {
+        const library = (() => {
+            const _library = {
+                currentPlayer: {
+                    stateId: "currentPlayer",
+                    //debo revisar las transition en el caso de que se transisionen muchas propiedades
+                },
+                slideCenterToLeft: {
+                    stateId: "slideCenterToLeft",
+                    classList: ["inactiveLeftScreen", "slideCenterToLeft"],
+                    type: "animation",
+                    animationName: "slideCenterToLeft",
+                },
+                slideRightToCenter: {
+                    stateId: "slideRightToCenter",
+                    classList: ["activeScreen", "slideRightToCenter"],
+                    type: "animation",
+                    animationName: "slideRightToCenter",
+                },
+                slideLeftToCenter: {
+                    stateId: "slideLeftToCenter",
+                    classList: ["activeScreen", "slideLeftToCenter"],
+                    type: "animation",
+                    animationName: "slideLeftToCenter",
+                },
+                slideCenterToRight: {
+                    stateId: "slideCenterToRight",
+                    classList: ["inactiveRightScreen", "slideCenterToRight"],
+                    type: "animation",
+                    animationName: "slideCenterToRight",
+                },
+            };
+            //stateId = {stateId,classList,type:(state, transition, animation),transitionPropertyName :(opcional de transition),animationName: (opcional de animation)}
+            const getState = (stateId) => {
+                if (!utilities.isObjectLiteral(_library[stateId])) return {};
+                return utilities.basicDeepCopy(_library[stateId]);
+            };
+            const getAllStates = () => {
+                return utilities.basicDeepCopy(_library);
+            };
+
+            return { getState, getAllStates };
+        })();
+
+        const _ObserveState = (target = {}) => {
+            if (!utilities.isObjectLiteral(target)) return;
+            const { element, state, hasToNotify, resolve, reject } = target;
+            const { type } = state;
+            const stateHandler = ({ element, hasToNotify, resolve, state }) => {
+                const { classList } = state;
+                const callback = ([{ target }], observer) => {
+                    const hasAllClasses = (target, classList) => {
+                        return classList.every((currentClass) => target.classList.contains(currentClass));
+                    };
+                    if (hasAllClasses(target, classList)) {
+                        if (hasToNotify)
+                            _notifications.sendEvent("stateChange", {
+                                element,
+                                state,
+                            });
+                        observer.disconnect();
+                        resolve({ element, state });
+                    }
+                };
+                const observer = new MutationObserver(callback);
+                observer.observe(element, { attributeFilter: ["class"] });
+            };
+            const animationTransitionHandler = ({ state, resolve, element, hasToNotify }) => {
+                const { type, transitionPropertyName, animationName } = state;
+                const eventStartName = `${type}Start`;
+                const eventEndName = `${type}End`;
+                const stateProperty = (() => {
+                    if (type === "transition") return transitionPropertyName;
+                    if (type === "animation") return animationName;
+                })();
+                const getEventProperty = (e) => {
+                    if (type === "transition") return e.propertyName;
+                    if (type === "animation") return e.animationName;
+                };
+                const getSettings = (eventName, eventHandler, eventListName) => {
+                    return {
+                        events: {
+                            [eventListName]: [{ event: eventName, handler: eventHandler }],
+                        },
+                    };
+                };
+                const createHandler = (eventName, eventHandler) => {
+                    return (e) => {
+                        if (getEventProperty(e) === stateProperty && typeof stateProperty === "string") {
+                            if (hasToNotify)
+                                _notifications.sendEvent(eventName, {
+                                    element,
+                                    state,
+                                });
+                            _elements.updateElement(element, getSettings(eventName, eventHandler, "removeEventList"));
+                            if (eventName === eventEndName) resolve({ element, state });
+                        }
+                    };
+                };
+                const eventStartHandler = (e) => createHandler(eventStartName, eventStartHandler)(e);
+                const eventEndHandler = (e) => createHandler(eventEndName, eventEndHandler)(e);
+                const eventListenersArguments = {
+                    start: {
+                        eventName: eventStartName,
+                        eventHandler: eventStartHandler,
+                    },
+                    end: {
+                        eventName: eventEndName,
+                        eventHandler: eventEndHandler,
+                    },
+                };
+                for (const { eventName, eventHandler } in eventListenersArguments) {
+                    _elements.updateElement(element, getSettings(eventName, eventHandler, "addEventList"));
+                }
+            };
+
+            if (type === "state") {
+                stateHandler({ element, hasToNotify, resolve, state });
+            } else if (type === "transition" || type === "animation") {
+                animationTransitionHandler({
+                    state,
+                    resolve,
+                    element,
+                    hasToNotify,
+                });
+            } else {
+                reject({ element, state });
+            }
+        };
+
+        const setState = (element, stateId, hasToNotify = false) => {
+            const statePromise = new Promise((resolve, reject) => {
+                const state = library.getState(stateId);
+                const isValidCase = (element, state) => {
+                    return utilities.isElement(element) && Boolean(Object.keys(state).length);
+                };
+                if (isValidCase(element, state)) {
+                    _ObserveState({
+                        element,
+                        state,
+                        hasToNotify,
+                        resolve,
+                        reject,
+                    });
+                    _elements.updateElement(element, {
+                        classObject: { addList: state.classList },
+                    });
+                } else {
+                    reject({ element, state });
+                }
+            });
+            statePromise.catch((message) => console.log({ ...message, rejected: true }));
+            return statePromise;
+        };
+
+        async function concatenateState(stateArgumentsList = []) {
+            if (!utilities.isIterable(stateArgumentsList)) return;
+            const isValidArgument = (argumentObject) => {
+                if (utilities.isObjectLiteral(argumentObject)) {
+                    return ["element", "stateId"].every((key) => Object.hasOwn(argumentObject, key));
+                }
+                return false;
+            };
+            for (const stateArgument of Array.from(stateArgumentsList)) {
+                if (!isValidArgument(stateArgument)) continue;
+                const { element, stateId, hasToNotify } = stateArgument;
+                await setState(element, stateId, hasToNotify);
+            }
+        }
+
+        const removeState = (element, stateId) => {
+            const { classList } = library.getState(stateId);
+            _elements.updateElement(element, {
+                classObject: { removeList: classList },
+            });
+        };
+
+        return { library, setState, concatenateState, removeState };
+    })();
+    const _carrousel = (() => {
+        const _getScreenList = () => Array.from(document.querySelectorAll("#carrousel .screen"));
+
+        const _getScreenByIndex = (index, screenList) => {
+            if (!Number.isInteger(index)) return;
+            const _getRelativeIndex = (index, screenList) => {
+                const length = screenList.length;
+                const lastIndex = length - 1;
+                while (index > lastIndex) index - length;
+                while (index < 0) index + length;
+                return index;
+            };
+            return screenList[_getRelativeIndex(index, screenList)];
+        };
+
+        const _getScreenIndex = (screen, screenList) => {
+            const index = screenList.findIndex((currentScreen) => currentScreen === screen);
+            if (index === -1) return;
+            return index;
+        };
+
+        const _getCurrentScreen = (screenList) => {
+            return screenList.find((screen) => screen.classList.contains("activeScreen"));
+        };
+
+        const _getSiblingScreen = (currentScreen, screenList, indexOffset) => {
+            const currentScreenIndex = _getScreenIndex(currentScreen, screenList);
+            const targetScreenIndex = Number.isInteger(currentScreenIndex) ? currentScreenIndex + indexOffset : undefined;
+            return _getScreenByIndex(targetScreenIndex, screenList);
+        };
+
+        const _getNextScreen = (currentScreen, screenList) => _getSiblingScreen(currentScreen, screenList, 1);
+
+        const _getPreviousScreen = (currentScreen, screenList) => _getSiblingScreen(currentScreen, screenList, -1);
+
+        const _getSlideSettings = (settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            const { targetGetter, targetScreenNextStateId, currentScreenNextStateId } = settings;
+            const screenList = _getScreenList();
+            const currentScreen = _getCurrentScreen(screenList);
+            const targetScreen = utilities.isFunction(targetGetter) ? targetGetter(currentScreen, screenList) : undefined;
+            const currentStateIdList = ["slideCenterToLeft", "slideRightToCenter", "slideLeftToCenter", "slideCenterToRight"];
+            return {
+                currentScreen: {
+                    screen: currentScreen,
+                    currentStateIdList,
+                    nextStateId: currentScreenNextStateId,
+                },
+                targetScreen: {
+                    screen: targetScreen,
+                    currentStateIdList,
+                    nextStateId: targetScreenNextStateId,
+                },
+            };
+        };
+
+        const _notify = (slidePromise, currentScreen, targetScreen) => {
+            const areValidScreenObject = (screenObjectList) => {
+                return screenObjectList.every((screenObject) => {
+                    if (!utilities.isObjectLiteral(screenObject)) return false;
+                    return ["screen", "state"].every((property) => Object.hasOwn(screenObject, property));
+                });
+            };
+            if (!areValidScreenObject([currentScreen, targetScreen])) return;
+            slidePromise = Promise.resolve(slidePromise);
+            const getData = (promiseResultList, currentScreen, targetScreen) => {
+                const data = {
+                    currentScreen: { screen: currentScreen.screen },
+                    targetScreen: { screen: targetScreen.screen },
+                };
+                for (const { element, state } of promiseResultList) {
+                    for (const screenObject in data) if (screenObject.screen === element) screenObject.state = state;
+                }
+                return data;
+            };
+            slidePromise.then((value) => {
+                _notifications.sendEvent("slideScreen", getData(value, currentScreen, targetScreen));
+            });
+            slidePromise.catch((reason) => {
+                console.log({
+                    ...getData(reason, currentScreen, targetScreen),
+                    rejected: true,
+                    event: "slideScreen",
+                });
+            });
+        };
+
+        const _slideScreens = (settings = {}) => {
+            if (!utilities.isObjectLiteral(settings)) return;
+            const { currentScreen, targetScreen } = settings;
+            const slideScreen = (screenObject = {}) => {
+                if (!utilities.isObjectLiteral(screenObject)) return;
+                const { screen, currentStateIdList, nextStateId } = screenObject;
+                for (const stateId of currentStateIdList) _states.removeState(screen, stateId);
+                return _states.setState(screen, nextStateId);
+            };
+            const slidePromise = Promise.all([slideScreen(currentScreen), slideScreen(targetScreen)]);
+            _notify(slidePromise, currentScreen, targetScreen);
+        };
+
+        const nextScreen = () => {
+            const targetGetter = _getNextScreen;
+            const currentScreenNextStateId = "slideCenterToLeft";
+            const targetScreenNextStateId = "slideRightToCenter";
+            const settings = _getSlideSettings({
+                targetGetter,
+                targetScreenNextStateId,
+                currentScreenNextStateId,
+            });
+            _slideScreens(settings);
+        };
+
+        const previousScreen = () => {
+            const targetGetter = _getPreviousScreen;
+            const currentScreenNextStateId = "slideCenterToRight";
+            const targetScreenNextStateId = "slideLeftToCenter";
+            const settings = _getSlideSettings({
+                targetGetter,
+                targetScreenNextStateId,
+                currentScreenNextStateId,
+            });
+            _slideScreens(settings);
+        };
+
+        const goTo = (index) => {
+            if (!Number.isInteger(index)) return;
+            const targetScreen = _getScreenByIndex(index, _getScreenList());
+            const currentScreenNextStateId = "slideCenterToLeft";
+            const targetScreenNextStateId = "slideRightToCenter";
+            const settings = _getSlideSettings({
+                targetScreenNextStateId,
+                currentScreenNextStateId,
+            });
+            settings.targetScreen.screen = targetScreen;
+            _slideScreens(settings);
+        };
+
+        return { nextScreen, previousScreen, goTo };
+    })();
+
+    const _notifications = (() => {
+        const sendEvent = (event, data) => pubSub.publish(event, data);
+        return { sendEvent };
+    })();
+
+    const _actions = (() => {})(); // modulo responsable de  interactuar con pubsub
+})();
+
+const testToggle = () => {
+    const arr = Array.from(document.querySelectorAll(".playerCardContainer"));
+    arr.forEach((element) => {
+        element.classList.toggle("currentPlayer");
+    });
+};
+
+const testRadio = (CSSSelector) => {
+    const arr = Array.from(document.querySelectorAll(CSSSelector));
+    arr.forEach((element) => {
+        console.log({ element, value: element.checked });
+    });
+};
