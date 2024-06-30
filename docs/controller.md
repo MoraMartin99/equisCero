@@ -11,15 +11,15 @@ Manejar la vista y el modelo
 -   **sessionEvent**: activado cuando se requiera actualizar información de la sesión del modelo. Instancia de [customEvent](./customEvent.md)
 
     ```
-    data:{eventName:string, changeList:[{field: value}, ...] }
+    data:{eventName:string, changes: {field: value, ...} }
     ```
 
-    donde field puede ser:
+    donde **field** puede ser:
 
     -   **type**, donde su _value_ es _string_
     -   **totalRounds**, donde su _value_ es _string_
     -   **difficultyLevel**, donde su _value_ es _string_
-    -   **player**, donde su _value_ es `{name: string, Id: string, role: string OR undefined}`
+    -   **players**, donde su _value_ es `{ Id: {name: string, Id: string, role: string OR undefined}, ... }`
 
 ### Métodos
 
@@ -83,24 +83,32 @@ Manejar la vista y el modelo
 
         -   Se obtiene `{totalRounds, type} === data.fields.gameTypeRadio`
 
-        -   Se invoca _sessionEvent.trigger({eventName:"sessionEvent", changeList:[{ type }, { totalRounds }]})_
+        -   Se invoca `sessionEvent.trigger({eventName:"sessionEvent", changes: {type, totalRounds}})`
 
     -   Si `data.senderId === "player1NameMenu"` entonces:
 
         -   Se obtiene `{value: name} === data.fields.playerName`, Si `Boolean(name) === false` entonces `name === "player1"`
 
-        -   Si `game.getType() === "PVSP"` entonces se invoca _sessionEvent.trigger({eventName:"sessionEvent", changeList:[{ player: {name, Id: "player1", role: undefined} }]})_
+        -   Si `game.getType() === "PVSP"` entonces se invoca `sessionEvent.trigger({eventName:"sessionEvent", changes : { players : {player1: {name, Id: "player1", role: undefined}}}})`
 
-        -   Si `game.getType() === "PVSCPU"` entonces se reasignara el _player.id_ aleatoriamente para _player1_ y _player2_ para mantener el juego justo, se usara [utilities.getRandomNumbersFromRange](./utilities.md#interfaz)(0,1) para obtener el indice de _["player1", "player2"]_, y se invoca _sessionEvent.trigger({eventName:"sessionEvent", changeList:[{ player: {name, Id: randomPlayerId, role: "user"} }, { player: {name: "CPU", Id: "player1", role: "CPU"} }]})_
+        -   Si `game.getType() === "PVSCPU"` entonces se reasignara el _player.id_ aleatoriamente para _player1_ y _player2_ para mantener el juego justo:
+
+        ```
+        const playersIdList = ["player1", "player2"]
+        const userPlayerId = playersIdList[Math.round( Math.random() * (playersIdList.length - 1))]
+        const cpuPlayerId = playersIdList.filter((item)=> item !== userPlayerId)[0]
+
+        sessionEvent.trigger({eventName:"sessionEvent", changes: { players: { [userPlayerId]: { name, Id: userPlayerId, role: "user" }, [cpuPlayerId]: {name: "CPU", Id: cpuPlayerId, role: "CPU"} } } })
+        ```
 
     -   Si `data.senderId === "player2NameMenu"` entonces:
 
         -   Se obtiene `{value: name} === data.fields.playerName`, Si `Boolean(name) === false` entonces `name === "player2"`
 
-        -   se invoca _sessionEvent.trigger({eventName:"sessionEvent", changeList:[{ player: {name, Id: "player2", role: undefined} }]})_
+        -   Se invoca `sessionEvent.trigger({eventName:"sessionEvent", changes: { players: { player2: {name, Id: "player2", role: undefined} } }})`
 
     -   Si `data.senderId === "difficultyScreen"` entonces:
 
         -   Se obtiene `{value: difficultyLevel} === data.fields.difficultyRadio`
 
-        -   se invoca _sessionEvent.trigger({eventName:"sessionEvent", changeList:[{ difficultyLevel }]})_
+        -   Se invoca `sessionEvent.trigger({eventName:"sessionEvent", changes: { difficultyLevel }]})`
