@@ -3,7 +3,7 @@ export default class Turns {
     #queue = [];
 
     setPlayersIdList(playersIdList) {
-        this.#playersIdList = playersIdList;
+        this.#playersIdList = Boolean(playersIdList?.[Symbol.iterator]) ? Array.from(playersIdList) : [];
     }
 
     getCurrentPlayerId() {
