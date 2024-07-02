@@ -5,7 +5,7 @@ export default class Board {
     #columnList = ["A", "B", "C"];
     #rowList = [1, 2, 3];
 
-    init() {
+    constructor() {
         for (const column of this.#columnList) {
             for (const row of this.#rowList) {
                 const cell = new Cell(column, row);
