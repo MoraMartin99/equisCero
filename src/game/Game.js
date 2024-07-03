@@ -23,9 +23,12 @@ export default class Game {
     #type = new Type();
     #ai = new AI();
 
-    constructor(namePattern) {
-        this.#namePattern = namePattern;
+    constructor() {
         this.moveEvent.subscribe(this.#moveEventHandler);
+    }
+
+    setNamePattern(namePattern) {
+        this.#namePattern = namePattern;
     }
 
     getNamePattern() {
