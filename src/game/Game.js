@@ -25,6 +25,7 @@ export default class Game {
 
     constructor(namePattern) {
         this.#namePattern = namePattern;
+        this.moveEvent.subscribe(this.#moveEventHandler);
     }
 
     getNamePattern() {
@@ -41,11 +42,6 @@ export default class Game {
 
     getTotalRounds() {
         return this.#rounds.getTotalRounds();
-    }
-
-    init() {
-        this.moveEvent.subscribe(this.#moveEventHandler);
-        this.#board.init();
     }
 
     navigationEventHandler = (data) => {
