@@ -6,9 +6,10 @@ export default class Players {
     #avatarSources = (() => {
         const sources = new Map();
         const getSource = (id) => sources.get(id);
+        const getAllSources = () => Object.fromEntries(sources.entries());
         const setSource = (id, source) => sources.set(id, source);
         const clear = () => sources.clear();
-        return { getSource, setSource, clear };
+        return { getSource, setSource, clear, getAllSources };
     })();
 
     constructor(namePattern) {
@@ -73,5 +74,9 @@ export default class Players {
     setAvatarSource({ url, id }) {
         if (!Boolean(typeof id === "string") || !Boolean(id)) return;
         this.#avatarSources.setSource(id, url);
+    }
+
+    getAllAvatarSources() {
+        return this.#avatarSources.getAllSources();
     }
 }
