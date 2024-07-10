@@ -1,10 +1,10 @@
-import Utilities from "./Utilities.js";
+import { isFunction } from "./Utilities.js";
 
 export default class CustomizedEvent {
     #subscribersList = [];
 
     #isFunction(callback) {
-        return new Utilities().isFunction(callback);
+        return isFunction(callback);
     }
 
     trigger(data) {

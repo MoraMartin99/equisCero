@@ -1,4 +1,4 @@
-import Utilities from "../Utilities.js";
+import { isFunction, getRandomItemByWeight } from "../Utilities.js";
 
 export default class AI {
     #player;
@@ -8,7 +8,6 @@ export default class AI {
     #dropToken;
 
     init({ player, difficultyLevel, cellGroupGetter, triggerEvent, dropToken }) {
-        const isFunction = new Utilities().isFunction;
         this.#player = Object(player);
         this.#difficultyLevel = difficultyLevel;
         this.#cellGroupGetter = cellGroupGetter;
@@ -32,7 +31,6 @@ export default class AI {
         if (currentPlayer.id !== this.#player.id) return;
         const self = this;
         const chance = this.#difficultyLevel === "hard" ? 100 : 60;
-        const getRandomItemByWeight = new Utilities().getRandomItemByWeight;
         const cellId = getRandomItemByWeight([
             { item: self.#getIdealCellId, weight: chance },
             { item: self.#getRandomEmptyCellId, weight: 100 - chance },
