@@ -10,10 +10,14 @@ Responsable de crear y modificar los HTMLElements
 
     ```
     change: {HTMLId: string, events: object, classes: object, attributes: object, content: string, styles: object }
-    events: {addList: [{event, handler}, ...], removeList: [{event, handler}, ...]}
-    classes: {addList: [class1, ...], removeList: [class1, ...]}
-    attributes: {addList: [{name: string, value: string}...], removeList: [name: string, ...]}
-    styles: {addList: [{propertyName: string, value: string}...], removeList: [propertyName: string, ...]}
+
+    events: {itemsToAdd: [{event: string, handler: fn}, ...], itemsToRemove: [{event: string, handler: fn}, ...]}
+
+    classes: {itemsToAdd: [class1, ...], itemsToRemove: [class1, ...]}
+
+    attributes: {itemsToAdd: [{name: string, value: string}...], itemsToRemove: [name, ...]}
+
+    styles: {itemsToAdd: [{propertyName: string, value: string}...], itemsToRemove: [propertyName: string, ...]}
     ```
 
     -   _content_ se carga como innerHTML
