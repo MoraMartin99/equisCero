@@ -1,14 +1,11 @@
 import StateObserver from "./StateObserver.js";
-import Elements from "./Elements.js";
 import { isIterable } from "../Utilities.js";
-
-const { isHTMLElement } = Elements;
 
 export default class ClassObserver extends StateObserver {
     observe(element, properties, maxTolerableTime) {
         const { classList } = Object(properties);
         const hasValidArguments = () => {
-            if (!isHTMLElement(element)) return false;
+            if (!Boolean(element instanceof Element)) return false;
             if (!isIterable(classList) || typeof classList === "string") return false;
             return true;
         };
@@ -18,6 +15,7 @@ export default class ClassObserver extends StateObserver {
             : maxTolerableTime > 0
             ? maxTolerableTime * 1000
             : super.minTime;
+        element = Object(element);
 
         const promise = new Promise((resolve, reject) => {
             if (!hasValidArguments()) return reject("invalid arguments");
