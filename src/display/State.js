@@ -1,5 +1,3 @@
-import Elements from "./Elements.js";
-
 export default class State {
     #properties;
     #StateObserver;
@@ -10,10 +8,11 @@ export default class State {
     }
 
     apply(element, maxTolerableTime = 10) {
-        const { classList } = Object(this.#properties);
+        const classList = Array.of(this.getProperty("classList")).flat();
+        element = Object(element);
         const promise = new Promise((resolve, reject) => {
             const observerPromise = this.#StateObserver.observe(element, this.getAllProperties(), maxTolerableTime);
-            Elements.updateElement(element, { classes: { itemsToAdd: classList } });
+            classList.forEach((currentClass) => typeof currentClass === "string" && element.classList?.add?.(currentClass));
             observerPromise
                 .then(() => resolve({ element, properties: this.getAllProperties() }))
                 .catch((reason) => reject({ element, properties: this.getAllProperties(), reason }));
@@ -25,8 +24,9 @@ export default class State {
     }
 
     remove(element) {
-        const { classList } = Object(this.#properties);
-        Elements.updateElement(element, { classes: { itemsToRemove: classList } });
+        const classList = Array.of(this.getProperty("classList")).flat();
+        element = Object(element);
+        classList.forEach((currentClass) => typeof currentClass === "string" && element.classList?.remove?.(currentClass));
     }
 
     getProperty(name) {
