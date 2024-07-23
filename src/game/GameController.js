@@ -51,12 +51,11 @@ export default class GameController {
     #nextPlayerEmitter() {
         this.#game.turns.nextTurn();
         const currentPlayer = this.#game.players.getPlayerById(this.#game.turns.getCurrentPlayerId());
-        this.nextPlayerEvent.trigger({ eventName: "nextPlayerEvent", currentPlayer });
+        this.nextPlayerEvent.trigger({ currentPlayer });
     }
 
     #roundEndEmitter(winnerMove, winnerId, result) {
         this.roundEndEvent.trigger({
-            eventName: "roundEndEvent",
             currentRound: this.#game.rounds.getCurrentRound(),
             winnerMove,
             winnerId,
@@ -68,7 +67,6 @@ export default class GameController {
     #gameEndEmitter(winnerMove) {
         const { totalWins, totalDraws, winnerId, result } = this.#game.results.getTotal();
         this.gameEndEvent.trigger({
-            eventName: "gameEndEvent",
             currentRound: this.#game.rounds.getCurrentRound(),
             winnerMove,
             totalWins,
@@ -118,7 +116,7 @@ export default class GameController {
             type = "invalid";
         }
 
-        this.moveEvent.trigger({ eventName: "moveEvent", type, targetCell, player: currentPlayer });
+        this.moveEvent.trigger({ type, targetCell, player: currentPlayer });
     }
 
     nextRound() {

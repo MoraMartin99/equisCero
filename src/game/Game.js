@@ -9,10 +9,10 @@ import Type from "./Type.js";
 import AI from "./AI.js";
 
 export default class Game {
-    moveEvent = new CustomizedEvent();
-    nextPlayerEvent = new CustomizedEvent();
-    roundEndEvent = new CustomizedEvent();
-    gameEndEvent = new CustomizedEvent();
+    moveEvent = new CustomizedEvent("moveEvent");
+    nextPlayerEvent = new CustomizedEvent("nextPlayerEvent");
+    roundEndEvent = new CustomizedEvent("roundEndEvent");
+    gameEndEvent = new CustomizedEvent("gameEndEvent");
     #namePattern;
     board = new Board();
     players = new Players(this.#namePattern);

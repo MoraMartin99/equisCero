@@ -1,7 +1,7 @@
 import CustomizedEvent from "./CustomizedEvent.js";
 
 export default class AvatarProvider {
-    #responseEvent = new CustomizedEvent();
+    #responseEvent = new CustomizedEvent("responseEvent");
     #properties = {};
 
     constructor({ providerId, baseURL }) {
@@ -21,7 +21,6 @@ export default class AvatarProvider {
         const url = `${this.getProperty("baseURL")}/${String(queryString)}`;
         const trigger = (responseType, url, id) => {
             this.responseEvent.trigger({
-                eventName: "responseEvent",
                 responseType,
                 resource: { url, id },
             });
