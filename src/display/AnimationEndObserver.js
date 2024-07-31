@@ -1,6 +1,6 @@
 import StateObserver from "./StateObserver.js";
 
-export default class AnimationObserver extends StateObserver {
+export default class AnimationEndObserver extends StateObserver {
     observe(element, properties, maxTolerableTime) {
         const { animationName } = Object(properties);
         const hasValidArguments = () => {
