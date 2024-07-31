@@ -1,7 +1,7 @@
 import StateObserver from "./StateObserver.js";
 import { isIterable } from "../Utilities.js";
 
-export default class TransitionObserver extends StateObserver {
+export default class TransitionEndObserver extends StateObserver {
     observe(element, properties, maxTolerableTime) {
         const { propertyNameList } = Object(properties);
         const hasValidArguments = () => {
