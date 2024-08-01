@@ -1004,15 +1004,23 @@ main {
 .cell .token {
     width: var(--cellTokenSize);
     height: var(--cellTokenSize);
-    transform: scale(0);
     opacity: 0;
-    transition: 0.25s linear;
-    transition-property: opacity, transform;
 }
 
-.token.smoothPopOut {
-    transform: scale(1);
-    opacity: 1;
+.smoothPopOut {
+    animation: smoothPopOut 0.25s linear forwards;
+}
+
+@keyframes smoothPopOut {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .token.player1 .fills {
