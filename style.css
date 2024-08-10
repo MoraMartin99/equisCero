@@ -307,6 +307,7 @@ main {
 }
 
 .screen {
+    transform: translateX(-100%);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -315,20 +316,12 @@ main {
     align-items: center;
 }
 
-.inactiveRightScreen {
-    transform: translateX(100%);
-}
-
-.inactiveLeftScreen {
-    transform: translateX(-100%);
-}
-
-.activeScreen {
+.active {
     transform: translateX(0);
 }
 
 .slideLeftToCenter {
-    animation: 0.5s linear slideLeftToCenter;
+    animation: 0.5s linear slideLeftToCenter forwards;
 }
 
 @keyframes slideLeftToCenter {
@@ -342,7 +335,7 @@ main {
 }
 
 .slideCenterToRight {
-    animation: 0.5s linear slideCenterToRight;
+    animation: 0.5s linear slideCenterToRight forwards;
 }
 
 @keyframes slideCenterToRight {
@@ -356,7 +349,7 @@ main {
 }
 
 .slideRightToCenter {
-    animation: 0.5s linear slideRightToCenter;
+    animation: 0.5s linear slideRightToCenter forwards;
 }
 
 @keyframes slideRightToCenter {
@@ -370,7 +363,7 @@ main {
 }
 
 .slideCenterToLeft {
-    animation: 0.5s linear slideCenterToLeft;
+    animation: 0.5s linear slideCenterToLeft forwards;
 }
 
 @keyframes slideCenterToLeft {
