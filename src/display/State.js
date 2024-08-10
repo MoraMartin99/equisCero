@@ -1,17 +1,19 @@
 export default class State {
     #properties;
-    #StateObserver;
+    #stateObserver;
 
-    constructor(properties, StateObserver) {
+    constructor(properties, stateObserver) {
         this.#properties = Object(properties);
-        this.#StateObserver = Object(StateObserver);
+        this.setObserver(stateObserver);
     }
 
     apply(element, maxTolerableTime = 10) {
         const classList = Array.of(this.getProperty("classList")).flat();
         element = Object(element);
         const promise = new Promise((resolve, reject) => {
-            const observerPromise = this.#StateObserver.observe(element, this.getAllProperties(), maxTolerableTime);
+            const observerPromise = this.#stateObserver.observe
+                ? Promise.resolve(this.#stateObserver.observe(element, this.getAllProperties(), maxTolerableTime))
+                : Promise.reject("invalid observer");
             classList.forEach((currentClass) => typeof currentClass === "string" && element.classList?.add?.(currentClass));
             observerPromise
                 .then(() => resolve({ element, properties: this.getAllProperties() }))
@@ -35,5 +37,9 @@ export default class State {
 
     getAllProperties() {
         return { ...this.#properties };
+    }
+
+    setObserver(stateObserver) {
+        this.#stateObserver = Object(stateObserver);
     }
 }
