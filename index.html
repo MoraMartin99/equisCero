@@ -275,8 +275,8 @@
                             <div id="b3" class="cell"></div>
                             <div id="c3" class="cell"></div>
                         </div>
-                        <div class="menuContainer pauseMenuContainer">
-                            <form action="" id="pauseMenu" class="overlayMenu">
+                        <div id="pauseOverlayMenu" class="overlayMenu">
+                            <form action="" id="pauseMenu" class="menuContainer">
                                 <p class="menuTitle">Pausa</p>
                                 <div class="pauseOptionContainer">
                                     <button type="button" class="pauseOptionButton goHomeButton" value="goHome">
@@ -348,8 +348,8 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="menuContainer confirmationMenuContainer hide">
-                            <form action="" id="confirmationMenu" class="overlayMenu">
+                        <div id="confirmationOverlayMenu" class="overlayMenu">
+                            <form action="" id="confirmationMenu" class="menuContainer">
                                 <p class="menuTitle">¿Reiniciar juego?</p>
                                 <div class="buttonContainer">
                                     <button id="cancelButton" class="confirmationButton" type="button"></button>
@@ -357,8 +357,6 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="menuContainer resultMenuContainer hide">
-                            <form action="" id="resultMenu" class="overlayMenu">
                                 <div id="winnerAvatarContainer">
                                     <img src="" alt="ganador" class="skeleton winnerAvatar player1" />
                                 </div>
@@ -381,6 +379,8 @@
                                         </svg>
                                     </button>
                                 </div>
+                        <div id="resultOverlayMenu" class="overlayMenu">
+                            <form action="" id="resultMenu" class="menuContainer">
                             </form>
                         </div>
                         <!-- <div class="menuContainer">
