@@ -1104,7 +1104,8 @@ footer {
 
 /* menuContainer */
 /* -------------------------------------------------------- */
-.menuContainer {
+
+.overlayMenu {
     top: 0;
     position: absolute;
     width: 100%;
@@ -1112,9 +1113,14 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    visibility: hidden;
 }
 
-.menuContainer::before {
+.show {
+    visibility: visible;
+}
+
+.overlayMenu::before {
     position: fixed;
     content: "";
     width: 100vw;
@@ -1124,7 +1130,7 @@ footer {
     left: 0;
 }
 
-.menuContainer .overlayMenu {
+.overlayMenu .menuContainer {
     position: relative;
     display: grid;
     width: 100%;
@@ -1356,15 +1362,15 @@ footer {
     align-items: center;
 }
 
-#resultMenu.player1 .resultButton {
+#resultOverlayMenu.player1 .resultButton {
     border-color: var(--colorPlayer1-100);
 }
 
-#resultMenu.player2 .resultButton {
+#resultOverlayMenu.player2 .resultButton {
     border-color: var(--colorPlayer2-100);
 }
 
-#resultMenu.draw .resultButton {
+#resultOverlayMenu.draw .resultButton {
     border-color: var(--colorDraw100);
 }
 
@@ -1378,17 +1384,20 @@ footer {
     fill-opacity: 1;
 }
 
-#resultMenu.player1 .resultButtonIcon .fills {
+#resultOverlayMenu.player1 .resultButtonIcon .fills {
     fill: var(--colorPlayer1-100);
 }
 
-#resultMenu.player2 .resultButtonIcon .fills {
+#resultOverlayMenu.player2 .resultButtonIcon .fills {
     fill: var(--colorPlayer2-100);
 }
 
-#resultMenu.draw .resultButtonIcon .fills {
+#resultOverlayMenu.draw .resultButtonIcon .fills {
     fill: var(--colorDraw100);
 }
 
 /* -------------------------------------------------------- */
 
+.hide {
+    display: none;
+}
