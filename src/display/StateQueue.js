@@ -13,6 +13,10 @@ export default class StateQueue {
             this.#queue = this.#queue.then(() => Promise.allSettled(Array.from(stateList).map(mapper)));
         }
 
+        return this.getQueue();
+    }
+
+    getQueue() {
         return this.#queue;
     }
 }
