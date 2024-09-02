@@ -73,7 +73,9 @@ html {
     --difficultyMenuMenuTitleFontSize: calc(1em * (19 / 16));
     --difficultyMenuOptionLabelFontSize: calc(1em * (13.91 / 16));
     --playersContainerPlayerNameFontSize: clamp(0.921rem, 4.6vw, 2.209rem);
-    --currentPlayerPlayersContainerPlayerNameFontSize: clamp(1.188rem, 5.94vw, 2.85rem);
+    --currentPlayerPlayersContainerPlayerNameFontSize: calc(
+        var(--currentPlayerPlayerCardContainerScale) * var(--playersContainerPlayerNameFontSize)
+    );
     --pauseMenuPauseOptionButtonFontSize: clamp(1.25rem, 0.692rem + 2.79vw, 2.031rem);
     --pauseMenuMenuTitleFontSize: clamp(1.875rem, 1.049rem + 4.13vw, 3.031rem);
     --confirmationMenuTitleFontSize: clamp(1.25rem, 0.692rem + 2.79vw, 2.031rem);
@@ -101,7 +103,9 @@ html {
     --playersContainerVSIconWidth: clamp(29.49px, 1.584px + 8.72vw, 68.55px);
     --currentPlayerPlayersContainerAvatarImageSize: clamp(55px, 17.19vw, 132px);
     --currentPlayerPlayerNameDecoratorWidthSize: clamp(10.99px, 3.43vw, 26.3759px);
-    --currentPlayerPlayerCardContainerWidth: calc(12ch + (-2 * var(--currentPlayerPlayerNameDecoratorOffset)));
+    --currentPlayerPlayerCardContainerWidth: calc(
+        (12ch + (-2 * var(--currentPlayerPlayerNameDecoratorOffset))) * var(--currentPlayerPlayerCardContainerScale)
+    );
     --currentPlayerPlayerCardContainerHeight: calc(
         var(--currentPlayerPlayersContainerPlayerNameFontSize) + (-1 * var(--currentPlayerPlayerNameDecoratorOffset)) +
             var(--currentPlayerPlayersContainerColumnGap) + var(--currentPlayerPlayersContainerAvatarImageSize)
@@ -219,6 +223,11 @@ html {
     /* rotation */
     /* -------------------------------------------------------- */
     --nopeRotationAngle: 15deg;
+    /* -------------------------------------------------------- */
+
+    /* scale */
+    /* -------------------------------------------------------- */
+    --currentPlayerPlayerCardContainerScale: 1.29;
     /* -------------------------------------------------------- */
 
     font-size: 100%;
@@ -793,7 +802,7 @@ main {
 
 #playersContainer {
     grid-area: players;
-    font-size: var(--currentPlayerPlayersContainerPlayerNameFontSize);
+    font-size: var(--playersContainerPlayerNameFontSize);
     display: grid;
     grid-template-columns: var(--currentPlayerPlayerCardContainerWidth) max-content var(--currentPlayerPlayerCardContainerWidth);
     grid-template-rows: var(--currentPlayerPlayerCardContainerHeight);
@@ -804,14 +813,42 @@ main {
 
 #playersContainer .playerCardContainer {
     font-size: inherit;
-    transition: var(--currentPlayerTransitionDeclaration);
+    color: var(--colorPrimary500);
 }
 
-#playersContainer .playerCardContainer.currentPlayer {
-    display: flex;
-    justify-content: center;
-    font-size: var(--currentPlayerPlayersContainerPlayerNameFontSize);
-    min-width: var(--currentPlayerPlayerCardContainerWidth);
+.playerCardContainer.currentPlayer,
+.playerCardContainer.idlePlayer {
+    animation: var(--ShiftChangeTimer) linear forwards;
+}
+
+.playerCardContainer.currentPlayer {
+    animation-name: highlightCurrentPlayer;
+}
+
+.playerCardContainer.idlePlayer {
+    animation-name: unhighlightCurrentPlayer;
+}
+
+@keyframes highlightCurrentPlayer {
+    from {
+        scale: 1;
+        color: var(--colorPrimary500);
+    }
+    to {
+        color: var(--colorPrimary700);
+        scale: var(--currentPlayerPlayerCardContainerScale);
+    }
+}
+
+@keyframes unhighlightCurrentPlayer {
+    from {
+        scale: var(--currentPlayerPlayerCardContainerScale);
+        color: var(--colorPrimary700);
+    }
+    to {
+        scale: 1;
+        color: var(--colorPrimary500);
+    }
 }
 
 #playersContainer .left {
@@ -833,10 +870,7 @@ main {
     justify-items: center;
     font-size: inherit;
     transition: inherit;
-}
-
-#playersContainer .currentPlayer .playerCard {
-    row-gap: var(--currentPlayerPlayersContainerColumnGap);
+    color: inherit;
 }
 
 #playersContainer .avatarImage {
@@ -845,29 +879,19 @@ main {
     width: var(--playersContainerAvatarImageSize);
     height: var(--playersContainerAvatarImageSize);
     filter: brightness(var(--iconContainerBrightness));
-    transition: inherit;
+    transition: filter var(--ShiftChangeTimer);
 }
 
-#playersContainer .currentPlayer .avatarImage {
-    --playersContainerAvatarImageSize: var(--currentPlayerPlayersContainerAvatarImageSize);
-    --iconContainerBrightness: var(--currentPlayerIconContainerBrightness);
-}
-
+#playersContainer .currentPlayer .avatarImage,
 #playersContainer .avatarImage[src=""] {
-    --iconContainerBrightness: 100%;
+    filter: brightness(var(--currentPlayerIconContainerBrightness));
 }
 
 #playersContainer .playerName {
-    font-size: var(--playersContainerPlayerNameFontSize);
+    font-size: inherit;
     font-weight: 700;
     line-height: 1;
-    color: var(--colorPrimary500);
-    transition: inherit;
-}
-
-#playersContainer .currentPlayer .playerName {
-    font-size: inherit;
-    color: var(--colorPrimary700);
+    color: inherit;
     position: relative;
 }
 
