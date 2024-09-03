@@ -218,6 +218,7 @@ html {
     /* -------------------------------------------------------- */
     --ShiftChangeTimer: 0.25s;
     --nopeRotationTimer: 0.75s;
+    --roundIndicatorAnimationTimer: 0.5s;
     /* -------------------------------------------------------- */
 
     /* rotation */
@@ -1067,22 +1068,59 @@ main {
     width: var(--roundIndicatorWidth);
     height: var(--roundIndicatorHeight);
     background-color: var(--colorPrimary500);
+    animation: var(--roundIndicatorAnimationTimer) linear forwards;
 }
 
 #roundIndicatorContainer .roundIndicator.player1 {
-    background-color: var(--colorPlayer1-100);
+    animation-name: player1RoundIndicator;
 }
 
 #roundIndicatorContainer .roundIndicator.player2 {
-    background-color: var(--colorPlayer2-100);
+    animation-name: player2RoundIndicator;
 }
 
 #roundIndicatorContainer .roundIndicator.draw {
-    background-color: var(--colorDraw100);
+    animation-name: drawRoundIndicator;
 }
 
 #roundIndicatorContainer .roundIndicator.current {
-    background-color: var(--colorPrimary200);
+    animation-name: currentRoundIndicator;
+}
+
+@keyframes currentRoundIndicator {
+    from {
+        background-color: var(--colorPrimary500);
+    }
+    to {
+        background-color: var(--colorPrimary200);
+    }
+}
+
+@keyframes player1RoundIndicator {
+    from {
+        background-color: var(--colorPrimary500);
+    }
+    to {
+        background-color: var(--colorPlayer1-100);
+    }
+}
+
+@keyframes player2RoundIndicator {
+    from {
+        background-color: var(--colorPrimary500);
+    }
+    to {
+        background-color: var(--colorPlayer2-100);
+    }
+}
+
+@keyframes drawRoundIndicator {
+    from {
+        background-color: var(--colorPrimary500);
+    }
+    to {
+        background-color: var(--colorDraw100);
+    }
 }
 
 #gameScreen .pauseButton {
