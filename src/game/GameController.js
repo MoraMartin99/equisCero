@@ -20,6 +20,12 @@ export default class GameController {
     };
     type = { getType: () => this.#game.type.getType() };
     ai = { printChoiceIndex: () => this.#game.ai.printChoiceIndex() };
+    #validPlayerSettings = {
+        playerIds: ["player1", "player2"],
+        tokens: { token1: "x", token2: "0" },
+        roles: ["CPU", "user", undefined],
+        namePattern: "^\\w{1,10}$",
+    };
 
     constructor() {
         this.moveEvent.subscribe(this.#moveEventHandler);
@@ -78,7 +84,7 @@ export default class GameController {
     }
 
     setGame(settings) {
-        let { namePattern, type, totalRounds, difficultyLevel, players, avatarSources } = Object(settings);
+        let { type, totalRounds, difficultyLevel, players, avatarSources } = Object(settings);
         type = String(type).toUpperCase();
         players = Object(players);
         avatarSources = Object(avatarSources);
@@ -91,13 +97,23 @@ export default class GameController {
         const isValidDifficultyLevel = (level) => {
             const levelList = ["normal", "hard"];
             return levelList.includes(level);
+        const isValidPlayerSettings = ({ id, name, role, tokenId }) => {
+            const regex = new RegExp(this.#validPlayerSettings.namePattern);
+            switch (true) {
+                case !this.#validPlayerSettings.playerIds.includes(id):
+                case !regex.test(name):
+                case !this.#validPlayerSettings.roles.includes(role):
+                case !this.#validPlayerSettings.tokens[tokenId]:
+                    return false;
+            }
+            return true;
         };
 
         if (typeof namePattern === "string") this.#game.setNamePattern(namePattern);
         if (isValidType(type)) this.#game.type.setType(type);
         this.#game.rounds.setTotalRounds(totalRounds);
         if (isValidDifficultyLevel(difficultyLevel)) this.#game.difficulty.setLevel(difficultyLevel);
-        for (const playerSettings of Object.values(players)) this.#game.players.setPlayer(Object(playerSettings));
+        for (const settings of Object.values(players)) if (isValidPlayerSettings(settings)) this.#setPlayer(settings);
         for (const [id, url] of Object.entries(avatarSources)) this.#game.players.setAvatarSource({ id, url });
     }
 
@@ -180,5 +196,11 @@ export default class GameController {
                 return false;
         }
         return true;
+    }
+
+    #setPlayer({ id, name, role, tokenId }) {
+        const token = this.#validPlayerSettings.tokens[tokenId];
+        const order = token === "x" ? 1 : token === "0" ? 2 : undefined;
+        this.#game.players.setPlayer({ id, name, role, token, order });
     }
 }

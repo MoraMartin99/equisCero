@@ -1,7 +1,6 @@
 import Player from "./Player.js";
 
 export default class Players {
-    #namePattern;
     #playersGroup = new Map();
     #avatarSources = (() => {
         const sources = new Map();
@@ -12,26 +11,15 @@ export default class Players {
         return { getSource, setSource, clear, getAllSources };
     })();
 
-    constructor(namePattern) {
-        this.#namePattern = namePattern;
-    }
-
-    #isValidName(name) {
-        if (this.#namePattern === undefined) return false;
-        const regex = new RegExp(this.#namePattern);
-        return regex.test(name);
-    }
-
-    setPlayer({ id, name, role }) {
-        if (!Boolean(typeof id === "string") || !Boolean(id) || !this.#isValidName(name)) return;
-        const settings = { player1: { token: "x", order: 1 }, player2: { token: "0", order: 2 } };
+    setPlayer({ id, name, role, token, order }) {
+        if (!Boolean(typeof id === "string") || !Boolean(id)) return;
         const player = new Player({
             id,
             name,
             role,
             avatarSources: this.#avatarSources,
-            token: settings[id]?.token,
-            order: settings[id]?.order,
+            token,
+            order,
         });
         this.#playersGroup.set(id, player);
     }
@@ -65,10 +53,6 @@ export default class Players {
 
     getCPUPlayer() {
         return this.#getPlayerByPropertyValue("role", "CPU");
-    }
-
-    getNamePattern() {
-        return this.#namePattern;
     }
 
     setAvatarSource({ url, id }) {
