@@ -27,6 +27,7 @@ export default class GameController {
         namePattern: "^\\w{1,10}$",
     };
     #validTypeList = ["PVSP", "PVSCPU"];
+    #validDifficultyLevelList = ["normal", "hard"];
 
     constructor() {
         this.moveEvent.subscribe(this.#moveEventHandler);
@@ -90,9 +91,6 @@ export default class GameController {
         players = Object(players);
         avatarSources = Object(avatarSources);
 
-        const isValidDifficultyLevel = (level) => {
-            const levelList = ["normal", "hard"];
-            return levelList.includes(level);
         const isValidPlayerSettings = ({ id, name, role, tokenId }) => {
             const regex = new RegExp(this.#validPlayerSettings.namePattern);
             switch (true) {
@@ -108,7 +106,7 @@ export default class GameController {
         if (typeof namePattern === "string") this.#game.setNamePattern(namePattern);
         if (this.#validTypeList.includes(type)) this.#game.type.setType(type);
         this.#game.rounds.setTotalRounds(totalRounds);
-        if (isValidDifficultyLevel(difficultyLevel)) this.#game.difficulty.setLevel(difficultyLevel);
+        if (this.#validDifficultyLevelList.includes(difficultyLevel)) this.#game.difficulty.setLevel(difficultyLevel);
         for (const settings of Object.values(players)) if (isValidPlayerSettings(settings)) this.#setPlayer(settings);
         for (const [id, url] of Object.entries(avatarSources)) this.#game.players.setAvatarSource({ id, url });
     }
