@@ -103,7 +103,6 @@ export default class GameController {
             return true;
         };
 
-        if (typeof namePattern === "string") this.#game.setNamePattern(namePattern);
         if (this.#validTypeList.includes(type)) this.#game.type.setType(type);
         this.#game.rounds.setTotalRounds(totalRounds);
         if (this.#validDifficultyLevelList.includes(difficultyLevel)) this.#game.difficulty.setLevel(difficultyLevel);
