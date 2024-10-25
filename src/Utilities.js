@@ -11,5 +11,6 @@ const getRandomItemByWeight = (weightList) => {
         if (accumulatedWeight >= randomNumber) return item;
     }
 };
+const isIterable = (value) => Symbol.iterator in Object(value);
 
-export { isFunction, getRandomItemByWeight };
+export { isFunction, getRandomItemByWeight, isIterable };
