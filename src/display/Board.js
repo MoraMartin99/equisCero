@@ -5,14 +5,12 @@ export default class Board {
     #event;
     #eventData;
     #stateQueue;
-    #playingState;
+    #playingClass;
 
     #clickHandler = (e) => {
         const target = e.target;
         const cellList = this.#cellList.map((item) => Object(item).getElement?.());
-        const isPlayable = () => {
-            return this.#playingState.getProperty?.("classList").every?.((item) => this.#element.classList?.contains?.(item));
-        };
+        const isPlayable = () => this.#element.classList?.contains?.(this.#playingClass);
         const closestCell = cellList.find?.((item) => Object(item).contains?.(target));
         if (!isPlayable() || !closestCell) return;
         this.#event.trigger?.({ cellId: Object(closestCell).id, ...this.#eventData });
@@ -22,10 +20,10 @@ export default class Board {
         return Object(this.#cellList.find((item) => Object(Object(item).getElement?.()).id === cellId));
     }
 
-    constructor({ element, cellList, playingState, event, eventData, stateQueue }) {
+    constructor({ element, cellList, playingClass, event, eventData, stateQueue }) {
         this.#element = Object(element);
         this.#cellList = cellList;
-        this.#playingState = Object(playingState);
+        this.#playingClass = playingClass;
         this.#event = Object(event);
         this.#eventData = Object(eventData);
         this.#stateQueue = Object(stateQueue);
@@ -49,11 +47,11 @@ export default class Board {
     }
 
     enableCellSelection() {
-        this.#playingState.apply?.(this.#element);
+        this.#element.classList.add?.(this.#playingClass);
     }
 
     disableCellSelection() {
-        this.#playingState.remove?.(this.#element);
+        this.#element.classList.remove?.(this.#playingClass);
     }
 
     setInvalidCell(cellId) {
