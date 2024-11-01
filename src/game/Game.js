@@ -11,6 +11,8 @@ import AI from "./AI.js";
 export default class Game {
     #moveEvent = new CustomizedEvent("moveEvent");
     #nextPlayerEvent = new CustomizedEvent("nextPlayerEvent");
+    #roundStartEvent = new CustomizedEvent("roundStartEvent");
+    #gameStartEvent = new CustomizedEvent("gameStartEvent");
     #roundEndEvent = new CustomizedEvent("roundEndEvent");
     #gameEndEvent = new CustomizedEvent("gameEndEvent");
     #board = new Board();
@@ -150,12 +152,16 @@ export default class Game {
         if (!this.#isGameSet()) return;
         this.#board.reset();
         this.#turns.resetQueue();
+        this.#roundStartEvent.trigger({
+            currentRound: this.#rounds.getCurrentRound(),
+        });
         this.#nextPlayerEmitter();
     }
 
     restart() {
         this.#rounds.resetCurrentRound();
         this.#results.reset();
+        this.#gameStartEvent.trigger();
         this.initRound();
     }
 
@@ -186,6 +192,7 @@ export default class Game {
             });
         }
         this.#turns.setPlayersIdList(this.#players.getPlayersIdList());
+        this.#gameStartEvent.trigger();
         this.initRound();
     }
 
@@ -213,8 +220,16 @@ export default class Game {
         return this.#nextPlayerEvent;
     }
 
+    get roundStartEvent() {
+        return this.#roundStartEvent;
+    }
+
     get roundEndEvent() {
         return this.#roundEndEvent;
+    }
+
+    get gameStartEvent() {
+        return this.#gameStartEvent;
     }
 
     get gameEndEvent() {
