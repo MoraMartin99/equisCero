@@ -55,17 +55,14 @@ export default class Game {
                 this.#results.setRecord(currentRound, result, winnerId);
                 if (currentRound < totalRounds)
                     this.#roundEndEmitter(winnerMove, winnerId, result);
-                if (currentRound === totalRounds)
-                    this.#gameEndEmitter(winnerMove);
+                if (currentRound === totalRounds) this.#gameEndEmitter(winnerMove);
             }
         }
     };
 
     #nextPlayerEmitter() {
         this.#turns.nextTurn();
-        const currentPlayer = this.#players.getPlayerById(
-            this.#turns.getCurrentPlayerId()
-        );
+        const currentPlayer = this.#players.getPlayerById(this.#turns.getCurrentPlayerId());
         this.nextPlayerEvent.trigger({ currentPlayer });
     }
 
@@ -80,8 +77,7 @@ export default class Game {
     }
 
     #gameEndEmitter(winnerMove) {
-        const { totalWins, totalDraws, winnerId, result } =
-            this.#results.getTotal();
+        const { totalWins, totalDraws, winnerId, result } = this.#results.getTotal();
         this.gameEndEvent.trigger({
             currentRound: this.#rounds.getCurrentRound(),
             winnerMove,
@@ -94,8 +90,7 @@ export default class Game {
     }
 
     setGame(settings) {
-        let { type, totalRounds, difficultyLevel, players, avatarSources } =
-            Object(settings);
+        let { type, totalRounds, difficultyLevel, players, avatarSources } = Object(settings);
         type = String(type).toUpperCase();
         players = Object(players);
         avatarSources = Object(avatarSources);
@@ -125,9 +120,7 @@ export default class Game {
     dropToken = (cellId) => {
         if (!this.#isGameSet()) return;
         const targetCell = this.#board.getCell(cellId);
-        const currentPlayer = this.#players.getPlayerById(
-            this.#turns.getCurrentPlayerId()
-        );
+        const currentPlayer = this.#players.getPlayerById(this.#turns.getCurrentPlayerId());
         let type;
 
         if (targetCell.id === undefined) return;
