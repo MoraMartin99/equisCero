@@ -50,6 +50,7 @@ export default class ResultMenu {
         const target = e.target;
         for (const { element, callback } of this.#optionList) {
             if (Object(element).contains?.(target)) {
+                this.hide();
                 callback();
                 break;
             }
