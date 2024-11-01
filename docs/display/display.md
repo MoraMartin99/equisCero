@@ -60,25 +60,44 @@ Manejar la vista
 
 ### Métodos
 
--   **init** _fn_: **[actions.init](./actions.md#interfaz)**
--   **responseEventHandler** _fn_: **[actions.responseEventHandler](./actions.md#interfaz)**
--   **moveEventHandler** _fn_: [actions.moveEventHandler](./actions.md#interfaz)
--   **nextPlayerEventHandler** _fn_: [actions.nextPlayerEventHandler](./actions.md#interfaz)
--   **roundEndEventHandler** _fn_: [actions.roundEndEventHandler](./actions.md#interfaz)
--   **gameEndEventHandler** _fn_: [actions.gameEndEventHandler](./actions.md#interfaz)
--   **setGameScreen** _fn_: [actions.setGameScreen](./actions.md#interfaz)
+-   **setPlayerNamePattern** _(pattern: string)fn_: Configura la validación de los nombres de los jugadores en los formularios que corresponda
+
+-   **reset** _fn_: Resetea la aplicación a sus estado inicial
+
+-   **setAvatarSource** _fn_: Configura el atributo **src** para los avatares
+
+-   **setGame** _({totalRounds: number, playersList: [{name: string, id: string, avatarSource: string}], ...}) fn_: Configura la pantalla inicial del juego
+
+-   **restartRoundIndicatorContainer** _fn_: Reinicia **RoundIndicatorContainer**
+
+-   **initRound** _(round: number) fn_: Limpia el **board**, resetea y anima el **roundIndicator** correspondiente y reinicia el **playersContainer**
+
+-   **switchCurrentPlayer** _(id: string, cellSelectionIsEnable: true) fn_: Anima el cambio de turno de **playersContainer** y el **board**. Si `cellSelectionIsEnable === true` entonces activa la selección de celda en el **board**
+
+-   **setInvalidCell** _(cellId: string) fn_: Configura una celda del **board** como invalida
+
+-   **dropToken** _(cellId: string, playerId: string) fn_: Configura una celda del **board** para contener el **token** asociado con **playerId** y desactiva selección de celda en el **board**
+
+-   **endRound** _( {currentRound: number, winnerMove: object, winnerId: string, result: string, players: object} ) fn_: Anima el **winnerMove** , anima el **current roundIndicator** según el resultado, configura y muestra el **resultMenu** al finalizar un round
+
+-   **endGame** _( {currentRound: number, winnerMove: object, winnerId: string, result: string, players: object} ) fn_: Anima el **winnerMove** , anima el **current roundIndicator** según el resultado, configura y muestra el **resultMenu** al finalizar el juego
 
 ## Implementación
 
--   **[elements](./elements.md)** _module_
--   **[stateQueue(10)](./stateQueue.md)** _module_
--   **[carrousel](./carrousel.md)** _module_: `carrousel(document.querySelector("#carrousel"))`
--   **[actions](./actions.md)** _module_
--   **[board](./board.md)** _module_: `board(document.querySelector("#board"))`
--   **[playersContainer](./playersContainer.md)** _module_: `playersContainer(document.querySelector("#playersContainer"))`
--   **[roundIndicatorContainer](./roundIndicatorContainer.md)** _module_: `roundIndicatorContainer(document.querySelector("#roundIndicatorContainer"))`
--   **[sessionFormManager](./sessionFormManager.md)** _module_
--   **pauseMenu** _object_: _new [PauseMenu](./PauseMenu.md)(document.querySelector(".pauseMenuContainer"), document.querySelector(".confirmationMenuContainer"))_
--   **resultMenu** _object_: _new [ResultMenu](./ResultMenu.md)(document.querySelector(".resultMenuContainer"))_
--   **gameScreenPauseButton** _object_: _new [PauseButton](./PauseButton.md)(document.querySelector("#gameScreen .pauseButton"))_
--   **headerPauseButton** _object_: _new [PauseButton](./PauseButton.md)(document.querySelector("header .pauseButton"))_
+-   **nextRound** _fn_: Encargada de minimizar el ResultMenu y lanzar el interactionEvent correspondiente
+
+-   **restartRound** _fn_: Encargada de lanzar el **interactionEvent** de tipo **restartRound**
+
+-   **restartGame** _fn_: Encargada de lanzar el **interactionEvent** de tipo **restartGame**
+
+-   **goHome** _fn_: Encargada de lanzar el **interactionEvent** de tipo **goHome**
+
+-   **animateWinnerMove** _(move: object, playerId) fn_: Anima un **winnerMove**
+
+-   **animateRoundIndicator** _(round: number, animationId: string) fn_: Anima un **roundIndicator**
+
+-   **setResultMenu** _(type: "roundEnd" OR "gameEnd", settings: {round: number, winnerId: string, result: string, players: object} ) fn_: Configura el **resultMenu** para mostrar el resultado al finalizar un round o el juego
+
+_Notas_
+
+-   Añadir los eventListeners para lanzar los _pauseMenu_ al tocar el respectivo botón
