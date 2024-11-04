@@ -12,19 +12,23 @@ export default class PlayersContainer {
         this.#stateQueue = Object(stateQueue);
     }
 
-    getCard(id) {
+    #getCardById(id) {
         return Object(this.#playerCardContainerList.find?.((item) => Object(item).getId?.() === id));
     }
 
     setCard({ id, name, source }) {
-        const card = this.getCard(id);
         card.setCard?.({ name, source });
+    #getCardBySlot(slot) {
+        return Object(this.#slots[slot]);
+    }
+
+        const card = this.#getCardBySlot(slot);
     }
 
     highlightCard(id) {
         if (!this.#highlightQueue) this.#highlightQueue = Promise.resolve(this.#stateQueue.getQueue?.());
         this.#highlightQueue = this.#highlightQueue.then(() => {
-            const card = this.getCard(id);
+            const card = this.#getCardById(id);
             const stateIsActive = (element, state) => {
                 return state.getProperty("classList").every((item) => element.classList.contains(item));
             };
@@ -45,7 +49,8 @@ export default class PlayersContainer {
 
     restart() {
         const list = this.#playerCardContainerList.map((item) => item.getElement());
-        const callback = (element) => [this.#highlightState, this.#unhighlightState].forEach((item) => item.remove(element));
+        const callback = (element) =>
+            [this.#highlightState, this.#unhighlightState].forEach((item) => item.remove(element));
         list.forEach(callback);
     }
 
