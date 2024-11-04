@@ -3,12 +3,13 @@ export default class PlayerCardContainer {
     #id;
     #avatarImage;
     #playerNameElement;
+    #idAffectedElements;
 
-    constructor({ element, id, avatarImage, playerNameElement }) {
+    constructor({ element, avatarImage, playerNameElement }) {
         this.#element = Object(element);
-        this.#id = id;
         this.#avatarImage = Object(avatarImage);
         this.#playerNameElement = Object(playerNameElement);
+        this.#idAffectedElements = [this.#element, this.#avatarImage.getElement()];
     }
 
     getElement() {
@@ -19,13 +20,24 @@ export default class PlayerCardContainer {
         return this.#id;
     }
 
-    setCard({ name, source }) {
+    set({ name, source, id }) {
         if (name) this.#playerNameElement.textContent = name;
         if (source) this.#avatarImage.setSource?.(source);
+        if (id) {
+            this.#resetId();
+            this.#id = String(id);
+            this.#idAffectedElements.forEach((item) => item.classList.add(this.#id));
+        }
+    }
+
+    #resetId() {
+        this.#idAffectedElements.forEach((item) => item.classList.remove(this.#id));
     }
 
     reset() {
         this.#playerNameElement.textContent = "";
         this.#avatarImage.reset?.();
+        this.#resetId();
+        this.#id = undefined;
     }
 }

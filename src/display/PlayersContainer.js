@@ -1,5 +1,6 @@
 export default class PlayersContainer {
     #playerCardContainerList;
+    #slots;
     #highlightState;
     #unhighlightState;
     #stateQueue;
@@ -7,6 +8,7 @@ export default class PlayersContainer {
 
     constructor({ playerCardContainerList, highlightState, unhighlightState, stateQueue }) {
         this.#playerCardContainerList = Object(playerCardContainerList);
+        this.#slots = { 1: this.#playerCardContainerList[0], 2: this.#playerCardContainerList[1] };
         this.#highlightState = Object(highlightState);
         this.#unhighlightState = Object(unhighlightState);
         this.#stateQueue = Object(stateQueue);
@@ -16,13 +18,13 @@ export default class PlayersContainer {
         return Object(this.#playerCardContainerList.find?.((item) => Object(item).getId?.() === id));
     }
 
-    setCard({ id, name, source }) {
-        card.setCard?.({ name, source });
     #getCardBySlot(slot) {
         return Object(this.#slots[slot]);
     }
 
+    setCard(slot, { id, name, source }) {
         const card = this.#getCardBySlot(slot);
+        card.set?.({ id, name, source });
     }
 
     highlightCard(id) {
