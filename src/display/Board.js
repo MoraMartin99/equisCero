@@ -55,11 +55,11 @@ export default class Board {
     }
 
     setInvalidCell(cellId) {
-        this.#getCell(cellId).setInvalid?.();
+        return this.#getCell(cellId).setInvalid?.();
     }
 
     dropToken(cellId, tokenElement) {
-        this.#getCell(cellId).dropToken?.(tokenElement);
+        return this.#getCell(cellId).dropToken?.(tokenElement);
     }
 
     setCellState(cellId, state, hasToWait) {
