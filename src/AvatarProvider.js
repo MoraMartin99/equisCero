@@ -17,7 +17,7 @@ export default class AvatarProvider {
         return this.#properties[name];
     }
 
-    #getAvatar(resourceId, queryString, fallbackAvatarURL) {
+    getAvatar(resourceId, queryString, fallbackAvatarURL) {
         const url = `${this.getProperty("baseURL")}/${String(queryString)}`;
         const trigger = (responseType, url, id) => {
             this.responseEvent.trigger({
@@ -35,14 +35,6 @@ export default class AvatarProvider {
                 trigger("fail", String(fallbackAvatarURL), resourceId);
                 console.error("no se pudo obtener el recurso: %o", reason);
             });
-        });
-    }
-
-    getAvatars(settingList = [{ resourceId, queryString, fallbackAvatarURL }]) {
-        settingList = Array.of(settingList).flat();
-        settingList.forEach((item) => {
-            const { resourceId, queryString, fallbackAvatarURL } = Object(item);
-            this.#getAvatar(resourceId, queryString, fallbackAvatarURL);
         });
     }
 }
