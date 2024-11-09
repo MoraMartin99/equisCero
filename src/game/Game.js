@@ -53,8 +53,7 @@ export default class Game {
                 this.#nextPlayerEmitter();
             } else {
                 this.#results.setRecord(currentRound, result, winnerId);
-                if (currentRound < totalRounds)
-                    this.#roundEndEmitter(winnerMove, winnerId, result);
+                if (currentRound < totalRounds) this.#roundEndEmitter(winnerMove, winnerId, result);
                 if (currentRound === totalRounds) this.#gameEndEmitter(winnerMove);
             }
         }
@@ -109,12 +108,9 @@ export default class Game {
 
         if (this.#validTypeList.includes(type)) this.#type.setType(type);
         this.#rounds.setTotalRounds(totalRounds);
-        if (this.#validDifficultyLevelList.includes(difficultyLevel))
-            this.#difficulty.setLevel(difficultyLevel);
-        for (const settings of Object.values(players))
-            if (isValidPlayerSettings(settings)) this.#setPlayer(settings);
-        for (const [id, url] of Object.entries(avatarSources))
-            this.#players.setAvatarSource({ id, url });
+        if (this.#validDifficultyLevelList.includes(difficultyLevel)) this.#difficulty.setLevel(difficultyLevel);
+        for (const settings of Object.values(players)) if (isValidPlayerSettings(settings)) this.#setPlayer(settings);
+        for (const [id, url] of Object.entries(avatarSources)) this.#players.setAvatarSource({ id, url });
     }
 
     dropToken = (cellId) => {
