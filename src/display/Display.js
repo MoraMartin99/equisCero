@@ -112,10 +112,11 @@ export default class Display {
             element: document.querySelector("#homeMenu"),
             fieldsExtractorCallback: (element) => {
                 const fields = Object.fromEntries(new FormData(element));
-                const type = String(Array.of(fields.gameTypeRadio?.match(/(?<= )[a-zA-Z]+$/)).flat()[0]);
-                const totalRounds = Number(Array.of(fields.gameTypeRadio?.match(/^\d(?= )/)).flat()[0]);
+                const id = Object.keys(fields)[0];
+                const type = String(Array.of(fields[id]?.match(/(?<= )[a-zA-Z]+$/)).flat()[0]);
+                const totalRounds = Number(Array.of(fields[id]?.match(/^\d(?= )/)).flat()[0]);
 
-                return { type, totalRounds };
+                return { [id]: { type, totalRounds } };
             },
             nextScreenTriggerList: Array.from(document.querySelectorAll("#homeMenu .unstyledRadio")),
             avatarManager: new AvatarManager(
