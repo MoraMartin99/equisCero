@@ -472,8 +472,6 @@ export default class Display {
 
     #restartGame = () => this.interactionEvent.trigger({ type: "restartGame" });
 
-    #goHome = () => this.interactionEvent.trigger({ type: "goHome" });
-
     #animateWinnerMove(move, playerId) {
         const cellStates = {
             player1: new State(
@@ -506,7 +504,7 @@ export default class Display {
             case type === "gameEnd":
                 optionList.push(
                     { element: createResultButton("restartGame"), callback: this.#restartGame },
-                    { element: createResultButton("goHome"), callback: this.#goHome }
+                    { element: createResultButton("goHome"), callback: this.reset }
                 );
                 classList.push("gameResult");
             case result === "draw":
