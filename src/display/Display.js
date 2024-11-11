@@ -344,16 +344,14 @@ export default class Display {
         );
     }
 
-    reset() {
+    reset = () => {
         const list = [
             this.#homeSessionForm,
             this.#player1NameSessionForm,
             this.#player2NameSessionForm,
             this.#difficultySessionForm,
             this.#board,
-            [this.#pauseMenu, this.#resultMenu].map((item) => {
-                return this.#getOverlayMenuResetAdapter(item);
-            }),
+            ...[this.#pauseMenu, this.#resultMenu].map((item) => this.#getOverlayMenuResetAdapter(item)),
             this.#playersContainer,
             this.#roundIndicatorContainer,
             this.#carrousel,
@@ -361,7 +359,7 @@ export default class Display {
 
         list.forEach((item) => Object(item).reset());
         this.#interactionEvent.trigger({ type: "goHome" });
-    }
+    };
 
     setAvatarSource(source, id) {
         const list = [
