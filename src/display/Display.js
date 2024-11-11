@@ -229,13 +229,15 @@ export default class Display {
             titleElement: document.querySelector("#confirmationOverlayMenu .menuTitle"),
         };
 
+        this.#confirmationMenu = new ConfirmationMenu(CMSettings);
+
         const PMSettings = {
             overlayMenu: createOverlayMenu(document.querySelector("#pauseOverlayMenu")),
             confirmationMenu: this.#confirmationMenu,
             options: {
                 goHome: {
                     element: document.querySelector("#pauseOverlayMenu .goHomeButton"),
-                    callback: () => this.reset,
+                    callback: this.reset,
                     title: "¿Ir al home?",
                 },
                 restartGame: {
@@ -245,7 +247,7 @@ export default class Display {
                 },
                 restartRound: {
                     element: document.querySelector("#pauseOverlayMenu .restartRoundButton"),
-                    callback: () => this.#restartRound,
+                    callback: this.#restartRound,
                     title: "¿Reiniciar round?",
                 },
             },
@@ -311,7 +313,7 @@ export default class Display {
         this.#player2NameSessionForm = new SessionForm(pn2sfSettings);
         this.#difficultySessionForm = new SessionForm(dsfSettings);
         this.#board = new Board(boardSettings);
-        this.#confirmationMenu = new ConfirmationMenu(CMSettings);
+
         this.#pauseMenu = new PauseMenu(PMSettings);
         this.#resultMenu = new ResultMenu(RMSettings);
         this.#playersContainer = createPlayersContainer();
