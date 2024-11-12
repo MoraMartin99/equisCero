@@ -463,6 +463,14 @@ export default class Display {
         this.#endStage("gameEnd", settings);
     }
 
+    disableScreenNavigation(screenId) {
+        this.#carrousel.disableScreen(screenId);
+    }
+
+    enableScreenNavigation(screenId) {
+        this.#carrousel.enableScreen(screenId);
+    }
+
     #getOverlayMenuResetAdapter = (overLayMenu) => {
         return { reset: () => Object(overLayMenu).hide() };
     };
