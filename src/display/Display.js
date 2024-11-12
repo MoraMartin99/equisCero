@@ -378,7 +378,7 @@ export default class Display {
 
         if (Number.isInteger(totalRounds)) {
             this.#roundIndicatorContainer.reset();
-            for (let round = 1; round < totalRounds; round++) {
+            for (let round = 1; round <= totalRounds; round++) {
                 roundIndicatorList.push(new RoundIndicator(createRoundIndicatorElement(round), round));
             }
             roundIndicatorList.forEach((item) => this.#roundIndicatorContainer.addIndicator(item));
