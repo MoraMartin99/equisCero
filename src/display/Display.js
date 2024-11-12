@@ -384,8 +384,8 @@ export default class Display {
             roundIndicatorList.forEach((item) => this.#roundIndicatorContainer.addIndicator(item));
         }
 
-        playersList.forEach?.(({ name, id, avatarSource, slot }) => {
-            this.#playersContainer.setCard(slot, { name, id, avatarSource });
+        playersList.forEach?.(({ name, id, avatarSource: source, slot }) => {
+            this.#playersContainer.setCard(slot, { name, id, source });
         });
     }
 
