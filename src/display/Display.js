@@ -213,6 +213,7 @@ export default class Display {
             event: this.#interactionEvent,
             stateQueue: this.#stateQueue,
             cellList: Array.from(document.querySelectorAll("#board .cell")).map((item) => createCell(item)),
+            eventData: { type: "selectCell" },
         };
 
         const createOverlayMenu = (element) =>
