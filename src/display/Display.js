@@ -508,33 +508,42 @@ export default class Display {
         let messageElement;
         const classList = [];
 
-        switch (true) {
-            case type === "roundEnd":
-                optionList.push({ element: createResultButton("nextRound"), callback: this.#nextRound });
-            case type === "gameEnd":
-                optionList.push(
-                    { element: createResultButton("restartGame"), callback: this.#restartGame },
-                    { element: createResultButton("goHome"), callback: this.reset }
-                );
-                classList.push("gameResult");
-            case result === "draw":
-                avatarDisplayElement = this.#winnerAvatarDisplayElementFactory.create("mask", {
-                    sources: { left: players["player1"].avatarSource, right: players["player2"].avatarSource },
-                });
-                messageElement = createMessageElement("draw");
-                classList.push("draw");
-            case result === "win":
-                avatarDisplayElement = this.#winnerAvatarDisplayElementFactory.create("image", {
-                    source: players[winnerId].avatarSource,
-                });
-                classList.push(winnerId);
-            case result === "win" && type === "roundEnd":
-                messageElement = createMessageElement("roundWin", {
-                    playerName: players[winnerId].name,
-                    round: round,
-                });
-            case result === "win" && type === "gameEnd":
-                messageElement = createMessageElement("gameWin", { playerName: players[winnerId].name });
+        if (type === "roundEnd") {
+            optionList.push({ element: createResultButton("nextRound"), callback: this.#nextRound });
+        }
+
+        if (type === "gameEnd") {
+            optionList.push(
+                { element: createResultButton("restartGame"), callback: this.#restartGame },
+                { element: createResultButton("goHome"), callback: this.reset }
+            );
+            classList.push("gameResult");
+        }
+
+        if (result === "draw") {
+            avatarDisplayElement = this.#winnerAvatarDisplayElementFactory.create("mask", {
+                sources: { left: players["player1"].avatarSource, right: players["player2"].avatarSource },
+            });
+            messageElement = createMessageElement("draw");
+            classList.push("draw");
+        }
+
+        if (result === "win") {
+            avatarDisplayElement = this.#winnerAvatarDisplayElementFactory.create("image", {
+                source: players[winnerId].avatarSource,
+            });
+            classList.push(winnerId);
+        }
+
+        if (result === "win" && type === "roundEnd") {
+            messageElement = createMessageElement("roundWin", {
+                playerName: players[winnerId].name,
+                round: round,
+            });
+        }
+
+        if (result === "win" && type === "gameEnd") {
+            messageElement = createMessageElement("gameWin", { playerName: players[winnerId].name });
         }
 
         this.#resultMenu.set({ optionList, avatarDisplayElement, messageElement, classList });
