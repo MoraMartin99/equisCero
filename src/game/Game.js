@@ -189,7 +189,7 @@ export default class Game {
         switch (true) {
             case this.#type.getType() === undefined:
             case this.#rounds.getTotalRounds() === undefined:
-            case this.#difficulty.getLevel() === undefined:
+            case this.#type.getType() === "PVSCPU" && this.#difficulty.getLevel() === undefined:
             case this.#players.getPlayersIdList().length < 2:
                 return false;
         }
