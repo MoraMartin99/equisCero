@@ -286,18 +286,9 @@ export default class Display {
                 new AnimationEndObserver()
             );
 
-            const unhighlightState = new State(
-                {
-                    classList: ["idlePlayer"],
-                    animationName: "unhighlightCurrentPlayer",
-                },
-                new AnimationEndObserver()
-            );
-
             return new PlayersContainer({
                 playerCardContainerList: [slot1Card, slot2Card],
                 highlightState,
-                unhighlightState,
                 stateQueue: this.#stateQueue,
             });
         };

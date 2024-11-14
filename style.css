@@ -808,22 +808,14 @@ main {
     column-gap: var(--playersContainerColumnGap);
 }
 
-#playersContainer .playerCardContainer {
+.playerCardContainer {
     font-size: inherit;
     color: var(--colorPrimary500);
-}
-
-.playerCardContainer.currentPlayer,
-.playerCardContainer.idlePlayer {
-    animation: var(--ShiftChangeTimer) linear forwards;
+    animation: unhighlightCurrentPlayer var(--ShiftChangeTimer) linear forwards;
 }
 
 .playerCardContainer.currentPlayer {
     animation-name: highlightCurrentPlayer;
-}
-
-.playerCardContainer.idlePlayer {
-    animation-name: unhighlightCurrentPlayer;
 }
 
 @keyframes highlightCurrentPlayer {
