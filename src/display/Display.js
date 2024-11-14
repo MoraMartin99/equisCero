@@ -449,7 +449,7 @@ export default class Display {
     #endStage(type, settings) {
         const { currentRound, winnerMove, winnerId, result, players } = Object(settings);
         const stateId = result === "draw" ? "draw" : winnerId;
-        const promise = this.#animateWinnerMove(winnerMove, winnerId);
+        const promise = result === "draw" ? this.#animateDraw() : this.#animateWinnerMove(winnerMove, winnerId);
 
         this.#setIndicatorState(currentRound, stateId);
         this.#setResultMenu(type, { round: currentRound, winnerId, result, players });
@@ -481,6 +481,15 @@ export default class Display {
     #restartRound = () => this.interactionEvent.trigger({ type: "restartRound" });
 
     #restartGame = () => this.interactionEvent.trigger({ type: "restartGame" });
+
+    #animateDraw() {
+        const state = new State(
+            { classList: ["draw"], animationName: "boardBackgroundColorToDrawColor" },
+            new AnimationEndObserver()
+        );
+
+        return this.#board.setState(state, false);
+    }
 
     #animateWinnerMove(move, playerId) {
         const cellStates = {
