@@ -35,9 +35,8 @@ Manejar el juego
 -   **gameEndEvent**: activado cuando finaliza el juego. Es una instancia de [CustomEvent](../customEvent.md)
 
     ```
-    data:{eventName:string, currentRound: number, winnerMove: object, player1TotalWins: number, player2TotalWins: number, totalDraws: number, result: string, winnerId: string, players: object }
+    data:{ roundResult: { currentRound: number, winnerMove: object, winnerId: string, result: string, players: object }, gameResult: { totalWins: {playerN: number, ...}, totalDraws: number, result: string, winnerId: string, players: object } }
     ```
-
     -   los valores de _winnerMove_ y _result_ son explicados en [board.getStatus](./board.md#interfaz)
 
 ### Métodos
