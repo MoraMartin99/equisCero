@@ -14,10 +14,13 @@ export default class State {
             const observerPromise = this.#stateObserver.observe
                 ? Promise.resolve(this.#stateObserver.observe(element, this.getAllProperties(), maxTolerableTime))
                 : Promise.reject("invalid observer");
-            classList.forEach((currentClass) => typeof currentClass === "string" && element.classList?.add?.(currentClass));
+
             observerPromise
                 .then(() => resolve({ element, properties: this.getAllProperties() }))
                 .catch((reason) => reject({ element, properties: this.getAllProperties(), reason }));
+            classList.forEach(
+                (currentClass) => typeof currentClass === "string" && element.classList?.add?.(currentClass)
+            );
         });
 
         promise.catch((reason) => console.error("no se pudo aplicar el estado: %o", reason));
