@@ -29,12 +29,15 @@ export default class SessionForm {
         this.#nextScreenCallback = nextScreenCallback;
         this.#previousScreenCallback = previousScreenCallback;
         this.#fieldsExtractorCallback = fieldsExtractorCallback;
-        this.#previousScreenTriggerList = isIterable(previousScreenTriggerList) ? Array.from(previousScreenTriggerList) : [];
+        this.#previousScreenTriggerList = isIterable(previousScreenTriggerList)
+            ? Array.from(previousScreenTriggerList)
+            : [];
         this.#nextScreenTriggerList = isIterable(nextScreenTriggerList) ? Array.from(nextScreenTriggerList) : [];
         this.#playerNameInputList = isIterable(playerNameInputList) ? Array.from(playerNameInputList) : [];
         this.#avatarManager = Object(avatarManager);
 
         this.#element.addEventListener?.("click", this.#clickHandler);
+        this.#element.addEventListener?.("keydown", this.#keyDownHandler);
     }
 
     getElement() {
@@ -58,6 +61,21 @@ export default class SessionForm {
     setAvatarSources(src, resourceId) {
         this.#avatarManager.setSources?.(src, resourceId);
     }
+
+    #keyDownHandler = (e) => {
+        const key = e.key;
+        const target = e.target;
+        const isPlayerNameInput = this.#playerNameInputList.some((item) => {
+            return Object(item).getElement?.().contains?.(target);
+        });
+        const nextTriggerElement = Object(this.#nextScreenTriggerList[0]);
+
+        if (key === "Enter" && isPlayerNameInput) {
+            e.preventDefault();
+            nextTriggerElement.click?.();
+            target.blur?.();
+        }
+    };
 
     #clickHandler = (e) => {
         const target = e.target;
