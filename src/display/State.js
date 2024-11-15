@@ -28,10 +28,17 @@ export default class State {
         return promise;
     }
 
+    #reflow(element) {
+        element.offsetHeight;
+    }
+
     remove(element) {
         const classList = Array.of(this.getProperty("classList")).flat();
         element = Object(element);
-        classList.forEach((currentClass) => typeof currentClass === "string" && element.classList?.remove?.(currentClass));
+        classList.forEach(
+            (currentClass) => typeof currentClass === "string" && element.classList?.remove?.(currentClass)
+        );
+        this.#reflow(element);
     }
 
     getProperty(name) {
