@@ -29,8 +29,10 @@ export default class PlayersContainer {
         if (!this.#highlightQueue) this.#highlightQueue = Promise.resolve(this.#stateQueue.getQueue?.());
         this.#highlightQueue = this.#highlightQueue.then(() => {
             const element = this.#getCardById(id).getElement();
-            this.restart();
-            return this.#stateQueue.add?.([{ state: this.#highlightState, element }]);
+            return this.#stateQueue.getQueue().then(() => {
+                this.restart();
+                return this.#stateQueue.add?.([{ state: this.#highlightState, element }]);
+            });
         });
 
         return this.#highlightQueue;
