@@ -437,22 +437,26 @@ export default class Display {
         return Promise.resolve(this.#board.dropToken(cellId, createToken(playerId)));
     }
 
-    #endStage(type, settings) {
-        const { currentRound, winnerMove, winnerId, result, players } = Object(settings);
+    #animateResult({ currentRound, winnerMove, winnerId, result }) {
         const stateId = result === "draw" ? "draw" : winnerId;
         const promise = result === "draw" ? this.#animateDraw() : this.#animateWinnerMove(winnerMove, winnerId);
 
         this.#setIndicatorState(currentRound, stateId);
-        this.#setResultMenu(type, { round: currentRound, winnerId, result, players });
+        return promise;
+    }
+
+    endRound({ currentRound, winnerMove, winnerId, result, players }) {
+        const promise = this.#animateResult({ currentRound, winnerMove, winnerId, result });
+
+        this.#setResultMenu("roundEnd", { round: currentRound, winnerId, result, players });
         promise.finally(() => this.#resultMenu.show());
     }
 
-    endRound(settings) {
-        this.#endStage("roundEnd", settings);
-    }
+    endGame({ roundResult, gameResult }) {
+        const promise = this.#animateResult(roundResult);
 
-    endGame(settings) {
-        this.#endStage("gameEnd", settings);
+        this.#setResultMenu("gameEnd", gameResult);
+        promise.finally(() => this.#resultMenu.show());
     }
 
     disableScreenNavigation(screenId) {

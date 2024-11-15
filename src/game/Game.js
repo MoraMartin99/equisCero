@@ -54,7 +54,7 @@ export default class Game {
             } else {
                 this.#results.setRecord(currentRound, result, winnerId);
                 if (currentRound < totalRounds) this.#roundEndEmitter(winnerMove, winnerId, result);
-                if (currentRound === totalRounds) this.#gameEndEmitter(winnerMove);
+                if (currentRound === totalRounds) this.#gameEndEmitter(winnerMove, winnerId, result);
             }
         }
     };
@@ -75,16 +75,24 @@ export default class Game {
         });
     }
 
-    #gameEndEmitter(winnerMove) {
-        const { totalWins, totalDraws, winnerId, result } = this.#results.getTotal();
+    #gameEndEmitter(winnerMove, winnerId, result) {
+        const { totalWins, totalDraws, winnerId: gameWinnerId, result: gameResult } = this.#results.getTotal();
+        const players = this.#players.getAllPlayers();
         this.gameEndEvent.trigger({
-            currentRound: this.#rounds.getCurrentRound(),
-            winnerMove,
-            totalWins,
-            totalDraws,
-            result,
-            winnerId,
-            players: this.#players.getAllPlayers(),
+            roundResult: {
+                currentRound: this.#rounds.getCurrentRound(),
+                winnerMove,
+                winnerId,
+                result,
+                players,
+            },
+            gameResult: {
+                totalWins,
+                totalDraws,
+                winnerId: gameWinnerId,
+                result: gameResult,
+                players,
+            },
         });
     }
 
