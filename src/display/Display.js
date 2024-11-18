@@ -44,10 +44,12 @@ export default class Display {
     #playersContainer;
     #roundIndicatorContainer;
     #winnerAvatarDisplayElementFactory;
+    #avatarPlaceHolderSrc;
 
     constructor(settings) {
         const { playerNamePattern } = Object(settings);
 
+        this.#avatarPlaceHolderSrc = "../../img/avatarPlaceholder.svg";
         this.#stateQueue = new StateQueue();
         this.#navigationEvent = new CustomizedEvent("navigationEvent");
         this.#interactionEvent = new CustomizedEvent("interactionEvent");
@@ -120,7 +122,9 @@ export default class Display {
             },
             nextScreenTriggerList: Array.from(document.querySelectorAll("#homeMenu .unstyledRadio")),
             avatarManager: new AvatarManager(
-                Array.from(document.querySelectorAll("#homeMenu .avatarImage")).map((item) => new AvatarImage(item))
+                Array.from(document.querySelectorAll("#homeMenu .avatarImage")).map(
+                    (item) => new AvatarImage(item, this.#avatarPlaceHolderSrc)
+                )
             ),
         });
 
@@ -142,7 +146,7 @@ export default class Display {
                 (item) => new PlayerNameInput(item, "activeTextInput")
             ),
             avatarManager: new AvatarManager([
-                new AvatarImage(document.querySelector("#player1NameMenu .avatarImage")),
+                new AvatarImage(document.querySelector("#player1NameMenu .avatarImage", this.#avatarPlaceHolderSrc)),
             ]),
         });
 
@@ -157,7 +161,7 @@ export default class Display {
                 (item) => new PlayerNameInput(item, "activeTextInput")
             ),
             avatarManager: new AvatarManager([
-                new AvatarImage(document.querySelector("#player2NameMenu .avatarImage")),
+                new AvatarImage(document.querySelector("#player2NameMenu .avatarImage"), this.#avatarPlaceHolderSrc),
             ]),
         });
 
@@ -268,13 +272,19 @@ export default class Display {
 
             const slot1Card = new PlayerCardContainer({
                 element: slot1CardElement,
-                avatarImage: new AvatarImage(slot1CardElement.querySelector(".avatarImage")),
+                avatarImage: new AvatarImage(
+                    slot1CardElement.querySelector(".avatarImage"),
+                    this.#avatarPlaceHolderSrc
+                ),
                 playerNameElement: slot1CardElement.querySelector(".playerName"),
             });
 
             const slot2Card = new PlayerCardContainer({
                 element: slot2CardElement,
-                avatarImage: new AvatarImage(slot2CardElement.querySelector(".avatarImage")),
+                avatarImage: new AvatarImage(
+                    slot2CardElement.querySelector(".avatarImage"),
+                    this.#avatarPlaceHolderSrc
+                ),
                 playerNameElement: slot2CardElement.querySelector(".playerName"),
             });
 

@@ -1,8 +1,10 @@
 export default class AvatarImage {
     #element;
+    #placeHolderSrc;
 
-    constructor(element) {
+    constructor(element, placeHolderSrc) {
         this.#element = Object(element);
+        this.#placeHolderSrc = placeHolderSrc;
     }
 
     setSource(source) {
@@ -15,6 +17,7 @@ export default class AvatarImage {
     }
 
     reset() {
+        if (this.#placeHolderSrc) return this.setSource(this.#placeHolderSrc);
         this.#element.removeAttribute?.("src");
     }
 }
