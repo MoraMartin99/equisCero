@@ -1337,14 +1337,14 @@ footer {
     height: var(--winnerAvatarSize);
 }
 
-.draw #winnerAvatarContainer .winnerAvatar.left {
+#winnerAvatarContainer .winnerAvatar.left {
     mask-image: url("./img/mask1.svg");
     -webkit-mask-image: url("./img/mask1.svg");
     mask-repeat: no-repeat;
     -webkit-mask-repeat: no-repeat;
 }
 
-.draw #winnerAvatarContainer .winnerAvatar.right {
+#winnerAvatarContainer .winnerAvatar.right {
     mask-image: url("./img/mask2.svg");
     -webkit-mask-image: url("./img/mask2.svg");
     mask-repeat: no-repeat;
