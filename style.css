@@ -1320,7 +1320,7 @@ footer {
     position: relative;
 }
 
-#maskContainer {
+.maskContainer {
     position: relative;
     display: grid;
     grid-template-columns: var(--drawWinnerAvatarContainerColumnWidth) max-content;
