@@ -214,6 +214,7 @@ html {
     /* -------------------------------------------------------- */
     --ShiftChangeTimer: 0.25s;
     --nopeRotationTimer: 0.75s;
+    --cellBGTransitionTime: 0.5s;
     --roundIndicatorAnimationTimer: 0.5s;
     /* -------------------------------------------------------- */
 
@@ -976,7 +977,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.5s linear;
+    transition: background-color var(--cellBGTransitionTime) linear;
     overflow: hidden;
 }
 
