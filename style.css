@@ -216,6 +216,7 @@ html {
     --nopeRotationTimer: 0.75s;
     --cellBGTransitionTime: 0.5s;
     --roundIndicatorAnimationTimer: 0.5s;
+    --drawColorChangeTime: Calc(var(--cellBGTransitionTime) + var(--cellBGTransitionTime) + var(--cellBGTransitionTime));
     /* -------------------------------------------------------- */
 
     /* rotation */
@@ -1058,6 +1059,7 @@ main {
 }
 
 #board.draw .token .fills {
+    transition: all var(--drawColorChangeTime) linear;
     fill: var(--colorDraw100);
 }
 
