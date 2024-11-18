@@ -20,7 +20,7 @@
         </header>
         <main>
             <div id="carrousel">
-                <div id="homeScreen" class="screen">
+                <div id="homeScreen" class="screen active">
                     <form action="" id="homeMenu" class="sessionForm">
                         <fieldset id="PVSPFieldset" class="gameTypeFieldset">
                             <div class="legendContainer">
@@ -212,16 +212,16 @@
                 </div>
                 <div id="gameScreen" class="screen">
                     <div id="playersContainer">
-                        <div class="playerCardContainer left player1">
-                            <div id="player1Card" class="playerCard">
-                                <p class="playerName">player1</p>
+                        <div class="playerCardContainer left ">
+                            <div  class="playerCard">
+                                <p class="playerName"></p>
                                 <img src="./img/avatarPlaceholder.svg"  class="avatarImage  skeleton" />
                             </div>
                         </div>
                         <img src="./img/gameplayVS.svg" alt="icono de VS" class="VSIcon" />
-                        <div class="playerCardContainer right player2 currentPlayer">
-                            <div id="player2Card" class="playerCard">
-                                <p class="playerName">player2</p>
+                        <div class="playerCardContainer right  ">
+                            <div  class="playerCard">
+                                <p class="playerName"></p>
                                 <img src="./img/avatarPlaceholder.svg"  class="avatarImage  skeleton" />
                             </div>
                         </div>
@@ -229,45 +229,15 @@
                     <div id="boardContainer">
                         <div id="roundIndicatorContainer"></div>
                         <div id="board">
-                            <div id="a1" class="cell"></div>
-                            <div id="b1" class="cell">
-                                <svg
-                                    class="token player2"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    style="-webkit-print-color-adjust: exact"
-                                    viewBox="5253.003 435.831 80 80"
-                                >
-                                    <g style="fill: #000">
-                                        <path
-                                            d="M5293.003 509.164c-18.409 0-33.333-14.924-33.333-33.333 0-18.41 14.924-33.334 33.333-33.334 18.41 0 33.334 14.924 33.334 33.334 0 18.409-14.924 33.333-33.334 33.333Zm0-6.667c14.728 0 26.667-11.939 26.667-26.666 0-14.728-11.939-26.667-26.667-26.667-14.727 0-26.666 11.939-26.666 26.667 0 14.727 11.939 26.666 26.666 26.666Z"
-                                            class="fills"
-                                        />
-                                    </g>
-                                </svg>
-                            </div>
-                            <div id="c1" class="cell"></div>
-                            <div id="a2" class="cell">
-                                <svg
-                                    class="token player1"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    style="-webkit-print-color-adjust: exact"
-                                    viewBox="5345.673 435.831 80 80"
-                                >
-                                    <g style="fill: #000">
-                                        <path
-                                            d="m5385.676 471.119 16.499-16.499 4.714 4.714-16.499 16.499 16.499 16.499-4.714 4.714-16.499-16.499-16.5 16.499-4.714-4.714 16.5-16.499-16.5-16.499 4.714-4.714 16.5 16.499Z"
-                                            class="fills"
-                                        />
-                                    </g>
-                                </svg>
-                            </div>
-                            <div id="b2" class="cell invalidMove"></div>
-                            <div id="c2" class="cell"></div>
-                            <div id="a3" class="cell"></div>
-                            <div id="b3" class="cell"></div>
-                            <div id="c3" class="cell"></div>
+                            <div id="A1" class="cell"></div>
+                            <div id="B1" class="cell"></div>
+                            <div id="C1" class="cell"></div>
+                            <div id="A2" class="cell"></div>
+                            <div id="B2" class="cell"></div>
+                            <div id="C2" class="cell"></div>
+                            <div id="A3" class="cell"></div>
+                            <div id="B3" class="cell"></div>
+                            <div id="C3" class="cell"></div>
                         </div>
                         <div id="pauseOverlayMenu" class="overlayMenu">
                             <form action="" id="pauseMenu" class="menuContainer">
