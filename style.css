@@ -209,10 +209,6 @@ html {
     --currentPlayerIconContainerBrightness: 100%;
     /* -------------------------------------------------------- */
 
-    /* transition */
-    /* -------------------------------------------------------- */
-    --currentPlayerTransitionDeclaration: all var(--ShiftChangeTimer) linear;
-    /* -------------------------------------------------------- */
 
     /* time */
     /* -------------------------------------------------------- */
@@ -946,19 +942,38 @@ main {
     grid-template-rows: repeat(3, max-content);
     gap: var(--boardGap);
     background-color: var(--colorPrimary400);
-    transition: var(--currentPlayerTransitionDeclaration);
+    animation: var(--ShiftChangeTimer) linear forwards;
 }
 
-#board.player2 {
-    background-color: var(--colorPlayer2-100);
+@keyframes boardBackgroundColorToPlayer1Color {
+    to{
+        background-color: var(--colorPlayer1-100);
+    }
 }
 
 #board.player1 {
-    background-color: var(--colorPlayer1-100);
+    animation-name: boardBackgroundColorToPlayer1Color;
+}
+
+@keyframes boardBackgroundColorToPlayer2Color {
+    to{
+        background-color: var(--colorPlayer2-100);
+    }
+}
+
+#board.player2 {
+    animation-name: boardBackgroundColorToPlayer2Color;
+}
+
+@keyframes boardBackgroundColorToDrawColor {
+    to{
+        background-color: var(--colorDraw100);
+    }
 }
 
 #board.draw {
-    background-color: var(--colorDraw100);
+    animation-duration: var(--drawColorChangeTime);
+    animation-name: boardBackgroundColorToDrawColor;
 }
 
 #board .cell {

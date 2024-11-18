@@ -423,12 +423,12 @@ export default class Display {
     switchCurrentPlayer(playerId, cellSelectionIsEnable = true) {
         const playerStates = {
             player1: new State(
-                { classList: ["player1"], propertyNameList: ["background-color"] },
-                new TransitionEndObserver()
+                { classList: ["player1"], animationName: "boardBackgroundColorToPlayer1Color" },
+                new AnimationEndObserver()
             ),
             player2: new State(
-                { classList: ["player2"], propertyNameList: ["background-color"] },
-                new TransitionEndObserver()
+                { classList: ["player2"], animationName: "boardBackgroundColorToPlayer1Color" },
+                new AnimationEndObserver()
             ),
         };
         const promise = this.#playersContainer.highlightCard(playerId);
