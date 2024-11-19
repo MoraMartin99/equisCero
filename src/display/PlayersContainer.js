@@ -2,14 +2,11 @@ export default class PlayersContainer {
     #playerCardContainerList;
     #slots;
     #highlightState;
-    #stateQueue;
-    #highlightQueue;
 
-    constructor({ playerCardContainerList, highlightState, stateQueue }) {
+    constructor({ playerCardContainerList, highlightState }) {
         this.#playerCardContainerList = Object(playerCardContainerList);
         this.#slots = { 1: this.#playerCardContainerList[0], 2: this.#playerCardContainerList[1] };
         this.#highlightState = Object(highlightState);
-        this.#stateQueue = Object(stateQueue);
     }
 
     #getCardById(id) {
@@ -26,16 +23,9 @@ export default class PlayersContainer {
     }
 
     highlightCard(id) {
-        if (!this.#highlightQueue) this.#highlightQueue = Promise.resolve(this.#stateQueue.getQueue?.());
-        this.#highlightQueue = this.#highlightQueue.then(() => {
-            const element = this.#getCardById(id).getElement();
-            return this.#stateQueue.getQueue().then(() => {
-                this.restart();
-                return this.#stateQueue.add?.([{ state: this.#highlightState, element }]);
-            });
-        });
-
-        return this.#highlightQueue;
+        this.restart();
+        const element = this.#getCardById(id).getElement();
+        return this.#highlightState.apply(element);
     }
 
     restart() {

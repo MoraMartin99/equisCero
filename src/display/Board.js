@@ -4,7 +4,6 @@ export default class Board {
     #stateList = [];
     #event;
     #eventData;
-    #stateQueue;
     #playingClass;
 
     #clickHandler = (e) => {
@@ -20,13 +19,12 @@ export default class Board {
         return Object(this.#cellList.find((item) => Object(Object(item).getElement?.()).id === cellId));
     }
 
-    constructor({ element, cellList, playingClass, event, eventData, stateQueue }) {
+    constructor({ element, cellList, playingClass, event, eventData }) {
         this.#element = Object(element);
         this.#cellList = cellList;
         this.#playingClass = playingClass;
         this.#event = Object(event);
         this.#eventData = Object(eventData);
-        this.#stateQueue = Object(stateQueue);
 
         this.#element.addEventListener?.("click", this.#clickHandler);
     }
@@ -62,15 +60,14 @@ export default class Board {
         return this.#getCell(cellId).dropToken?.(tokenElement);
     }
 
-    setCellState(cellId, state, hasToWait) {
-        return Promise.resolve(this.#getCell(cellId).setState?.(state, hasToWait));
+    setCellState(cellId, state) {
+        return Promise.resolve(this.#getCell(cellId).setState?.(state));
     }
 
-    setState(state, hasToWait) {
+    setState(state) {
         this.resetState();
         state = Object(state);
         this.#stateList.push(state);
-        if (hasToWait) return Promise.resolve(this.#stateQueue.add?.([{ state, element: this.#element }]));
-        return Promise.resolve(state.apply?.(this.#element));
+        return state.apply?.(this.#element);
     }
 }

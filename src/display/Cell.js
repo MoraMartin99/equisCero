@@ -1,17 +1,15 @@
 export default class Cell {
     #element;
     #stateList = [];
-    #stateQueue;
     #invalidMoveState;
     #vanishState;
     #smoothPopOutState;
 
-    constructor({ element, invalidMoveState, vanishState, smoothPopOutState, stateQueue }) {
+    constructor({ element, invalidMoveState, vanishState, smoothPopOutState }) {
         this.#element = Object(element);
         this.#invalidMoveState = Object(invalidMoveState);
         this.#vanishState = Object(vanishState);
         this.#smoothPopOutState = Object(smoothPopOutState);
-        this.#stateQueue = Object(stateQueue);
     }
 
     getElement() {
@@ -29,16 +27,17 @@ export default class Cell {
         this.#stateList = [];
     }
 
-    setState(state, hasToWait) {
+    setState(state) {
         state = Object(state);
         this.#stateList.push(state);
-        if (hasToWait) return Promise.resolve(this.#stateQueue.add?.([{ state, element: this.#element }]));
         return Promise.resolve(state.apply?.(this.#element));
     }
 
     setInvalid() {
         const stateHasStarted = () => {
-            const classList = [this.#invalidMoveState, this.#vanishState].map((item) => item.getProperty?.("classList")).flat();
+            const classList = [this.#invalidMoveState, this.#vanishState]
+                .map((item) => item.getProperty?.("classList"))
+                .flat();
             return Boolean(classList.every((item) => this.#element.classList?.contains?.(item)));
         };
         if (stateHasStarted()) return Promise.resolve();
@@ -50,6 +49,6 @@ export default class Cell {
 
     dropToken(tokenElement) {
         this.#element.appendChild?.(tokenElement);
-        return Promise.resolve(this.#stateQueue.add?.([{ state: this.#smoothPopOutState, element: tokenElement }]));
+        return this.#smoothPopOutState.apply?.(tokenElement);
     }
 }

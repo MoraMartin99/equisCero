@@ -11,7 +11,6 @@ import AvatarManager from "./AvatarManager.js";
 import PlayerNameInput from "./PlayerNameInput.js";
 import Board from "./Board.js";
 import Cell from "./Cell.js";
-import StateQueue from "./StateQueue.js";
 import createToken from "./createToken.js";
 import OverlayMenu from "./OverlayMenu.js";
 import PauseMenu from "./PauseMenu.js";
@@ -26,6 +25,7 @@ import PlayersContainer from "./PlayersContainer.js";
 import RoundIndicatorContainer from "./RoundIndicatorContainer.js";
 import RoundIndicator from "./RoundIndicator.js";
 import createRoundIndicatorElement from "./createRoundIndicatorElement.js";
+import PromiseQueue from "./PromiseQueue.js";
 
 export default class Display {
     #navigationEvent;
@@ -50,7 +50,7 @@ export default class Display {
         const { playerNamePattern } = Object(settings);
 
         this.#avatarPlaceHolderSrc = "../../img/avatarPlaceholder.svg";
-        this.#stateQueue = new StateQueue();
+        this.#stateQueue = new PromiseQueue();
         this.#navigationEvent = new CustomizedEvent("navigationEvent");
         this.#interactionEvent = new CustomizedEvent("interactionEvent");
         this.#submitEvent = new CustomizedEvent("submitEvent");
@@ -299,7 +299,6 @@ export default class Display {
             return new PlayersContainer({
                 playerCardContainerList: [slot1Card, slot2Card],
                 highlightState,
-                stateQueue: this.#stateQueue,
             });
         };
 
@@ -432,10 +431,16 @@ export default class Display {
                 new AnimationEndObserver()
             ),
         };
-        const promise = this.#playersContainer.highlightCard(playerId);
 
-        this.#board.setState(playerStates[playerId], false);
-        if (cellSelectionIsEnable) promise.finally(() => this.#board.enableCellSelection());
+        const callback = () => {
+            const playersPromise = this.#playersContainer.highlightCard(playerId);
+            const boardPromise = this.#board.setState(playerStates[playerId]);
+            const promiseList = Promise.allSettled([playersPromise, boardPromise]);
+            if (cellSelectionIsEnable) promiseList.then(() => this.#board.enableCellSelection());
+            return promiseList;
+        };
+
+        this.#stateQueue.add(callback);
     }
 
     setInvalidCell(cellId) {
@@ -444,7 +449,8 @@ export default class Display {
 
     dropToken(cellId, playerId) {
         this.#board.disableCellSelection();
-        return Promise.resolve(this.#board.dropToken(cellId, createToken(playerId)));
+        const callback = () => this.#board.dropToken(cellId, createToken(playerId));
+        return this.#stateQueue.add(callback);
     }
 
     #animateResult({ currentRound, winnerMove, winnerId, result }) {
@@ -493,7 +499,7 @@ export default class Display {
             new AnimationEndObserver()
         );
 
-        return this.#board.setState(state, false);
+        return this.#stateQueue.add?.(() => this.#board.setState(state));
     }
 
     #animateWinnerMove(move, playerId) {
@@ -510,7 +516,7 @@ export default class Display {
 
         const promiseList = Object.values(Object(move))
             .sort(({ id: a }, { id: b }) => String(a).localeCompare(String(b)))
-            .map(({ id }) => this.#board.setCellState(id, cellStates[playerId], true));
+            .map(({ id }) => this.#stateQueue.add(() => this.#board.setCellState(id, cellStates[playerId])));
 
         return Promise.allSettled(promiseList);
     }
