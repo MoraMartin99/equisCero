@@ -427,7 +427,7 @@ export default class Display {
                 new AnimationEndObserver()
             ),
             player2: new State(
-                { classList: ["player2"], animationName: "boardBackgroundColorToPlayer1Color" },
+                { classList: ["player2"], animationName: "boardBackgroundColorToPlayer2Color" },
                 new AnimationEndObserver()
             ),
         };
