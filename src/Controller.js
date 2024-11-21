@@ -155,9 +155,9 @@ export default class Controller {
 
     #roundStartEventHandler = ({ currentRound: round }) => this.#view.initRound(round);
 
-    #nextPlayerEventHandler = ({ currentPlayer: { id, role } }) => {
+    #nextPlayerEventHandler = ({ currentPlayer: { id, role, tokenId } }) => {
         const cellSelectionIsEnable = role === "CPU" ? false : true;
-        this.#view.switchCurrentPlayer(id, cellSelectionIsEnable);
+        this.#view.switchCurrentPlayer(id, tokenId, cellSelectionIsEnable);
     };
 
     #selectCellHandler = (cellId) => {
@@ -183,10 +183,10 @@ export default class Controller {
         if (type === "goHome") this.#goHomeHandler();
     };
 
-    #moveEventHandler = ({ type, targetCell: { id: cellId }, player: { id: playerId } }) => {
         cellId = String(cellId).toLocaleUpperCase();
+    #moveEventHandler = ({ type, targetCell: { id: cellId }, player: { tokenId } }) => {
         if (type === "invalid") this.#view.setInvalidCell(cellId);
-        if (type === "valid") this.#view.dropToken(cellId, playerId);
+        if (type === "valid") this.#view.dropToken(cellId, tokenId);
     };
 
     #roundEndEventHandler = (data) => this.#view.endRound(data);

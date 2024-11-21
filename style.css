@@ -47,8 +47,8 @@ html {
     --colorSecondary800: #332e0f;
     --colorAccent1: #ffd700;
     --colorAccent1Disabled: #ccb33c;
-    --colorPlayer1-100: #81fcff;
-    --colorPlayer2-100: #ffeb84;
+    --colorToken1-100: #81fcff;
+    --colorToken2-100: #ffeb84;
     --colorDraw100: #8fff85;
     --colorInvalid100: #ffb396;
     --colorInvalidInputTextBackground: #fee3d9;
@@ -466,11 +466,11 @@ main {
 }
 
 #homeMenu .playerName.player1 {
-    color: var(--colorPlayer1-100);
+    color: var(--colorToken1-100);
 }
 
 #homeMenu .playerName.player2 {
-    color: var(--colorPlayer2-100);
+    color: var(--colorToken2-100);
 }
 
 #homeMenu .VSIcon {
@@ -939,24 +939,24 @@ main {
     animation: var(--ShiftChangeTimer) linear forwards;
 }
 
-@keyframes boardBackgroundColorToPlayer1Color {
+@keyframes boardBackgroundColorToToken1Color {
     to{
-        background-color: var(--colorPlayer1-100);
+        background-color: var(--colorToken1-100);
     }
 }
 
-#board.player1 {
-    animation-name: boardBackgroundColorToPlayer1Color;
+#board.token1 {
+    animation-name: boardBackgroundColorToToken1Color;
 }
 
-@keyframes boardBackgroundColorToPlayer2Color {
+@keyframes boardBackgroundColorToToken2Color {
     to{
-        background-color: var(--colorPlayer2-100);
+        background-color: var(--colorToken2-100);
     }
 }
 
-#board.player2 {
-    animation-name: boardBackgroundColorToPlayer2Color;
+#board.token2 {
+    animation-name: boardBackgroundColorToToken2Color;
 }
 
 @keyframes boardBackgroundColorToDrawColor {
@@ -982,12 +982,12 @@ main {
     overflow: hidden;
 }
 
-#board .cell.player1 {
-    background-color: var(--colorPlayer1-100);
+#board .cell.token1 {
+    background-color: var(--colorToken1-100);
 }
 
-#board .cell.player2 {
-    background-color: var(--colorPlayer2-100);
+#board .cell.token2 {
+    background-color: var(--colorToken2-100);
 }
 
 .cell.invalidMove::before,
@@ -1050,12 +1050,12 @@ main {
     }
 }
 
-.token.player1 .fills {
-    fill: var(--colorPlayer1-100);
+.token.token1 .fills {
+    fill: var(--colorToken1-100);
 }
 
-.token.player2 .fills {
-    fill: var(--colorPlayer2-100);
+.token.token2 .fills {
+    fill: var(--colorToken2-100);
 }
 
 #board.draw .token .fills {
@@ -1081,12 +1081,12 @@ main {
     animation: var(--roundIndicatorAnimationTimer) linear forwards;
 }
 
-#roundIndicatorContainer .roundIndicator.player1 {
-    animation-name: player1RoundIndicator;
+#roundIndicatorContainer .roundIndicator.token1 {
+    animation-name: token1RoundIndicator;
 }
 
-#roundIndicatorContainer .roundIndicator.player2 {
-    animation-name: player2RoundIndicator;
+#roundIndicatorContainer .roundIndicator.token2 {
+    animation-name: token2RoundIndicator;
 }
 
 #roundIndicatorContainer .roundIndicator.draw {
@@ -1106,21 +1106,21 @@ main {
     }
 }
 
-@keyframes player1RoundIndicator {
+@keyframes token1RoundIndicator {
     from {
         background-color: var(--colorPrimary500);
     }
     to {
-        background-color: var(--colorPlayer1-100);
+        background-color: var(--colorToken1-100);
     }
 }
 
-@keyframes player2RoundIndicator {
+@keyframes token2RoundIndicator {
     from {
         background-color: var(--colorPrimary500);
     }
     to {
-        background-color: var(--colorPlayer2-100);
+        background-color: var(--colorToken2-100);
     }
 }
 
@@ -1362,8 +1362,8 @@ footer {
     left: var(--winnerAvatarContainerBannerLeft);
 }
 
-.gameResult.player1 #winnerAvatarContainer::after,
-.gameResult.player2 #winnerAvatarContainer::after {
+.gameResult.token1 #winnerAvatarContainer::after,
+.gameResult.token2 #winnerAvatarContainer::after {
     position: absolute;
     width: var(--winnerAvatarContainerDecoratorSize);
     height: var(--winnerAvatarContainerDecoratorSize);
@@ -1375,19 +1375,19 @@ footer {
     left: var(--winnerAvatarContainerDecoratorLeft);
 }
 
-.player1 #winnerAvatarContainer::before {
+.token1 #winnerAvatarContainer::before {
     background-image: url("./img/pattern1.svg");
 }
 
-.gameResult.player1 #winnerAvatarContainer::before {
+.gameResult.token1 #winnerAvatarContainer::before {
     background-image: url("./img/pattern4.svg");
 }
 
-.player2 #winnerAvatarContainer::before {
+.token2 #winnerAvatarContainer::before {
     background-image: url("./img/pattern2.svg");
 }
 
-.gameResult.player2 #winnerAvatarContainer::before {
+.gameResult.token2 #winnerAvatarContainer::before {
     background-image: url("./img/pattern5.svg");
 }
 
@@ -1407,12 +1407,12 @@ footer {
     color: var(--colorPrimary100);
 }
 
-.player1 #messageAccent {
-    color: var(--colorPlayer1-100);
+.token1 #messageAccent {
+    color: var(--colorToken1-100);
 }
 
-.player2 #messageAccent {
-    color: var(--colorPlayer2-100);
+.token2 #messageAccent {
+    color: var(--colorToken2-100);
 }
 
 .draw #messageAccent {
@@ -1434,12 +1434,12 @@ footer {
     align-items: center;
 }
 
-#resultOverlayMenu.player1 .resultButton {
-    border-color: var(--colorPlayer1-100);
+#resultOverlayMenu.token1 .resultButton {
+    border-color: var(--colorToken1-100);
 }
 
-#resultOverlayMenu.player2 .resultButton {
-    border-color: var(--colorPlayer2-100);
+#resultOverlayMenu.token2 .resultButton {
+    border-color: var(--colorToken2-100);
 }
 
 #resultOverlayMenu.draw .resultButton {
@@ -1456,12 +1456,12 @@ footer {
     fill-opacity: 1;
 }
 
-#resultOverlayMenu.player1 .resultButtonIcon .fills {
-    fill: var(--colorPlayer1-100);
+#resultOverlayMenu.token1 .resultButtonIcon .fills {
+    fill: var(--colorToken1-100);
 }
 
-#resultOverlayMenu.player2 .resultButtonIcon .fills {
-    fill: var(--colorPlayer2-100);
+#resultOverlayMenu.token2 .resultButtonIcon .fills {
+    fill: var(--colorToken2-100);
 }
 
 #resultOverlayMenu.draw .resultButtonIcon .fills {

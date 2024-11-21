@@ -1,14 +1,13 @@
-const createToken = (playerId) => {
+const createToken = (tokenId) => {
     const element = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    const classList = ["token"];
+    const classList = ["token", tokenId];
     const attributeList = [
         { name: "fill", value: "none" },
         { name: "style", value: "-webkit-print-color-adjust: exact" },
     ];
     let content;
 
-    if (playerId === "player1") {
-        classList.push("player1");
+    if (tokenId === "token1") {
         attributeList.push({ name: "viewBox", value: "5345.673 435.831 80 80" });
         content = `<g style="fill: #000">
                                         <path
@@ -16,8 +15,7 @@ const createToken = (playerId) => {
                                             class="fills"
                                         />
                                     </g>`;
-    } else if (playerId === "player2") {
-        classList.push("player2");
+    } else if (tokenId === "token2") {
         attributeList.push({ name: "viewBox", value: "5253.003 435.831 80 80" });
         content = `<g style="fill: #000">
                                         <path

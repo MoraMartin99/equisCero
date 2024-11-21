@@ -400,12 +400,12 @@ export default class Display {
                 { classList: ["current"], animationName: "currentRoundIndicator" },
                 new AnimationEndObserver()
             ),
-            player1: new State(
-                { classList: ["player1"], animationName: "player1RoundIndicator" },
+            token1: new State(
+                { classList: ["token1"], animationName: "token1RoundIndicator" },
                 new AnimationEndObserver()
             ),
-            player2: new State(
-                { classList: ["player2"], animationName: "player2RoundIndicator" },
+            token2: new State(
+                { classList: ["token2"], animationName: "token2RoundIndicator" },
                 new AnimationEndObserver()
             ),
             draw: new State({ classList: ["draw"], animationName: "drawRoundIndicator" }, new AnimationEndObserver()),
@@ -420,21 +420,21 @@ export default class Display {
         this.#playersContainer.restart();
     }
 
-    switchCurrentPlayer(playerId, cellSelectionIsEnable = true) {
-        const playerStates = {
-            player1: new State(
-                { classList: ["player1"], animationName: "boardBackgroundColorToPlayer1Color" },
+    switchCurrentPlayer(playerId, boardStateId, cellSelectionIsEnable = true) {
+        const boardStates = {
+            token1: new State(
+                { classList: ["token1"], animationName: "boardBackgroundColorToToken1Color" },
                 new AnimationEndObserver()
             ),
-            player2: new State(
-                { classList: ["player2"], animationName: "boardBackgroundColorToPlayer2Color" },
+            token2: new State(
+                { classList: ["token2"], animationName: "boardBackgroundColorToToken2Color" },
                 new AnimationEndObserver()
             ),
         };
 
         const callback = () => {
             const playersPromise = this.#playersContainer.highlightCard(playerId);
-            const boardPromise = this.#board.setState(playerStates[playerId]);
+            const boardPromise = this.#board.setState(boardStates[boardStateId]);
             const promiseList = Promise.allSettled([playersPromise, boardPromise]);
             if (cellSelectionIsEnable) promiseList.then(() => this.#board.enableCellSelection());
             return promiseList;
@@ -447,51 +447,11 @@ export default class Display {
         return Promise.resolve(this.#board.setInvalidCell(cellId));
     }
 
-    dropToken(cellId, playerId) {
+    dropToken(cellId, tokenId) {
         this.#board.disableCellSelection();
-        const callback = () => this.#board.dropToken(cellId, createToken(playerId));
+        const callback = () => this.#board.dropToken(cellId, createToken(tokenId));
         return this.#stateQueue.add(callback);
     }
-
-    #animateResult({ currentRound, winnerMove, winnerId, result }) {
-        const stateId = result === "draw" ? "draw" : winnerId;
-        const promise = result === "draw" ? this.#animateDraw() : this.#animateWinnerMove(winnerMove, winnerId);
-
-        this.#setIndicatorState(currentRound, stateId);
-        return promise;
-    }
-
-    endRound({ currentRound, winnerMove, winnerId, result, players }) {
-        const promise = this.#animateResult({ currentRound, winnerMove, winnerId, result });
-
-        this.#setResultMenu("roundEnd", { round: currentRound, winnerId, result, players });
-        promise.finally(() => this.#resultMenu.show());
-    }
-
-    endGame({ roundResult, gameResult }) {
-        const promise = this.#animateResult(roundResult);
-
-        this.#setResultMenu("gameEnd", gameResult);
-        promise.finally(() => this.#resultMenu.show());
-    }
-
-    disableScreenNavigation(screenId) {
-        this.#carrousel.disableScreen(screenId);
-    }
-
-    enableScreenNavigation(screenId) {
-        this.#carrousel.enableScreen(screenId);
-    }
-
-    #getOverlayMenuResetAdapter = (overLayMenu) => {
-        return { reset: () => Object(overLayMenu).hide() };
-    };
-
-    #nextRound = () => this.interactionEvent.trigger({ type: "nextRound" });
-
-    #restartRound = () => this.interactionEvent.trigger({ type: "restartRound" });
-
-    #restartGame = () => this.interactionEvent.trigger({ type: "restartGame" });
 
     #animateDraw() {
         const state = new State(
@@ -502,27 +462,35 @@ export default class Display {
         return this.#stateQueue.add?.(() => this.#board.setState(state));
     }
 
-    #animateWinnerMove(move, playerId) {
+    #animateWinnerMove(move, stateId) {
         const cellStates = {
-            player1: new State(
-                { classList: ["player1"], propertyNameList: ["background-color"] },
+            token1: new State(
+                { classList: ["token1"], propertyNameList: ["background-color"] },
                 new TransitionEndObserver()
             ),
-            player2: new State(
-                { classList: ["player2"], propertyNameList: ["background-color"] },
+            token2: new State(
+                { classList: ["token2"], propertyNameList: ["background-color"] },
                 new TransitionEndObserver()
             ),
         };
 
         const promiseList = Object.values(Object(move))
             .sort(({ id: a }, { id: b }) => String(a).localeCompare(String(b)))
-            .map(({ id }) => this.#stateQueue.add(() => this.#board.setCellState(id, cellStates[playerId])));
+            .map(({ id }) => this.#stateQueue.add(() => this.#board.setCellState(id, cellStates[stateId])));
 
         return Promise.allSettled(promiseList);
     }
 
+    #animateResult({ currentRound, winnerMove, stateId, result }) {
+        stateId = result === "draw" ? "draw" : stateId;
+        const promise = result === "draw" ? this.#animateDraw() : this.#animateWinnerMove(winnerMove, stateId);
+
+        this.#setIndicatorState(currentRound, stateId);
+        return promise;
+    }
+
     #setResultMenu(type, settings) {
-        const { round, winnerId, result, players } = Object(settings);
+        const { round, winnerId, result, players, tokenId } = Object(settings);
         const optionList = [];
         let avatarDisplayElement;
         let messageElement;
@@ -552,7 +520,7 @@ export default class Display {
             avatarDisplayElement = this.#winnerAvatarDisplayElementFactory.create("image", {
                 source: players[winnerId].avatarSource,
             });
-            classList.push(winnerId);
+            classList.push(tokenId);
         }
 
         if (result === "win" && type === "roundEnd") {
@@ -568,4 +536,41 @@ export default class Display {
 
         this.#resultMenu.set({ optionList, avatarDisplayElement, messageElement, classList });
     }
+
+    #getTokenId = ({ winnerId, players }) => Object(players)?.[winnerId]?.tokenId;
+
+    endRound({ currentRound, winnerMove, winnerId, players, result }) {
+        const tokenId = this.#getTokenId({ winnerId, players });
+        const promise = this.#animateResult({ currentRound, winnerMove, result, stateId: tokenId });
+
+        this.#setResultMenu("roundEnd", { round: currentRound, winnerId, result, players, tokenId });
+        promise.finally(() => this.#resultMenu.show());
+    }
+
+    endGame({ roundResult, gameResult }) {
+        const roundTokenId = this.#getTokenId(Object(roundResult));
+        const gameTokenId = this.#getTokenId(Object(gameResult));
+        const promise = this.#animateResult({ ...roundResult, stateId: roundTokenId });
+
+        this.#setResultMenu("gameEnd", { ...gameResult, tokenId: gameTokenId });
+        promise.finally(() => this.#resultMenu.show());
+    }
+
+    disableScreenNavigation(screenId) {
+        this.#carrousel.disableScreen(screenId);
+    }
+
+    enableScreenNavigation(screenId) {
+        this.#carrousel.enableScreen(screenId);
+    }
+
+    #getOverlayMenuResetAdapter = (overLayMenu) => {
+        return { reset: () => Object(overLayMenu).hide() };
+    };
+
+    #nextRound = () => this.interactionEvent.trigger({ type: "nextRound" });
+
+    #restartRound = () => this.interactionEvent.trigger({ type: "restartRound" });
+
+    #restartGame = () => this.interactionEvent.trigger({ type: "restartGame" });
 }
