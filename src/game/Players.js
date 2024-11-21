@@ -11,7 +11,7 @@ export default class Players {
         return { getSource, setSource, clear, getAllSources };
     })();
 
-    setPlayer({ id, name, role, token, order }) {
+    setPlayer({ id, name, role, token, order, tokenId }) {
         if (!Boolean(typeof id === "string") || !Boolean(id)) return;
         const player = new Player({
             id,
@@ -19,6 +19,7 @@ export default class Players {
             role,
             avatarSources: this.#avatarSources,
             token,
+            tokenId,
             order,
         });
         this.#playersGroup.set(id, player);
@@ -37,7 +38,9 @@ export default class Players {
     }
 
     #getPlayerByPropertyValue(name, value) {
-        const id = [...this.#playersGroup.values()].find((item) => item.getProperty(name) === value)?.getProperty?.("id");
+        const id = [...this.#playersGroup.values()]
+            .find((item) => item.getProperty(name) === value)
+            ?.getProperty?.("id");
         return this.getPlayerById(id);
     }
 

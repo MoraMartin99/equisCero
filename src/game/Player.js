@@ -2,7 +2,7 @@ export default class Player {
     #properties;
     #avatarSources;
 
-    constructor({ id, name, role, avatarSources, token, order }) {
+    constructor({ id, name, role, avatarSources, token, order, tokenId }) {
         this.#avatarSources = avatarSources;
         const getSource = (sourceId) => Object(this.#avatarSources).getSource?.(sourceId);
 
@@ -12,6 +12,7 @@ export default class Player {
             role,
             token,
             order,
+            tokenId,
             get avatarSource() {
                 if (role === "CPU") return getSource("CPU");
                 if (role === "user") return getSource("player1");

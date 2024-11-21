@@ -206,7 +206,7 @@ export default class Game {
 
     #setPlayer({ id, name, role, tokenId, order }) {
         const token = this.#validPlayerSettings.tokens[tokenId];
-        this.#players.setPlayer({ id, name, role, token, order });
+        this.#players.setPlayer({ id, name, role, token, order, tokenId });
     }
 
     get moveEvent() {
