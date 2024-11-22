@@ -75,51 +75,43 @@ export default class Controller {
         this.#model.setGame({ avatarSources: { [id]: url } });
     };
 
-    #submitEventHandler = ({ senderId, fields }) => {
-        const playerIdList = ["player1", "player2"];
-        const tokenList = [
-            { tokenId: "token1", order: 1 },
-            { tokenId: "token2", order: 2 },
-        ];
-        const roleList = ["user", "CPU", undefined];
-        let player1TokenId = tokenList[0].tokenId;
-        let player2TokenId = tokenList[1].tokenId;
+    #homeMenuHandler = ({ gameTypeRadio: { totalRounds, type } }) => this.#model.setGame({ type, totalRounds });
 
+    #playerNameMenuHandler(senderId, { playerName: name }) {
+        const type = this.#model.type.getType();
+        const playerIdList = ["player1", "player2"];
+        const tokenIdList = ["token1", "token2"];
+        const roleList = ["user", "CPU", undefined];
+        let player1TokenId = tokenIdList[0];
+        let player2TokenId = tokenIdList[1];
         const setPlayer = (id, name, role, tokenId) => {
-            name = name ? name : id;
-            const order = tokenList.find(({ tokenId: target }) => tokenId === target).order;
+            name = name ? name : String(role).toUpperCase() === "CPU" ? role : id;
+            const order = tokenId === "token1" ? 1 : 2;
             this.#model.setGame({ players: { id: { id, name, role, tokenId, order } } });
         };
 
-        if (senderId === "homeMenu") {
-            const { totalRounds, type } = fields.gameTypeRadio;
-            this.#model.setGame({ type, totalRounds });
-        }
-
         if (senderId === "player1NameMenu") {
-            const name = fields.playerName;
-            const type = this.#model.type.getType();
-
             if (type === "PVSCPU") {
-                player1TokenId = tokenList[Math.round(Math.random() * (tokenList.length - 1))].tokenId;
-                player2TokenId = tokenList.find(({ tokenId }) => tokenId !== player1TokenId).tokenId;
+                player1TokenId = tokenIdList[Math.round(Math.random() * (tokenIdList.length - 1))];
+                player2TokenId = tokenIdList.find((tokenId) => tokenId !== player1TokenId);
                 setPlayer(playerIdList[0], name, roleList[0], player1TokenId);
-                setPlayer(playerIdList[1], roleList[1], roleList[1], player2TokenId);
+                setPlayer(playerIdList[1], undefined, roleList[1], player2TokenId);
             }
 
             if (type === "PVSP") setPlayer(playerIdList[0], name, roleList[2], player1TokenId);
         }
 
-        if (senderId === "player2NameMenu") {
-            const name = fields.playerName;
-            player2TokenId = tokenList[1].tokenId;
-            setPlayer(playerIdList[1], name, roleList[2], player2TokenId);
-        }
+        if (senderId === "player2NameMenu") setPlayer(playerIdList[1], name, roleList[2], player2TokenId);
+    }
 
-        if (senderId === "difficultyMenu") {
-            const difficultyLevel = fields.difficultyRadio;
-            this.#model.setGame({ difficultyLevel });
+    #difficultyMenuHandler = ({ difficultyRadio: difficultyLevel }) => this.#model.setGame({ difficultyLevel });
+
+    #submitEventHandler = ({ senderId, fields }) => {
+        if (senderId === "homeMenu") this.#homeMenuHandler(fields);
+        if (senderId === "player1NameMenu" || senderId === "player2NameMenu") {
+            this.#playerNameMenuHandler(senderId, fields);
         }
+        if (senderId === "difficultyMenu") this.#difficultyMenuHandler(fields);
     };
 
     #navigationEventHandler = ({
