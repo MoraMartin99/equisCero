@@ -175,8 +175,8 @@ export default class Controller {
         if (type === "goHome") this.#goHomeHandler();
     };
 
-        cellId = String(cellId).toLocaleUpperCase();
     #moveEventHandler = ({ type, targetCell: { id: cellId }, player: { tokenId } }) => {
+        cellId = String(cellId).toUpperCase();
         if (type === "invalid") this.#view.setInvalidCell(cellId);
         if (type === "valid") this.#view.dropToken(cellId, tokenId);
     };
