@@ -490,8 +490,6 @@ main {
 }
 
 .unstyledRadio {
-    /*  -webkit-appearance: none;
-    appearance: none; */
     display: none;
 }
 
