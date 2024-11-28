@@ -5,14 +5,16 @@
 /* -------------------------------------------------------- */
 @font-face {
     font-family: lugati;
-    src: url(./fonts/woff2/lugati_bld-webfont.woff2) format("woff2"), url(./fonts/woff/lugati_bld-webfont.woff) format("woff");
+    src: url(./fonts/woff2/lugati_bld-webfont.woff2) format("woff2"),
+        url(./fonts/woff/lugati_bld-webfont.woff) format("woff");
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: lugati;
-    src: url(./fonts/woff2/lugati_rglr-webfont.woff2) format("woff2"), url(./fonts/woff/lugati_rglr-webfont.woff) format("woff");
+    src: url(./fonts/woff2/lugati_rglr-webfont.woff2) format("woff2"),
+        url(./fonts/woff/lugati_rglr-webfont.woff) format("woff");
     font-weight: 400;
     font-style: normal;
 }
@@ -209,14 +211,15 @@ html {
     --currentPlayerIconContainerBrightness: 100%;
     /* -------------------------------------------------------- */
 
-
     /* time */
     /* -------------------------------------------------------- */
     --ShiftChangeTimer: 0.25s;
     --nopeRotationTimer: 0.75s;
     --cellBGTransitionTime: 0.5s;
     --roundIndicatorAnimationTimer: 0.5s;
-    --drawColorChangeTime: Calc(var(--cellBGTransitionTime) + var(--cellBGTransitionTime) + var(--cellBGTransitionTime));
+    --drawColorChangeTime: Calc(
+        var(--cellBGTransitionTime) + var(--cellBGTransitionTime) + var(--cellBGTransitionTime)
+    );
     /* -------------------------------------------------------- */
 
     /* rotation */
@@ -801,7 +804,9 @@ main {
     grid-area: players;
     font-size: var(--playersContainerPlayerNameFontSize);
     display: grid;
-    grid-template-columns: var(--currentPlayerPlayerCardContainerWidth) max-content var(--currentPlayerPlayerCardContainerWidth);
+    grid-template-columns: var(--currentPlayerPlayerCardContainerWidth) max-content var(
+            --currentPlayerPlayerCardContainerWidth
+        );
     grid-template-rows: var(--currentPlayerPlayerCardContainerHeight);
     grid-template-areas: "left center right";
     place-items: center;
@@ -938,7 +943,7 @@ main {
 }
 
 @keyframes boardBackgroundColorToToken1Color {
-    to{
+    to {
         background-color: var(--colorToken1-100);
     }
 }
@@ -948,7 +953,7 @@ main {
 }
 
 @keyframes boardBackgroundColorToToken2Color {
-    to{
+    to {
         background-color: var(--colorToken2-100);
     }
 }
@@ -958,7 +963,7 @@ main {
 }
 
 @keyframes boardBackgroundColorToDrawColor {
-    to{
+    to {
         background-color: var(--colorDraw100);
     }
 }
@@ -1472,45 +1477,50 @@ footer {
 /* -------------------------------------------------------------------------------------------------------------- */
 
 @media (width >= 768px) {
-
     /* Estilos globales */
     /* -------------------------------------------------------- */
     html {
+        /* Fonts */
+        /* --------------------------------------------- */
+        --playersContainerPlayerNameFontSize: clamp(1.23525rem, 0.44099999999999984rem + 1.6546875000000003vw, 1.5rem);
+        /* --------------------------------------------- */
 
-    /* Fonts */
-    /* --------------------------------------------- */
-    --playersContainerPlayerNameFontSize: clamp(1.23525rem, 0.44099999999999984rem + 1.6546875000000003vw, 1.5rem);
-    /* --------------------------------------------- */
+        /* gap */
+        /* --------------------------------------------- */
+        --playersContainerPlayerCardGap: 2.88px;
+        --playersContainerColumnGap: clamp(80px, 1.25rem + 7.8125vw, 100px);
+        /* --------------------------------------------- */
 
-    /* gap */
-    /* --------------------------------------------- */
-    --playersContainerPlayerCardGap:2.88px;
-    --playersContainerColumnGap:clamp(80px, 1.25rem + 7.8125vw, 100px);
-    /* --------------------------------------------- */
+        /* padding */
+        /* --------------------------------------------- */
+        --playerCardContainerPadding: 8.24px;
+        /* --------------------------------------------- */
 
-    /* padding */
-    /* --------------------------------------------- */
-    --playerCardContainerPadding:8.24px;
-    /* --------------------------------------------- */
+        /* size */
+        /* --------------------------------------------- */
+        --playersContainerAvatarImageSize: 123.53px;
+        --currentPlayerPlayerCardContainerWidth: calc(
+            var(--currentPlayerPlayerCardContainerScale) *
+                (max(12ch, var(--playersContainerAvatarImageSize)) + var(--playerCardContainerPadding) * 2) +
+                (-2 * var(--currentPlayerPlayerCardContainerDecoratorOffset))
+        );
+        --currentPlayerPlayerNameDecoratorWidthSize: calc(30px / var(--currentPlayerPlayerCardContainerScale));
+        --currentPlayerPlayerCardContainerHeight: calc(
+            var(--currentPlayerPlayerCardContainerScale) *
+                (var(--playersContainerAvatarImageSize) + (var(--playerCardContainerPadding) * 2)) +
+                var(--playersContainerPlayerNameFontSize)
+        );
+        /* --------------------------------------------- */
 
-    /* size */
-    /* --------------------------------------------- */
-    --playersContainerAvatarImageSize:123.53px;
-    --currentPlayerPlayerCardContainerWidth: calc(var(--currentPlayerPlayerCardContainerScale) * (max(12ch, var(--playersContainerAvatarImageSize)) + var(--playerCardContainerPadding)*2) + (-2 * var(--currentPlayerPlayerCardContainerDecoratorOffset)));
-    --currentPlayerPlayerNameDecoratorWidthSize:calc(30px/var(--currentPlayerPlayerCardContainerScale));
-    --currentPlayerPlayerCardContainerHeight: calc(var(--currentPlayerPlayerCardContainerScale) * (var(--playersContainerAvatarImageSize) + (var(--playerCardContainerPadding)*2)) + var(--playersContainerPlayerNameFontSize));
-    /* --------------------------------------------- */
+        /* scale */
+        /* --------------------------------------------- */
+        --currentPlayerPlayerCardContainerScale: calc(150 / 123.53);
+        /* --------------------------------------------- */
 
-    /* scale */
-    /* --------------------------------------------- */
-    --currentPlayerPlayerCardContainerScale:calc(150/123.53);
-    /* --------------------------------------------- */
-
-    /* offset */
-    /* --------------------------------------------- */
-    --currentPlayerPlayerCardContainerDecoratorOffset:-10px;
-    /* --------------------------------------------- */
-    
+        /* offset */
+        /* --------------------------------------------- */
+        --currentPlayerPlayerCardContainerDecoratorOffset: -10px;
+        /* --------------------------------------------- */
     }
 
     /* -------------------------------------------------------- */
@@ -1520,22 +1530,23 @@ footer {
 
     #playersContainer .playerCard {
         grid-template-areas:
-        "avatar"
-        "name";
+            "avatar"
+            "name";
     }
 
     #playersContainer .playerName {
-        position:initial;
+        position: initial;
         grid-area: name;
     }
 
-    .playerCardContainer{
+    .playerCardContainer {
         background-color: var(--colorPrimary500);
         padding: var(--playerCardContainerPadding);
         position: relative;
     }
 
-    .playerCardContainer.currentPlayer::before,.playerCardContainer.currentPlayer::after{
+    .playerCardContainer.currentPlayer::before,
+    .playerCardContainer.currentPlayer::after {
         position: absolute;
         width: var(--currentPlayerPlayerNameDecoratorWidthSize);
         height: var(--currentPlayerPlayerNameDecoratorWidthSize);
@@ -1543,25 +1554,25 @@ footer {
         background-size: 100%;
     }
 
-    .playerCardContainer.currentPlayer.left::before{
+    .playerCardContainer.currentPlayer.left::before {
         background-image: url("./img/playerCardDecoratorBottomRight.svg");
         bottom: var(--currentPlayerPlayerCardContainerDecoratorOffset);
         right: var(--currentPlayerPlayerCardContainerDecoratorOffset);
     }
 
-    .playerCardContainer.currentPlayer.left::after{
+    .playerCardContainer.currentPlayer.left::after {
         background-image: url("./img/playerCardDecoratorTopLeft.svg");
         top: var(--currentPlayerPlayerCardContainerDecoratorOffset);
         left: var(--currentPlayerPlayerCardContainerDecoratorOffset);
     }
 
-    .playerCardContainer.currentPlayer.right::before{
+    .playerCardContainer.currentPlayer.right::before {
         background-image: url("./img/playerCardDecoratorBottomLeft.svg");
         bottom: var(--currentPlayerPlayerCardContainerDecoratorOffset);
         left: var(--currentPlayerPlayerCardContainerDecoratorOffset);
     }
 
-    .playerCardContainer.currentPlayer.right::after{
+    .playerCardContainer.currentPlayer.right::after {
         background-image: url("./img/playerCardDecoratorTopRight.svg");
         top: var(--currentPlayerPlayerCardContainerDecoratorOffset);
         right: var(--currentPlayerPlayerCardContainerDecoratorOffset);
@@ -1580,30 +1591,35 @@ footer {
     }
 
     #playersContainer .currentPlayer .playerName::after,
-#playersContainer .currentPlayer .playerName::before {
-    display: none;
+    #playersContainer .currentPlayer .playerName::before {
+        display: none;
+    }
+
+    @keyframes highlightCurrentPlayer {
+        from {
+            scale: 1;
+            filter: brightness(var(--iconContainerBrightness));
+        }
+        to {
+            scale: var(--currentPlayerPlayerCardContainerScale);
+            filter: brightness(100%);
+        }
+    }
+
+    @keyframes unhighlightCurrentPlayer {
+        from {
+            scale: var(--currentPlayerPlayerCardContainerScale);
+            filter: brightness(100%);
+        }
+        to {
+            scale: 1;
+            filter: brightness(var(--iconContainerBrightness));
+        }
+    }
+
+    /* -------------------------------------------------------- */
 }
 
-@keyframes highlightCurrentPlayer {
-    from {
-        scale: 1;
-        filter: brightness(var(--iconContainerBrightness));
-    }
-    to {
-        scale: var(--currentPlayerPlayerCardContainerScale);
-        filter: brightness(100%);
-    }
-}
-
-@keyframes unhighlightCurrentPlayer {
-    from {
-        scale: var(--currentPlayerPlayerCardContainerScale);
-        filter: brightness(100%);
-    }
-    to {
-        scale: 1;
-        filter: brightness(var(--iconContainerBrightness));
-    }
 }
 
     /* -------------------------------------------------------- */
