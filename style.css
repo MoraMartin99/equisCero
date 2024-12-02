@@ -1620,9 +1620,203 @@ footer {
     /* -------------------------------------------------------- */
 }
 
-}
+/* -------------------------------------------------------------------------------------------------------------- */
 
+/* Estilos para pantallas >= 1024px */
+/* -------------------------------------------------------------------------------------------------------------- */
+
+@media (width >= 1024px) {
+    /* Estilos globales */
     /* -------------------------------------------------------- */
+
+    html {
+        /* Fonts */
+        /* --------------------------------------------- */
+        --homeContainerFontSize: 1.781rem;
+        --pauseMenuMenuTitleFontSize: 2.531rem;
+        --pauseMenuPauseOptionButtonFontSize: 1.688rem;
+        --confirmationMenuTitleFontSize: var(--pauseMenuPauseOptionButtonFontSize);
+        --resultMessageFontSize: 1.5rem;
+        /* --------------------------------------------- */
+
+        /* padding */
+        /* --------------------------------------------- */
+        --headerPaddingBlock: 25px;
+        --footerPaddingBlock: 10px;
+        --playerCardContainerPaddingBlock: 8.19px;
+        --playerCardContainerPadding: var(--playerCardContainerPaddingBlock) var(--playersContainerPlayerCardGap);
+        --headerPaddingLeft: clamp(122.5px, 22.5px + 9.765625vw, 147.5px);
+        --headerPaddingRight: clamp(45px, -55px + 9.765625vw, 70px);
+        --headerPaddingInLine: var(--headerPaddingLeft) var(--headerPaddingRight);
+        --roundIndicatorContainerInLinePadding: 6.75px;
+        --roundIndicatorContainerBlockPadding: 3.5px;
+        --confirmationMenuPaddingBlock: 20.47px;
+        /* --------------------------------------------- */
+
+        /* gap */
+        /* --------------------------------------------- */
+        --homeMenuColumnGap: 50px;
+        --playersContainerPlayerCardGap: 13.43px;
+        --playersContainerColumnGap: 108px;
+        --gameScreenRowGap: clamp(70.98px, 37.58px + 3.261718749999998vw, 79.33px);
+        --pauseMenuRowGap: 45.5px;
+        --confirmationMenuButtonContainerColumnGap: 41.5px;
+        --confirmationMenuRowGap: 12.5px;
+        --resultMenuRowGap: 20px;
+        /* --------------------------------------------- */
+
+        /* size */
+        /* --------------------------------------------- */
+        --githubIconWidth: 50px;
+        --playersContainerAvatarImageSize: 49.15px;
+        --playerNameMaxWidth: 12ch;
+        --currentPlayerPlayerCardContainerWidth: calc(
+            var(--currentPlayerPlayerCardContainerScale) *
+                (
+                    var(--playersContainerAvatarImageSize) + var(--playerNameMaxWidth) +
+                        var(--playersContainerPlayerCardGap) * 3
+                ) + (-2 * var(--currentPlayerPlayerCardContainerDecoratorOffset))
+        );
+        --currentPlayerPlayerNameDecoratorWidthSize: 30px;
+        --currentPlayerPlayerCardContainerHeight: calc(
+            var(--currentPlayerPlayerCardContainerScale) *
+                (var(--playersContainerAvatarImageSize) + (var(--playerCardContainerPaddingBlock) * 2)) +
+                (-2 * var(--currentPlayerPlayerCardContainerDecoratorOffset))
+        );
+        --boardCellSize: 122px;
+        --roundIndicatorWidth: 14px;
+        --roundIndicatorHeight: 20.5px;
+        --pauseButtonIconWidth: 80px;
+        --pauseButtonIconHeight: 40px;
+        --pauseMenuPauseOptionIconSize: calc(1em * (34 / 27));
+        --confirmationMenuConfirmationButtonSize: 81.5px;
+        --winnerAvatarSize: 204px;
+        --winnerAvatarContainerBannerWidth: 339px;
+        --resultMenuResultButtonWidth: 95px;
+        --resultMenuResultButtonHeight: 47.5px;
+        --resultMenuResultButtonBorderWidth: 1.67px;
+        --resultMenuResultButtonIconSize: 40.5px;
+        /* --------------------------------------------- */
+
+        /* scale */
+        /* --------------------------------------------- */
+        --currentPlayerPlayerCardContainerScale: calc(55.5 / 49.15);
+        /* --------------------------------------------- */
+
+        /* offset */
+        /* --------------------------------------------- */
+        --currentPlayerPlayerCardContainerDecoratorOffset: -8px;
+        --roundIndicatorContainerTop: -6.5px;
+        --winnerAvatarContainerBannerTop: -14px;
+        /* --------------------------------------------- */
+
+        /* time */
+        /* --------------------------------------------- */
+        --headerPauseControlTime: 0.5s;
+        /* --------------------------------------------- */
+    }
+
+    header {
+        grid-template-columns: 1fr max-content 1fr var(--pauseButtonIconWidth);
+        grid-template-areas: ". logo . button";
+        padding-left: var(--pauseButtonIconWidth);
+        animation: var(--headerPauseControlTime) linear forwards;
+    }
+
+    header.enablePauseControl {
+        animation-name: expandHeader;
+    }
+
+    header.disablePauseControl {
+        animation-name: collapseHeader;
+    }
+
+    @keyframes collapseHeader {
+        from {
+            grid-template-columns: 0fr max-content 1fr max-content;
+            padding-inline: var(--headerPaddingInLine);
+        }
+        to {
+            grid-template-columns: 1fr max-content 1fr var(--pauseButtonIconWidth);
+            padding-inline: initial;
+            padding-left: var(--pauseButtonIconWidth);
+        }
+    }
+
+    @keyframes expandHeader {
+        from {
+            grid-template-columns: 1fr max-content 1fr var(--pauseButtonIconWidth);
+            padding-inline: initial;
+            padding-left: var(--pauseButtonIconWidth);
+        }
+        to {
+            grid-template-columns: 0fr max-content 1fr max-content;
+            padding-inline: var(--headerPaddingInLine);
+        }
+    }
+
+    #homeContainer {
+        grid-area: logo;
+    }
+
+    .pauseButton.desktop {
+        grid-area: button;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        transition-property: opacity, visibility;
+        transition-duration: var(--headerPauseControlTime);
+    }
+
+    .enablePauseControl .pauseButton.desktop {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .pauseButtonIcon .base {
+        fill: var(--colorSecondary100);
+    }
+
+    .pauseButtonIcon .fills {
+        fill: var(--colorSecondary500);
+    }
+
+    #gameScreen {
+        grid-template-rows: repeat(2, max-content);
+        grid-template-areas:
+            "players    "
+            "board      ";
+        row-gap: var(--gameScreenRowGap);
+    }
+
+    #homeMenu {
+        grid-template-areas: "PVSP PVSCPU";
+        column-gap: var(--homeMenuColumnGap);
+    }
+
+    #playersContainer .playerCard {
+        column-gap: var(--playersContainerPlayerCardGap);
+        row-gap: initial;
+        align-items: center;
+    }
+
+    #playersContainer .left .playerCard {
+        grid-template-areas: "avatar name ";
+        grid-template-columns: max-content var(--playerNameMaxWidth);
+    }
+
+    #playersContainer .right .playerCard {
+        grid-template-areas: " name avatar";
+        grid-template-columns: var(--playerNameMaxWidth) max-content;
+    }
+
+    .pauseButton.main {
+        display: none;
+    }
+
+    #pauseMenu .pauseOptionIcon {
+        font-size: inherit;
+    }
 }
 
 /* -------------------------------------------------------------------------------------------------------------- */
