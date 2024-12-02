@@ -45,6 +45,7 @@ export default class Display {
     #roundIndicatorContainer;
     #winnerAvatarDisplayElementFactory;
     #avatarPlaceHolderSrc;
+    #pauseButtonElementList;
 
     constructor(settings) {
         const { playerNamePattern } = Object(settings);
@@ -307,7 +308,7 @@ export default class Display {
             baseAttributeList: [{ name: "alt", value: "ganador" }],
         };
 
-        const pauseButtonElementList = document.querySelectorAll(".pauseButton");
+        this.#pauseButtonElementList = document.querySelectorAll(".pauseButton");
 
         this.#homeSessionForm = new SessionForm(hsfSettings);
         this.#player1NameSessionForm = new SessionForm(pn1sfSettings);
@@ -324,7 +325,9 @@ export default class Display {
         );
 
         if (playerNamePattern) this.setPlayerNamePattern(playerNamePattern);
-        pauseButtonElementList.forEach((item) => item.addEventListener("click", (e) => this.#pauseMenu.show()));
+        this.#pauseButtonElementList.forEach((item) => item.addEventListener("click", (e) => this.#pauseMenu.show()));
+        this.#interactionEvent.subscribe(this.#interactionEventHandler);
+        this.#navigationEvent.subscribe(this.#navigationEventHandler);
     }
 
     get navigationEvent() {
@@ -573,4 +576,41 @@ export default class Display {
     #restartRound = () => this.interactionEvent.trigger({ type: "restartRound" });
 
     #restartGame = () => this.interactionEvent.trigger({ type: "restartGame" });
+
+    #hidePauseButtons = () => {
+        this.#pauseButtonElementList.forEach((item) => {
+            item.style.transitionDuration = "0s";
+            item.style.visibility = "hidden";
+        });
+    };
+
+    #showPauseButtons = () => {
+        this.#pauseButtonElementList.forEach((item) => {
+            item.style.removeProperty("visibility");
+            item.style.removeProperty("transition-duration");
+        });
+    };
+
+    #interactionEventHandler = ({ type }) => {
+        if (type === "hideMenu") this.#showPauseButtons();
+        if (type === "showMenu") this.#hidePauseButtons();
+    };
+
+    #navigationEventHandler = ({ currentScreen: { id: currentScreenId }, targetScreen: { id: targetScreenId } }) => {
+        const enablePauseControlClass = "enablePauseControl";
+        const disablePauseControlClass = "disablePauseControl";
+        const header = document.querySelector("header");
+        const enablePauseControl = () => {
+            header.classList.remove(disablePauseControlClass);
+            header.classList.add(enablePauseControlClass);
+        };
+        const disablePauseControl = () => {
+            header.classList.remove(enablePauseControlClass);
+            header.classList.add(disablePauseControlClass);
+        };
+        const isDesktopScreen = window.innerWidth >= 1024 ? true : false;
+
+        if (targetScreenId === "gameScreen" && isDesktopScreen) enablePauseControl();
+        if (currentScreenId === "gameScreen" && isDesktopScreen) disablePauseControl();
+    };
 }
