@@ -738,6 +738,7 @@ main {
     background-size: 100%;
     width: var(--iconContainerDecoratorSize);
     height: var(--iconContainerDecoratorSize);
+    display: block;
 }
 
 #difficultyMenu .option input[type="radio"]:checked ~ .iconContainer.left::after {
